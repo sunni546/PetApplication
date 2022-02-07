@@ -51,7 +51,7 @@ public class Home extends AppCompatActivity {
         });
 
 
-        // 위에서 생성한 listview에 클릭 이벤트 핸들러 정의.
+        // 위에서 생성한 listview 에 클릭 이벤트 핸들러 정의.
         listviewPet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
