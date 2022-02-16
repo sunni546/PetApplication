@@ -9,7 +9,7 @@
 
     <ImageView
         android:contentDescription="Photo"
-        android:id="@+id/imageView_petPhoto"
+        android:id="@+id/iv_petPhoto"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1" />
@@ -21,7 +21,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView_petName"
+            android:id="@+id/tv_petName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -31,7 +31,7 @@
             android:textSize="32sp" />
 
         <TextView
-            android:id="@+id/textView_petDetail"
+            android:id="@+id/tv_petDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

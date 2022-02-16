@@ -3,6 +3,7 @@ package com.example.pet;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -40,17 +41,19 @@ public class Home extends AppCompatActivity {
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_launcher_foreground),
                 "돌비", "묘생 1년차");
 
+        // pet 추가 버튼
         ImageButton btn_add = (ImageButton) findViewById(R.id.btn_add);
+        Intent intentAdd = new Intent(this, Add.class);
         btn_add.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                // pet 추가 페이지로 넘어가기
-
+                // pet 추가 화면으로 넘어가기
+                startActivity(intentAdd);
                 // listview 갱신
                 adapter.notifyDataSetChanged();
             }
         });
 
-
+        Intent intentInfo = new Intent(this, Info.class);
         // 위에서 생성한 listview 에 클릭 이벤트 핸들러 정의.
         listviewPet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -58,12 +61,14 @@ public class Home extends AppCompatActivity {
                 // get item
                 Home_ListViewItem item = (Home_ListViewItem) parent.getItemAtPosition(position);
 
-                Drawable photoDrawable = item.getPhoto();
                 String nameStr = item.getName();
-                String detailStr = item.getDetail();
 
-                // TODO : use item data.
-                Toast.makeText(getApplicationContext(), nameStr + "는 " + detailStr, Toast.LENGTH_SHORT).show();
+                // pet 정보 화면으로 넘어가기
+                intentInfo.putExtra("name", nameStr);
+                startActivity(intentInfo);
+
+                // 클릭 확인하기
+                // Toast.makeText(getApplicationContext(), nameStr, Toast.LENGTH_SHORT).show();
             }
         });
     }

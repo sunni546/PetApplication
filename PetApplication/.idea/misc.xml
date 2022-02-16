@@ -3,8 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/GitHub/PetApplication/PetApplication/app/src/main/res/layout/add.xml" value="0.1534954407294833" />
         <entry key="..\:/GitHub/PetApplication/PetApplication/app/src/main/res/layout/home.xml" value="0.24818840579710144" />
         <entry key="..\:/GitHub/PetApplication/PetApplication/app/src/main/res/layout/home_listview_item.xml" value="0.12907608695652173" />
+        <entry key="..\:/GitHub/PetApplication/PetApplication/app/src/main/res/layout/info.xml" value="0.1534954407294833" />
+        <entry key="..\:/GitHub/PetApplication/PetApplication/app/src/main/res/layout/join.xml" value="0.25" />
+        <entry key="..\:/GitHub/PetApplication/PetApplication/app/src/main/res/layout/log_in.xml" value="0.1534954407294833" />
+        <entry key="..\:/GitHub/PetApplication/PetApplication/app/src/main/res/layout/main.xml" value="0.22" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/PetApplication/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1645" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/PetApplication/app/src/main/res/drawable/corner_shape_listview_item.xml" value="0.1105" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/PetApplication/app/src/main/res/drawable/ic_launcher_background.xml" value="0.25" />
