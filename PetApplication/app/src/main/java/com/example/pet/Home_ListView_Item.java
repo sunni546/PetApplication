@@ -2,7 +2,7 @@ package com.example.pet;
 
 import android.graphics.drawable.Drawable;
 
-public class Home_ListViewItem {
+public class Home_ListView_Item {
     private Drawable photoDrawable;
     private String nameStr;
     private String detailStr;

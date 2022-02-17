@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Pet Application</string>
+
+    <string name="emotion">감정</string>
+    <string name="action">활동</string>
+    <string name="sleep_time">수면 시간</string>
+    <string name="eat_time">식사 시간</string>
+    <string name="movement_time">운동 시간</string>
+    <string name="pain">통증</string>
+    <string name="abnormal_behavior">이상 행동</string>
+
+    <string name="hour"> 시간</string>
+    <string name="minute"> 분</string>
+    <string name="day_total">하루 총</string>
+    <string name="number_of_times"> 회</string>
 </resources>

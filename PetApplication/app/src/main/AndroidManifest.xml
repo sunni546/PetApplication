@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PetApplication">
         <activity
-            android:name=".Main"
+            android:name=".Main_Logo"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,11 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Join"/>
-        <activity android:name=".Log_In"/>
+        <activity android:name=".Main_Join"/>
+        <activity android:name=".Main_LogIn"/>
         <activity android:name=".Home"/>
-        <activity android:name=".Add"/>
+        <activity android:name=".Home_PetAdd"/>
         <activity android:name=".Info"/>
+        <activity android:name=".Info_PetInfo"/>
+        <activity android:name=".Info_Pain"/>
+        <activity android:name=".Info_AbnormalBehavior"/>
     </application>
 
 </manifest>
