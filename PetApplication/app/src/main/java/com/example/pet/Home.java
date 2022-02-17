@@ -38,8 +38,8 @@ public class Home extends AppCompatActivity {
         listviewPet.setAdapter(adapter);
 
         // 처음 pet 추가시
-        View viewEmpty = (View) findViewById(R.id.view1);
-        isFirstPet(viewEmpty, listviewPet);
+        View viewHome = (View) findViewById(R.id.v_home);
+        isFirstPet(viewHome, listviewPet);
 
 
         // 1
