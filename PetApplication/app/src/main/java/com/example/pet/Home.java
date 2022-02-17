@@ -48,33 +48,44 @@ public class Home extends AppCompatActivity {
         // 2
         adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_launcher_foreground),
                 "돌비", "묘생 1년차");
+        // 3
+        // adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_launcher_foreground),
+        //         "체리", "견생 3년차");
+        // 4
+        // adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_launcher_foreground),
+        //         "해피", "견생 1년차");
+        // 5
+        // adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_launcher_foreground),
+        //         "나비", "묘생 4년차");
+        
 
-        ImageButton btn_add = (ImageButton) findViewById(R.id.btn_add);
-        btn_add.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                // pet 추가 페이지로 넘어가기
-                Intent intent_sleep = new Intent(getApplicationContext(),Profile_add.class);
-                startActivity(intent_sleep);
-
-                // listview 갱신
-                adapter.notifyDataSetChanged();
-            }
+        // pet 추가 버튼
+        ImageButton btnAdd = (ImageButton) findViewById(R.id.btn_add);
+        btnAdd.setOnClickListener(view -> {
+            // pet 정보 추가 화면으로 넘어가기
+            Intent intentProfile_add = new Intent(getApplicationContext(),Profile_add.class);
+            startActivity(intentProfile_add);
+            // listview 갱신
+            adapter.notifyDataSetChanged();
         });
 
 
+        Intent intentInfo = new Intent(this, Info.class);
         // 위에서 생성한 listview 에 클릭 이벤트 핸들러 정의.
         listviewPet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 // get item
-                Home_ListViewItem item = (Home_ListViewItem) parent.getItemAtPosition(position);
+                Home_ListView_Item item = (Home_ListView_Item) parent.getItemAtPosition(position);
 
-                Drawable photoDrawable = item.getPhoto();
-                String nameStr = item.getName();
-                String detailStr = item.getDetail();
+                String petNameStr = item.getName();
 
-                // TODO : use item data.
-                Toast.makeText(getApplicationContext(), nameStr + "는 " + detailStr, Toast.LENGTH_SHORT).show();
+                // pet 정보 화면으로 넘어가기
+                intentInfo.putExtra("petName", petNameStr);
+                startActivity(intentInfo);
+
+                // 클릭 확인하기
+                // Toast.makeText(getApplicationContext(), petNameStr, Toast.LENGTH_SHORT).show();
             }
         });
     }
