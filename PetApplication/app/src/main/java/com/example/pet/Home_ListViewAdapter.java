@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Home_ListViewAdapter extends BaseAdapter {
 
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    private ArrayList<Home_ListViewItem> listViewItemList = new ArrayList<Home_ListViewItem>() ;
+    private ArrayList<Home_ListView_Item> listViewItemList = new ArrayList<Home_ListView_Item>() ;
 
     // 생성자
     Home_ListViewAdapter() { }
@@ -42,21 +42,21 @@ public class Home_ListViewAdapter extends BaseAdapter {
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-        final ImageView photoImageView = (ImageView) convertView.findViewById(R.id.imageView_petPhoto) ;
-        final TextView nameTextView = (TextView) convertView.findViewById(R.id.textView_petName) ;
-        final TextView detailTextView = (TextView) convertView.findViewById(R.id.textView_petDetail) ;
+        final ImageView ivPhoto = (ImageView) convertView.findViewById(R.id.iv_photo) ;
+        final TextView tvName = (TextView) convertView.findViewById(R.id.tv_name) ;
+        final TextView tvDetail = (TextView) convertView.findViewById(R.id.tv_detail) ;
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        Home_ListViewItem listViewItem = listViewItemList.get(position);
+        Home_ListView_Item listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        photoImageView.setImageDrawable(listViewItem.getPhoto());
-        nameTextView.setText(listViewItem.getName());
-        detailTextView.setText(listViewItem.getDetail());
+        ivPhoto.setImageDrawable(listViewItem.getPhoto());
+        tvName.setText(listViewItem.getName());
+        tvDetail.setText(listViewItem.getDetail());
 
         // button1 클릭 시 TextView(textView1)의 내용 변경.
-        ImageButton btn_delete = (ImageButton) convertView.findViewById(R.id.btn_delete);
-        btn_delete.setOnClickListener(new Button.OnClickListener() {
+        ImageButton btnDelete = (ImageButton) convertView.findViewById(R.id.btn_delete);
+        btnDelete.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 // 아이템 삭제
                 listViewItemList.remove(pos) ;
@@ -85,7 +85,7 @@ public class Home_ListViewAdapter extends BaseAdapter {
 
     // 아이템 데이터 추가.
     public void addItem(Drawable photo, String name, String detail) {
-        Home_ListViewItem item = new Home_ListViewItem();
+        Home_ListView_Item item = new Home_ListView_Item();
 
         item.setPhoto(photo);
         item.setName(name);
