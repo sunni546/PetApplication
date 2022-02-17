@@ -3,6 +3,7 @@ package com.example.pet;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class Home extends AppCompatActivity {
 
     boolean firstPet = false;
@@ -20,6 +23,12 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener((view -> {
+            Intent intent_cctv = new Intent(getApplicationContext(),Profile_add.class);
+            startActivity(intent_cctv);
+        }));
 
         // Adapter 생성
         Home_ListViewAdapter adapter = new Home_ListViewAdapter();
@@ -44,6 +53,8 @@ public class Home extends AppCompatActivity {
         btn_add.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 // pet 추가 페이지로 넘어가기
+                Intent intent_sleep = new Intent(getApplicationContext(),Profile_add.class);
+                startActivity(intent_sleep);
 
                 // listview 갱신
                 adapter.notifyDataSetChanged();
