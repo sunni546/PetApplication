@@ -3,6 +3,7 @@ package com.example.pet;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -44,6 +45,8 @@ public class Home extends AppCompatActivity {
         btn_add.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 // pet 추가 페이지로 넘어가기
+                Intent intent_sleep = new Intent(getApplicationContext(),Profile_add.class);
+                startActivity(intent_sleep);
 
                 // listview 갱신
                 adapter.notifyDataSetChanged();
