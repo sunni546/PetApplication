@@ -52,9 +52,9 @@ public class Home extends AppCompatActivity {
 
         // pet 추가 버튼
         ImageButton btnAdd = (ImageButton) findViewById(R.id.btn_add);
-        Intent intentHome_PetAdd = new Intent(this, Home_PetAdd.class);
         btnAdd.setOnClickListener(view -> {
             // pet 정보 추가 화면으로 넘어가기
+            Intent intentHome_PetAdd = new Intent(getApplicationContext(),Profile_add.class);
             startActivity(intentHome_PetAdd);
             // listview 갱신
             adapter.notifyDataSetChanged();
