@@ -228,7 +228,7 @@
 
     <Button
         android:textColor="@color/black"
-        android:id="@+id/save_btn"
+        android:id="@+id/save_btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="저장"
@@ -239,7 +239,7 @@
 
     <Button
         android:textColor="@color/black"
-        android:id="@+id/cancel_btn"
+        android:id="@+id/cancel_btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="150dp"

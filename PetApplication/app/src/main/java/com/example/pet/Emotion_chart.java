@@ -2,6 +2,7 @@ package com.example.pet;
 
 
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,8 +20,19 @@ public class Emotion_chart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.emotion);
 
+        //취소 버튼
+        Button cancel_btn = (Button) findViewById(R.id.button_b);
+        cancel_btn.setOnClickListener(view -> {
+            finish();
+        });
+
 
         LineChart lineChart = (LineChart) findViewById(R.id.happy_chart);
+        LineChart lineChart2 = (LineChart) findViewById(R.id.comfort_chart);
+        LineChart lineChart3 = (LineChart) findViewById(R.id.anxiety_chart);
+        LineChart lineChart4 = (LineChart) findViewById(R.id.angry_chart);
+        LineChart lineChart5 = (LineChart) findViewById(R.id.fear_chart);
+        LineChart lineChart6 = (LineChart) findViewById(R.id.agg_chart);
         ArrayList<Entry> entries = new ArrayList<>();
         entries.add(new Entry(4f, 0));
         entries.add(new Entry(8f, 1));
@@ -56,6 +68,21 @@ public class Emotion_chart extends AppCompatActivity {
 
         lineChart.setData(data);
         lineChart.animateY(5000);
+
+        lineChart2.setData(data);
+        lineChart2.animateY(5000);
+
+        lineChart3.setData(data);
+        lineChart3.animateY(5000);
+
+        lineChart4.setData(data);
+        lineChart4.animateY(5000);
+
+        lineChart5.setData(data);
+        lineChart5.animateY(5000);
+
+        lineChart6.setData(data);
+        lineChart6.animateY(5000);
 
     }
 }

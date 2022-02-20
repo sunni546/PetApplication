@@ -26,7 +26,7 @@
             <!-- ㅡㅡㅡㅡㅡㅡㅡㅡ수면 시간ㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/button_back"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -108,6 +108,7 @@
                 android:textSize="25dp" />
 
             <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/eat_chart"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
 
@@ -172,6 +173,7 @@
                 android:textSize="25dp" />
 
             <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/act_chart"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
 

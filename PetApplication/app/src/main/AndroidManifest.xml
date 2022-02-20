@@ -31,6 +31,7 @@
         <activity android:name=".Emotion_chart"/>
         <activity android:name=".Profile_info"/>
         <activity android:name=".Profile_add"/>
+        <activity android:name=".Home_CCTV"/>
     </application>
 
 </manifest>

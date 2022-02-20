@@ -26,7 +26,7 @@ public class Home extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener((view -> {
-            Intent intent_cctv = new Intent(getApplicationContext(),Profile_add.class);
+            Intent intent_cctv = new Intent(getApplicationContext(),Home_CCTV.class);
             startActivity(intent_cctv);
         }));
 
@@ -68,6 +68,8 @@ public class Home extends AppCompatActivity {
             // listview 갱신
             adapter.notifyDataSetChanged();
         });
+
+
 
 
         Intent intentInfo = new Intent(this, Info.class);

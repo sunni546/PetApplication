@@ -26,7 +26,7 @@ public class Info extends AppCompatActivity {
 
         // pet 추가 버튼
         ImageButton btnPetInfo = (ImageButton) findViewById(R.id.btn_petInfo);
-        Intent intentInfo_PetInfo = new Intent(this, Info_PetInfo.class);
+        Intent intentInfo_PetInfo = new Intent(this, Profile_info.class);
         btnPetInfo.setOnClickListener(view -> {
             // pet 정보 보기 화면으로 넘어가기
             intentInfo_PetInfo.putExtra("petName", petNameStr);
@@ -45,24 +45,19 @@ public class Info extends AppCompatActivity {
 
         ivEmotion.setImageResource(R.drawable.ic_launcher_foreground);
 
-        /*
-        Intent intentEmotion = new Intent(this, Info_Emotion.class);
-        layoutEmotion.setOnClickListener((view -> {
+        Intent intentEmotion = new Intent(this, Emotion_chart.class);
+        layoutEmotion.setOnClickListener(view -> {
             startActivity(intentEmotion);
         });
-        */
-
 
         // 활동
         LinearLayout layoutAction = (LinearLayout) findViewById(R.id.layout_action);
 
-        /*
-        Intent intentAction = new Intent(this, Info_Action.class);
-        layoutAction.setOnClickListener((view -> {
+
+        Intent intentAction = new Intent(this, Sleep_Chart.class);
+        layoutAction.setOnClickListener(view -> {
             startActivity(intentAction);
         });
-        */
-
 
         // 통증
         LinearLayout layoutPain = (LinearLayout) findViewById(R.id.layout_pain);
