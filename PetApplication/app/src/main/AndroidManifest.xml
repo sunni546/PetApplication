@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pet">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,17 +23,14 @@
         <activity android:name=".Main_Join"/>
         <activity android:name=".Main_LogIn"/>
         <activity android:name=".Home"/>
-        <activity android:name=".Home_PetAdd"/>
+        <activity android:name=".Home_CCTV"/>
         <activity android:name=".Info"/>
-        <activity android:name=".Info_PetInfo"/>
-        <activity android:name=".Info_Pain"/>
-        <activity android:name=".Info_AbnormalBehavior"/>
-
-        <activity android:name=".Sleep_Chart"/>
-        <activity android:name=".Emotion_chart"/>
         <activity android:name=".Profile_info"/>
         <activity android:name=".Profile_add"/>
-        <activity android:name=".Home_CCTV"/>
+        <activity android:name=".Chart_Emotion"/>
+        <activity android:name=".Chart_Action"/>
+        <activity android:name=".Chart_Pain"/>
+        <activity android:name=".Chart_AbnormalBehavior"/>
     </application>
 
 </manifest>

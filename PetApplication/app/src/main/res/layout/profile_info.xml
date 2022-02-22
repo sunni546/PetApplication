@@ -39,6 +39,7 @@
                     android:textSize="18dp" />
 
                 <TextView
+                    android:id="@+id/tv_pet_name_profile_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="멍구"

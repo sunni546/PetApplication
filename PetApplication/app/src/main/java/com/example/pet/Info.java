@@ -24,15 +24,14 @@ public class Info extends AppCompatActivity {
         TextView tvPetName = (TextView) findViewById(R.id.tv_petName);
         tvPetName.setText(petNameStr);
 
-        // pet 추가 버튼
+        // pet info 버튼
         ImageButton btnPetInfo = (ImageButton) findViewById(R.id.btn_petInfo);
-        Intent intentInfo_PetInfo = new Intent(this, Profile_info.class);
+        Intent intentProfile_info = new Intent(this, Profile_info.class);
         btnPetInfo.setOnClickListener(view -> {
             // pet 정보 보기 화면으로 넘어가기
-            intentInfo_PetInfo.putExtra("petName", petNameStr);
-            startActivity(intentInfo_PetInfo);
+            intentProfile_info.putExtra("petName", petNameStr);
+            startActivity(intentProfile_info);
         });
-
 
         // 감정
         LinearLayout layoutEmotion = (LinearLayout) findViewById(R.id.layout_emotion);
@@ -45,7 +44,7 @@ public class Info extends AppCompatActivity {
 
         ivEmotion.setImageResource(R.drawable.ic_launcher_foreground);
 
-        Intent intentEmotion = new Intent(this, Emotion_chart.class);
+        Intent intentEmotion = new Intent(this, Chart_Emotion.class);
         layoutEmotion.setOnClickListener(view -> {
             startActivity(intentEmotion);
         });
@@ -54,7 +53,7 @@ public class Info extends AppCompatActivity {
         LinearLayout layoutAction = (LinearLayout) findViewById(R.id.layout_action);
 
 
-        Intent intentAction = new Intent(this, Sleep_Chart.class);
+        Intent intentAction = new Intent(this, Chart_Action.class);
         layoutAction.setOnClickListener(view -> {
             startActivity(intentAction);
         });
@@ -67,7 +66,7 @@ public class Info extends AppCompatActivity {
         String painStr = "2";
         // tvPain.setText(painStr);
 
-        Intent intentPain = new Intent(this, Info_Pain.class);
+        Intent intentPain = new Intent(this, Chart_Pain.class);
         layoutPain.setOnClickListener(view -> {
             startActivity(intentPain);
         });
@@ -80,7 +79,7 @@ public class Info extends AppCompatActivity {
         String abnormalBehaviorStr = "6";
         // tvAbnormalBehavior.setText(abnormalBehaviorStr);
 
-        Intent intentAbnormalBehavior = new Intent(this, Info_AbnormalBehavior.class);
+        Intent intentAbnormalBehavior = new Intent(this, Chart_AbnormalBehavior.class);
         layoutAbnormalBehavior.setOnClickListener(view -> {
             startActivity(intentAbnormalBehavior);
         });

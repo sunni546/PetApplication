@@ -15,26 +15,26 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
-public class Info_AbnormalBehavior extends AppCompatActivity {
+public class Chart_Pain extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.info_abnormal_behavior);
+        setContentView(R.layout.chart_pain);
 
-        // 이상 행동 통계
-        TextView tv1HourAb = (TextView) findViewById(R.id.tv_1hour_ab);
-        TextView tv1dDayAb = (TextView) findViewById(R.id.tv_1day_ab);
+        // 통증 통계
+        TextView tv1HourPain = (TextView) findViewById(R.id.tv_1hour_pain);
+        TextView tv1dDayPain = (TextView) findViewById(R.id.tv_1day_pain);
 
         // TODO
-        String hourAbStr = "2";
-        String dayAbStr = "3";
+        String hourPainStr = "2";
+        String dayPainStr = "3";
 
-        tv1HourAb.setText(hourAbStr);
-        tv1dDayAb.setText(dayAbStr);
+        tv1HourPain.setText(hourPainStr);
+        tv1dDayPain.setText(dayPainStr);
 
-        // 이상 행동 1시간 그래프
-        LineChart lineChart1HourAb = (LineChart) findViewById(R.id.chart_1hour_ab);
+        // 통증 1시간 그래프
+        LineChart lc1HourPain = (LineChart) findViewById(R.id.chart_1hour_pain);
 
         // TODO
         ArrayList<Entry> entries = new ArrayList<>();
@@ -56,13 +56,13 @@ public class Info_AbnormalBehavior extends AppCompatActivity {
 
         // 애니메이션 설정
         // 설정시 그래프가 한번에 나타나는 것이 아니라 창 이동시 그래프의 선이 제자리 찾아가면서 나타남
-        lineChart1HourAb.animateY(1500);
-        lineChart1HourAb.setData(data);
+        lc1HourPain.animateY(1500);
+        lc1HourPain.setData(data);
 
-        // 이상 행동 1일 그래프
-        LineChart lineChart1DayAb = (LineChart) findViewById(R.id.chart_1day_ab);
+        // 통증 1일 그래프
+        LineChart lc1DayPain = (LineChart) findViewById(R.id.chart_1day_pain);
 
-        lineChart1DayAb.animateY(1500);
-        lineChart1DayAb.setData(data);
+        lc1DayPain.animateY(1500);
+        lc1DayPain.setData(data);
     }
 }

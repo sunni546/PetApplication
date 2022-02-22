@@ -1,6 +1,5 @@
 package com.example.pet;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -16,26 +15,26 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
-public class Info_Pain extends AppCompatActivity {
+public class Chart_AbnormalBehavior extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.info_pain);
+        setContentView(R.layout.chart_abnormal_behavior);
 
-        // 통증 통계
-        TextView tv1HourPain = (TextView) findViewById(R.id.tv_1hour_pain);
-        TextView tv1dDayPain = (TextView) findViewById(R.id.tv_1day_pain);
+        // 이상 행동 통계
+        TextView tv1HourAb = (TextView) findViewById(R.id.tv_1hour_ab);
+        TextView tv1dDayAb = (TextView) findViewById(R.id.tv_1day_ab);
 
         // TODO
-        String hourPainStr = "2";
-        String dayPainStr = "3";
+        String hourAbStr = "2";
+        String dayAbStr = "3";
 
-        tv1HourPain.setText(hourPainStr);
-        tv1dDayPain.setText(dayPainStr);
+        tv1HourAb.setText(hourAbStr);
+        tv1dDayAb.setText(dayAbStr);
 
-        // 통증 1시간 그래프
-        LineChart lc1HourPain = (LineChart) findViewById(R.id.chart_1hour_pain);
+        // 이상 행동 1시간 그래프
+        LineChart lineChart1HourAb = (LineChart) findViewById(R.id.chart_1hour_ab);
 
         // TODO
         ArrayList<Entry> entries = new ArrayList<>();
@@ -57,13 +56,13 @@ public class Info_Pain extends AppCompatActivity {
 
         // 애니메이션 설정
         // 설정시 그래프가 한번에 나타나는 것이 아니라 창 이동시 그래프의 선이 제자리 찾아가면서 나타남
-        lc1HourPain.animateY(1500);
-        lc1HourPain.setData(data);
+        lineChart1HourAb.animateY(1500);
+        lineChart1HourAb.setData(data);
 
-        // 통증 1일 그래프
-        LineChart lc1DayPain = (LineChart) findViewById(R.id.chart_1day_pain);
+        // 이상 행동 1일 그래프
+        LineChart lineChart1DayAb = (LineChart) findViewById(R.id.chart_1day_ab);
 
-        lc1DayPain.animateY(1500);
-        lc1DayPain.setData(data);
+        lineChart1DayAb.animateY(1500);
+        lineChart1DayAb.setData(data);
     }
 }

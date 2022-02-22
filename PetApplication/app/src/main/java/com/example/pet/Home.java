@@ -4,20 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class Home extends AppCompatActivity {
 
     boolean firstPet = false;
+    private ImageButton btnAdd;
+    private Button btnLogOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class Home extends AppCompatActivity {
         
 
         // pet 추가 버튼
-        ImageButton btnAdd = (ImageButton) findViewById(R.id.btn_add);
+        btnAdd = (ImageButton) findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(view -> {
             // pet 정보 추가 화면으로 넘어가기
             Intent intentProfile_add = new Intent(getApplicationContext(),Profile_add.class);
@@ -69,11 +70,8 @@ public class Home extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         });
 
-
-
-
+        // listviewPet 에 클릭 이벤트 핸들러 정의.
         Intent intentInfo = new Intent(this, Info.class);
-        // 위에서 생성한 listview 에 클릭 이벤트 핸들러 정의.
         listviewPet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
@@ -89,6 +87,16 @@ public class Home extends AppCompatActivity {
                 // 클릭 확인하기
                 // Toast.makeText(getApplicationContext(), petNameStr, Toast.LENGTH_SHORT).show();
             }
+        });
+
+        // 로그아웃 버튼
+        btnLogOut = (Button) findViewById(R.id.btn_log_out);
+        btnLogOut.setOnClickListener(view -> {
+            // 로그아웃
+            FirebaseAuth.getInstance().signOut();
+            // Main_Logo 화면으로 넘어가기
+            Intent intentMainLogo = new Intent(getApplicationContext(),Main_Logo.class);
+            startActivity(intentMainLogo);
         });
     }
 

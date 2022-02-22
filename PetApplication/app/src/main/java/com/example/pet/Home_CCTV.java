@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Home_CCTV extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cctv);
+        setContentView(R.layout.home_cctv);
     }
 }
 
