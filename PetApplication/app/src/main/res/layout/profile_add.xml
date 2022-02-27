@@ -53,6 +53,7 @@
                 android:orientation="horizontal">
 
                 <RadioGroup
+                    android:id="@+id/gender"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -67,13 +68,13 @@
                         android:id="@+id/woman"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="여성" />
+                        android:text="암컷" />
 
                     <RadioButton
                         android:id="@+id/man"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="남성" />
+                        android:text="수컷" />
                 </RadioGroup>
 
             </LinearLayout>
@@ -104,28 +105,35 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <Switch
-                    android:id="@+id/cat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:text="고양이" />
+                <RadioGroup
+                    android:id="@+id/c_d"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                <Switch
-                    android:id="@+id/dog"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="강아지" />
+                    <RadioButton
+                        android:id="@+id/cat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="고양이" />
+
+                    <RadioButton
+                        android:id="@+id/dog"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="강아지" />
+                </RadioGroup>
+
             </LinearLayout>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -154,6 +162,7 @@
                 android:orientation="horizontal">
 
                 <RadioGroup
+                    android:id="@+id/neuter"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -187,6 +196,7 @@
                 android:layout_marginBottom="50dp">
 
                 <RadioGroup
+                    android:id="@+id/disease"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"

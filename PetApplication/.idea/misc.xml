@@ -32,6 +32,8 @@
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/drawable/ic_launcher_background.xml" value="0.18" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/bottom_app_bar.xml" value="0.25" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/cctv.xml" value="0.25" />
+        <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/chart_action.xml" value="0.33" />
+        <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/chart_emotion.xml" value="0.5" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/emotion.xml" value="0.25" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/home.xml" value="0.15" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/home_listview_item.xml" value="0.17391304347826086" />
@@ -43,7 +45,7 @@
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/main.xml" value="0.16843971631205673" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/main_join.xml" value="0.16843971631205673" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/main_log_in.xml" value="0.16843971631205673" />
-        <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/profile_add.xml" value="0.25" />
+        <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/profile_add.xml" value="0.33" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/profile_info.xml" value="0.33" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/sleep.xml" value="0.33" />
       </map>
