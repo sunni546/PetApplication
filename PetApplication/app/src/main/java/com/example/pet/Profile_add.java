@@ -13,6 +13,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
@@ -97,6 +98,9 @@ public class Profile_add extends AppCompatActivity {
                 Info.put("disease", disease);
                 newPet.set(Info)
                         .addOnFailureListener(e -> Log.w("DB_Pet_Info", "error", e));
+                // 사용자의 pet 수 수정
+                DocumentReference userOfPet = firebaseFirestore.collection("Users").document(userUid);
+                userOfPet.update("numPets", FieldValue.increment(1));
 
                 // TODO : 감정
                 Map<String, Object> Emotion = new HashMap<>();

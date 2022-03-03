@@ -1,24 +1,33 @@
 package com.example.pet;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class Home extends AppCompatActivity {
 
-    boolean firstPet = false;
-    private ImageButton btnAdd;
-    private Button btnLogOut;
+    private Home_ListViewAdapter adapter;
+    private ListView listviewPet;
+
+    private Boolean firstPet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,36 +41,62 @@ public class Home extends AppCompatActivity {
         }));
 
         // Adapter 생성
-        Home_ListViewAdapter adapter = new Home_ListViewAdapter();
+        adapter = new Home_ListViewAdapter();
 
         // ListView 참조 및 Adapter 달기
-        ListView listviewPet = (ListView) findViewById(R.id.listview_pet);
+        listviewPet = findViewById(R.id.listview_pet);
         listviewPet.setAdapter(adapter);
 
-        // 처음 pet 추가시
-        View viewHome = (View) findViewById(R.id.v_home);
-        isFirstPet(viewHome, listviewPet);
+        //firebase 인스턴스 초기화
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        assert user != null;
+        String userUid = user.getUid();
 
-        // 1
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_launcher_foreground),
-                "멍구", "견생 2년차");
-        // 2
-        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_launcher_foreground),
-                "돌비", "묘생 1년차");
-        // 3
-        // adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_launcher_foreground),
-        //         "체리", "견생 3년차");
-        // 4
-        // adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_launcher_foreground),
-        //         "해피", "견생 1년차");
-        // 5
-        // adapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_launcher_foreground),
-        //         "나비", "묘생 4년차");
-        
+        // pet 유무 확인
+        DocumentReference docRefUsers = firebaseFirestore.collection("Users").document(userUid);
+        docRefUsers.get().addOnSuccessListener(documentSnapshot -> {
+            DB_User userDB = documentSnapshot.toObject(DB_User.class);
+            assert userDB != null;
+
+            firstPet = userDB.getNumPets() == 0;
+
+            // pet 리스트 생성
+            View viewHome = findViewById(R.id.v_home);
+
+            if (firstPet) {
+                isFirstPet(viewHome, listviewPet);
+            } else {
+                isNotFirstPet(viewHome, listviewPet);
+            }
+        });
+
+        // 리스트 생성
+        if (!firstPet) {
+            firebaseFirestore.collection("Users").document(userUid).collection("Pets")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Log.d("LISTVIEWPET", document.getId() + " => " + document.getData());
+                                    adapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_launcher_foreground),
+                                            document.get("name").toString(), document.get("age").toString() + "살");
+                                    // listview 갱신
+                                    adapter.notifyDataSetChanged();
+                                }
+                            } else {
+                                Log.d("LISTVIEWPET", "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+        }
 
         // pet 추가 버튼
-        btnAdd = (ImageButton) findViewById(R.id.btn_add);
+        ImageButton btnAdd = findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(view -> {
             // pet 정보 추가 화면으로 넘어가기
             Intent intentProfile_add = new Intent(getApplicationContext(),Profile_add.class);
@@ -72,25 +107,22 @@ public class Home extends AppCompatActivity {
 
         // listviewPet 에 클릭 이벤트 핸들러 정의.
         Intent intentInfo = new Intent(this, Info.class);
-        listviewPet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
-                // get item
-                Home_ListView_Item item = (Home_ListView_Item) parent.getItemAtPosition(position);
+        listviewPet.setOnItemClickListener((parent, v, position, id) -> {
+            // get item
+            Home_ListView_Item item = (Home_ListView_Item) parent.getItemAtPosition(position);
 
-                String petNameStr = item.getName();
+            String petNameStr = item.getName();
 
-                // pet 정보 화면으로 넘어가기
-                intentInfo.putExtra("petName", petNameStr);
-                startActivity(intentInfo);
+            // pet 정보 화면으로 넘어가기
+            intentInfo.putExtra("petName", petNameStr);
+            startActivity(intentInfo);
 
-                // 클릭 확인하기
-                // Toast.makeText(getApplicationContext(), petNameStr, Toast.LENGTH_SHORT).show();
-            }
+            // 클릭 확인하기
+            // Toast.makeText(getApplicationContext(), petNameStr, Toast.LENGTH_SHORT).show();
         });
 
         // 로그아웃 버튼
-        btnLogOut = (Button) findViewById(R.id.btn_log_out);
+        Button btnLogOut = findViewById(R.id.btn_log_out);
         btnLogOut.setOnClickListener(view -> {
             // 로그아웃
             FirebaseAuth.getInstance().signOut();
@@ -100,14 +132,12 @@ public class Home extends AppCompatActivity {
         });
     }
 
-    public void isFirstPet(View v, ListView lv){
-        if (firstPet) {
-            v.setVisibility(View.GONE);
-            lv.setVisibility(View.GONE);
-        }
-        else{
-            v.setVisibility(View.VISIBLE);
-            lv.setVisibility(View.VISIBLE);
-        }
+    public void isFirstPet(View v, ListView lv) {
+        v.setVisibility(View.GONE);
+        lv.setVisibility(View.GONE);
+    }
+    public void isNotFirstPet(View v, ListView lv) {
+        v.setVisibility(View.VISIBLE);
+        lv.setVisibility(View.VISIBLE);
     }
 }
