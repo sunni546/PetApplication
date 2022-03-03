@@ -95,7 +95,7 @@ public class Profile_add extends AppCompatActivity {
                 Info.put("breed", breed);
                 Info.put("neuter", neuter);
                 Info.put("disease", disease);
-                newPet.collection("Info").document().set(Info)
+                newPet.set(Info)
                         .addOnFailureListener(e -> Log.w("DB_Pet_Info", "error", e));
 
                 // TODO : 감정
