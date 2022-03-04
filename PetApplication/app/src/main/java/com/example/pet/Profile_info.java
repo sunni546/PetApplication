@@ -27,11 +27,5 @@ public class Profile_info extends AppCompatActivity {
             finish();
         });
 
-        // 저장 버튼
-        Button save_btn = (Button) findViewById(R.id.save_btn);
-        save_btn.setOnClickListener(view -> {
-            finish();
-        });
-
     }
 }
