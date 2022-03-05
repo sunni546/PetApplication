@@ -32,10 +32,13 @@
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/drawable/ic_launcher_background.xml" value="0.18" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/bottom_app_bar.xml" value="0.25" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/cctv.xml" value="0.25" />
+        <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/chart_abnormal_behavior.xml" value="0.16621376811594202" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/chart_action.xml" value="0.33" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/chart_emotion.xml" value="0.5" />
+        <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/chart_pain.xml" value="0.16621376811594202" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/emotion.xml" value="0.25" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/home.xml" value="0.15" />
+        <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/home_cctv.xml" value="0.16621376811594202" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/home_listview_item.xml" value="0.17391304347826086" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/home_pet_add.xml" value="0.1" />
         <entry key="..\:/Users/rudtn/Documents/GitHub/PetApplication/PetApplication/app/src/main/res/layout/info.xml" value="0.25" />

@@ -33,6 +33,7 @@ public class Chart_Emotion extends AppCompatActivity {
         LineChart lineChart5 = (LineChart) findViewById(R.id.fear_chart);
         LineChart lineChart6 = (LineChart) findViewById(R.id.agg_chart);
         ArrayList<Entry> entries = new ArrayList<>();
+
         entries.add(new Entry(4f, 0));
         entries.add(new Entry(8f, 1));
         entries.add(new Entry(6f, 2));

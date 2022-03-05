@@ -23,7 +23,6 @@ public class Profile_add extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth = null;
     private FirebaseFirestore firebaseFirestore = null;
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_add);
@@ -91,11 +90,11 @@ public class Profile_add extends AppCompatActivity {
                 Info.put("name", name);
                 Info.put("gender", gender);
                 Info.put("age", age);
-                Info.put("cat/dog", c_d);
+                Info.put("cat_dog", c_d);
                 Info.put("breed", breed);
                 Info.put("neuter", neuter);
                 Info.put("disease", disease);
-                newPet.collection("Info").document("Info").set(Info)
+                newPet.set(Info)
                         .addOnFailureListener(e -> Log.w("DB_Pet_Info", "error", e));
 
                 // TODO : 감정

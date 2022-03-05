@@ -39,7 +39,7 @@
                     android:textSize="18dp" />
 
                 <TextView
-                    android:id="@+id/tv_pet_name_profile_info"
+                    android:id="@+id/pro_info_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="멍구"
@@ -68,6 +68,7 @@
                         android:textSize="18dp" />
 
                     <TextView
+                        android:id="@+id/pro_info_gender"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="암컷"
@@ -91,6 +92,7 @@
                     android:textSize="18dp" />
 
                 <TextView
+                    android:id="@+id/pro_info_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="3살"
@@ -108,6 +110,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/pro_info_c_d"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="고양이"
@@ -129,6 +132,7 @@
                     android:textSize="18dp" />
 
                 <TextView
+                    android:id="@+id/pro_info_breed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="러시안 블루"
@@ -157,6 +161,7 @@
                         android:textSize="18dp" />
 
                     <TextView
+                        android:id="@+id/pro_info_neuter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="O"
@@ -187,6 +192,7 @@
                         android:textSize="18dp" />
 
                     <TextView
+                        android:id="@+id/pro_info_disease"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="O"
