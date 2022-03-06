@@ -143,7 +143,7 @@ public class Profile_add extends AppCompatActivity {
 
                 // 팝업 끄기
                 // Home 화면으로
-                ((Home)Home.hContext).makelistviewPet();
+                ((Home)Home.hContext).makeListviewPet();
                 finish();
             } else {
                 // No user is signed in

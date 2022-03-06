@@ -80,7 +80,7 @@ public class Home extends AppCompatActivity {
 
         // 리스트 생성
         if (!firstPet) {
-            makelistviewPet();
+            makeListviewPet();
         }
 
         // pet 추가 버튼
@@ -110,12 +110,12 @@ public class Home extends AppCompatActivity {
             // 로그아웃
             FirebaseAuth.getInstance().signOut();
             // Main_Logo 화면으로 넘어가기
-            Intent intentMainLogo = new Intent(getApplicationContext(),Main_Logo.class);
+            Intent intentMainLogo = new Intent(getApplicationContext(), Main_Logo.class);
             startActivity(intentMainLogo);
         });
     }
 
-    public void makelistviewPet() {
+    public void makeListviewPet() {
         // Adapter 생성
         adapter = new Home_ListViewAdapter();
 
