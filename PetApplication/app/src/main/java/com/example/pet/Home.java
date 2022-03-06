@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,15 +26,22 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class Home extends AppCompatActivity {
 
+    public static Context hContext;
+
     private Home_ListViewAdapter adapter;
     private ListView listviewPet;
 
     private Boolean firstPet = false;
 
+    private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore firebaseFirestore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+
+        hContext = this;
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener((view -> {
@@ -40,16 +49,12 @@ public class Home extends AppCompatActivity {
             startActivity(intent_cctv);
         }));
 
-        // Adapter 생성
-        adapter = new Home_ListViewAdapter();
-
-        // ListView 참조 및 Adapter 달기
+        // ListView 참조
         listviewPet = findViewById(R.id.listview_pet);
-        listviewPet.setAdapter(adapter);
 
         //firebase 인스턴스 초기화
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
         assert user != null;
@@ -75,24 +80,7 @@ public class Home extends AppCompatActivity {
 
         // 리스트 생성
         if (!firstPet) {
-            firebaseFirestore.collection("Users").document(userUid).collection("Pets")
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Log.d("LISTVIEWPET", document.getId() + " => " + document.getData());
-                                    adapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_launcher_foreground),
-                                            document.get("name").toString(), document.get("age").toString() + "살");
-                                    // listview 갱신
-                                    adapter.notifyDataSetChanged();
-                                }
-                            } else {
-                                Log.d("LISTVIEWPET", "Error getting documents: ", task.getException());
-                            }
-                        }
-                    });
+            makelistviewPet();
         }
 
         // pet 추가 버튼
@@ -101,8 +89,6 @@ public class Home extends AppCompatActivity {
             // pet 정보 추가 화면으로 넘어가기
             Intent intentProfile_add = new Intent(getApplicationContext(),Profile_add.class);
             startActivity(intentProfile_add);
-            // listview 갱신
-            adapter.notifyDataSetChanged();
         });
 
         // listviewPet 에 클릭 이벤트 핸들러 정의.
@@ -116,9 +102,6 @@ public class Home extends AppCompatActivity {
             // pet 정보 화면으로 넘어가기
             intentInfo.putExtra("petName", petNameStr);
             startActivity(intentInfo);
-
-            // 클릭 확인하기
-            // Toast.makeText(getApplicationContext(), petNameStr, Toast.LENGTH_SHORT).show();
         });
 
         // 로그아웃 버튼
@@ -130,6 +113,41 @@ public class Home extends AppCompatActivity {
             Intent intentMainLogo = new Intent(getApplicationContext(),Main_Logo.class);
             startActivity(intentMainLogo);
         });
+    }
+
+    public void makelistviewPet() {
+        // Adapter 생성
+        adapter = new Home_ListViewAdapter();
+
+        // Adapter 달기
+        listviewPet.setAdapter(adapter);
+
+        //firebase 인스턴스 초기화
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        assert user != null;
+        String userUid = user.getUid();
+
+        firebaseFirestore.collection("Users").document(userUid).collection("Pets")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("LISTVIEWPET", document.getId() + " => " + document.getData());
+                                adapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_launcher_foreground),
+                                        document.get("name").toString(), document.get("age").toString() + "살");
+                                // listview 갱신
+                                adapter.notifyDataSetChanged();
+                            }
+                        } else {
+                            Log.d("LISTVIEWPET", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 
     public void isFirstPet(View v, ListView lv) {
