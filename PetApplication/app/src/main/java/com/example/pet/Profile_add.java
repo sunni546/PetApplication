@@ -15,14 +15,18 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Profile_add extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth = null;
     private FirebaseFirestore firebaseFirestore = null;
+    String stringtime;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_add);
@@ -109,12 +113,14 @@ public class Profile_add extends AppCompatActivity {
                         .addOnFailureListener(e -> Log.w("DB_Pet_Emotion", "error", e));
 
                 // TODO : 활동
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh", Locale.KOREA);
+                Calendar calendar = Calendar.getInstance();
+                stringtime=simpleDateFormat.format(calendar.getTime());
                 Map<String, Object> Act = new HashMap<>();
                 Act.put("수면 시간", 1);
                 Act.put("식사 시간", 2);
                 Act.put("운동 시간",3);
-                Act.put("활동 기록 시간", new Timestamp(new Date()));
-                newPet.collection("Act").document("Act").set(Act)
+                newPet.collection("Act").document(stringtime).set(Act)
                         .addOnFailureListener(e -> Log.w("DB_Pet_Act", "error", e));
 
                 // TODO : 통증

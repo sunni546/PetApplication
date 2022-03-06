@@ -97,8 +97,6 @@ public class Profile_info extends AppCompatActivity {
                         tvage = findViewById(R.id.pro_info_age);
                         tvage.setText(age);
 
-
-
                     }
                     else{
                         Log.d(TAG, "No such document");
