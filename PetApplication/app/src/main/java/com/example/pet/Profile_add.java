@@ -15,15 +15,18 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Profile_add extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth = null;
     private FirebaseFirestore firebaseFirestore = null;
-
+    String stringtime;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_add);
@@ -91,7 +94,7 @@ public class Profile_add extends AppCompatActivity {
                 Info.put("name", name);
                 Info.put("gender", gender);
                 Info.put("age", age);
-                Info.put("cat/dog", c_d);
+                Info.put("cat_dog", c_d);
                 Info.put("breed", breed);
                 Info.put("neuter", neuter);
                 Info.put("disease", disease);
@@ -106,30 +109,32 @@ public class Profile_add extends AppCompatActivity {
                 Emotion.put("화남/불쾌", 4);
                 Emotion.put("공포", 5);
                 Emotion.put("공격성", 6);
-                newPet.collection("Emotion").document().set(Emotion)
+                newPet.collection("Emotion").document("Emotion").set(Emotion)
                         .addOnFailureListener(e -> Log.w("DB_Pet_Emotion", "error", e));
 
                 // TODO : 활동
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh", Locale.KOREA);
+                Calendar calendar = Calendar.getInstance();
+                stringtime=simpleDateFormat.format(calendar.getTime());
                 Map<String, Object> Act = new HashMap<>();
                 Act.put("수면 시간", 1);
                 Act.put("식사 시간", 2);
                 Act.put("운동 시간",3);
-                Act.put("활동 기록 시간", new Timestamp(new Date()));
-                newPet.collection("Act").document().set(Act)
+                newPet.collection("Act").document(stringtime).set(Act)
                         .addOnFailureListener(e -> Log.w("DB_Pet_Act", "error", e));
 
                 // TODO : 통증
                 Map<String, Object> Pain = new HashMap<>();
                 Pain.put("numPain", 1);
                 Pain.put("timePain", new Timestamp(new Date()));
-                newPet.collection("Pains").document().set(Pain)
+                newPet.collection("Pains").document("Pains").set(Pain)
                         .addOnFailureListener(e -> Log.w("DB_Pet_Pain", "error", e));
 
                 // TODO : 이상횟수
                 Map<String, Object> AB = new HashMap<>();
                 AB.put("numAB", 2);
                 AB.put("timeAB", new Timestamp(new Date()));
-                newPet.collection("AbnormalBehaviors").document().set(AB)
+                newPet.collection("AbnormalBehaviors").document("AbnormalBehaviors").set(AB)
                         .addOnFailureListener(e -> Log.w("DB_Pet_AB", "error", e));
 
                 // 팝업 끄기

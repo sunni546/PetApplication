@@ -39,7 +39,7 @@
                     android:textSize="18dp" />
 
                 <TextView
-                    android:id="@+id/tv_pet_name_profile_info"
+                    android:id="@+id/pro_info_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="멍구"
@@ -68,6 +68,7 @@
                         android:textSize="18dp" />
 
                     <TextView
+                        android:id="@+id/pro_info_gender"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="암컷"
@@ -91,6 +92,7 @@
                     android:textSize="18dp" />
 
                 <TextView
+                    android:id="@+id/pro_info_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="3살"
@@ -108,6 +110,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/pro_info_c_d"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="고양이"
@@ -129,6 +132,7 @@
                     android:textSize="18dp" />
 
                 <TextView
+                    android:id="@+id/pro_info_breed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="러시안 블루"
@@ -157,6 +161,7 @@
                         android:textSize="18dp" />
 
                     <TextView
+                        android:id="@+id/pro_info_neuter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="O"
@@ -187,6 +192,7 @@
                         android:textSize="18dp" />
 
                     <TextView
+                        android:id="@+id/pro_info_disease"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="O"
@@ -204,32 +210,22 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="30dp"
-        tools:src="@tools:sample/avatars"
+        android:src="@mipmap/ic_launcher"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:textColor="@color/black"
-        android:id="@+id/save_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="저장"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cancel_btn"
-        tools:layout_editor_absoluteY="16dp"
-        android:backgroundTint="@color/G"/>
-
-    <Button
-        android:textColor="@color/black"
         android:id="@+id/cancel_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="150dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="300dp"
         android:backgroundTint="@color/G"
         android:text="취소"
-        app:layout_constraintEnd_toStartOf="@+id/save_btn"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="16dp" />
 

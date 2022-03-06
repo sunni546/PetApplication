@@ -1,8 +1,14 @@
 package com.example.pet;
 
-import android.os.Bundle;
-import android.widget.Button;
+import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -10,78 +16,135 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class Chart_Action extends AppCompatActivity {
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth firebaseAuth;
+    int count;
+    String stringtime;
+
+    String sleep;
+    int sleep_t;
+
+    String eat;
+    int eat_t;
+
+    String act;
+    int act_t;
+
+    TextView sleep_h;
+    TextView sleep_m;
+
+    TextView eat_h;
+    TextView eat_m;
+
+    TextView act_h;
+    TextView act_m;
+
+
+    Map<String, Object> Act = new HashMap<>();
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chart_action);
 
-        //BarEntry : (x,y 쌍으로 Bar Chart에 표시될 데이터 저장)
-        //BarDataSet : BarEntry를 바탕으로 실제 Bar DateSet 생성
-        //BarData : BarChart에 보여질 데이터 구성
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        String userUid = user.getUid();
+        Intent intentInfo = new Intent(this.getIntent());
+        String petNameStr = intentInfo.getStringExtra("petName");
 
         Button cancel_btn = (Button) findViewById(R.id.button_back);
         cancel_btn.setOnClickListener(view -> {
             finish();
         });
 
-        //수면시간 차드
+        //수면시간 차트
         BarChart barChart = (BarChart) findViewById(R.id.sleep_chart);
         ArrayList<BarEntry> entries = new ArrayList<>();
         entries.add(new BarEntry(4f, 0));
         entries.add(new BarEntry(8f, 1));
         entries.add(new BarEntry(6f, 2));
-        entries.add(new BarEntry(2f, 3));
-        entries.add(new BarEntry(18f, 4));
-        entries.add(new BarEntry(9f, 5));
-        entries.add(new BarEntry(16f, 6));
-        entries.add(new BarEntry(5f, 7));
-        entries.add(new BarEntry(3f, 8));
-        entries.add(new BarEntry(7f, 10));
-        entries.add(new BarEntry(9f, 11));
         BarDataSet dataSet = new BarDataSet(entries, "# of Calls");
         BarData data = new BarData(dataSet);
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS); //
         barChart.setData(data);
 
 
-        BarChart barChart2= (BarChart) findViewById(R.id.eat_chart);
-        ArrayList<BarEntry> entries2 = new ArrayList<>();
-        entries2.add(new BarEntry(4f, 0));
-        entries2.add(new BarEntry(8f, 1));
-        entries2.add(new BarEntry(6f, 2));
-        entries2.add(new BarEntry(2f, 3));
-        entries2.add(new BarEntry(18f, 4));
-        entries2.add(new BarEntry(9f, 5));
-        entries2.add(new BarEntry(16f, 6));
-        entries2.add(new BarEntry(5f, 7));
-        entries2.add(new BarEntry(3f, 8));
-        entries2.add(new BarEntry(7f, 10));
-        entries2.add(new BarEntry(9f, 11));
-        BarDataSet dataSet2 = new BarDataSet(entries2, "# of Calls");
-        BarData data2 = new BarData(dataSet2);
-        dataSet2.setColors(ColorTemplate.COLORFUL_COLORS); //
-        barChart2.setData(data2);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh", Locale.KOREA);
+        Date currentTime = new Date ( );
+        stringtime=simpleDateFormat.format(currentTime);
 
+        db.collection("Users")
+                .document(userUid)
+                .collection("Pets")
+                .document(petNameStr)
+                .collection("Act")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                count = task.getResult().size()-1;
+                Log.d(TAG,"count : "+count);
+            }
+        });
 
-        BarChart barChart3= (BarChart) findViewById(R.id.act_chart);
-        ArrayList<BarEntry> entries3 = new ArrayList<>();
-        entries3.add(new BarEntry(4f, 0));
-        entries3.add(new BarEntry(8f, 1));
-        entries3.add(new BarEntry(6f, 2));
-        entries3.add(new BarEntry(2f, 3));
-        entries3.add(new BarEntry(18f, 4));
-        entries3.add(new BarEntry(9f, 5));
-        entries3.add(new BarEntry(16f, 6));
-        entries3.add(new BarEntry(5f, 7));
-        entries3.add(new BarEntry(3f, 8));
-        entries3.add(new BarEntry(7f, 10));
-        entries3.add(new BarEntry(9f, 11));
-        BarDataSet dataSet3 = new BarDataSet(entries3, "# of Calls");
-        BarData data3 = new BarData(dataSet3);
-        dataSet3.setColors(ColorTemplate.COLORFUL_COLORS); //
-        barChart3.setData(data3);
+        DocumentReference docRef = db.collection("Users").document(userUid)
+                .collection("Pets").document(petNameStr)
+                .collection("Act").document("TOTAL");
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()){
+                        Act = document.getData();
+                        sleep = String.valueOf(Act.get("수면 시간"));
+                        eat = String.valueOf(Act.get("식사 시간"));
+                        act =String.valueOf(Act.get("활동 시간"));
+
+                        sleep_t=(Integer.parseInt(sleep)/count);
+                        eat_t=(Integer.parseInt(eat)/count);
+                        act_t=(Integer.parseInt(act)/count);
+
+                        sleep_h = findViewById(R.id.sleep_hour);
+                        sleep_m = findViewById(R.id.sleep_minute);
+                        sleep_h.setText(String.valueOf(sleep_t/60));
+                        sleep_m.setText(String.valueOf(sleep_t%60));
+
+                        eat_h = findViewById(R.id.eat_hour);
+                        eat_m = findViewById(R.id.eat_minute);
+                        eat_h.setText(String.valueOf(eat_t/60));
+                        eat_m.setText(String.valueOf(eat_t%60));
+
+                        act_h = findViewById(R.id.act_hour);
+                        act_m = findViewById(R.id.act_minute);
+                        act_h.setText(String.valueOf(act_t/60));
+                        act_m.setText(String.valueOf(act_t%60));
+                    }
+                    else{
+                        Log.d(TAG, "No such document");
+                    }
+                }
+                else{
+                    Log.d(TAG, "get failed with", task.getException());
+                }
+            }
+        });
     }
 }
