@@ -203,24 +203,13 @@ public class Info extends AppCompatActivity {
             startActivity(intentAction);
         });
         //------------------------------------------------------------------------------------------
-        // 통증
-        LinearLayout layoutPain = (LinearLayout) findViewById(R.id.layout_pain);
-        TextView tvPain = (TextView) findViewById(R.id.tv_pain);
 
-        // TODO: pain
-        String painStr = "2";
-        // tvPain.setText(painStr);
-
-        Intent intentPain = new Intent(this, Chart_Pain.class);
-        layoutPain.setOnClickListener(view -> {
-            startActivity(intentPain);
-        });
 
         // 이상행동
         LinearLayout layoutAbnormalBehavior = (LinearLayout) findViewById(R.id.layout_abnormal_behavior);
         TextView tvAbnormalBehavior = (TextView) findViewById(R.id.tv_abnormal_behavior);
 
-        // TODO: pain
+        // TODO: 이상행동
         String abnormalBehaviorStr = "6";
         // tvAbnormalBehavior.setText(abnormalBehaviorStr);
 

@@ -29,7 +29,6 @@
         <activity android:name=".Profile_add"/>
         <activity android:name=".Chart_Emotion"/>
         <activity android:name=".Chart_Action"/>
-        <activity android:name=".Chart_Pain"/>
         <activity android:name=".Chart_AbnormalBehavior"/>
     </application>
 

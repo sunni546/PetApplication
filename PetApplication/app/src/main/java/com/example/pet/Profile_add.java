@@ -127,13 +127,6 @@ public class Profile_add extends AppCompatActivity {
                 newPet.collection("Act").document(stringtime).set(Act)
                         .addOnFailureListener(e -> Log.w("DB_Pet_Act", "error", e));
 
-                // TODO : 통증
-                Map<String, Object> Pain = new HashMap<>();
-                Pain.put("numPain", 1);
-                Pain.put("timePain", new Timestamp(new Date()));
-                newPet.collection("Pains").document("Pains").set(Pain)
-                        .addOnFailureListener(e -> Log.w("DB_Pet_Pain", "error", e));
-
                 // TODO : 이상횟수
                 Map<String, Object> AB = new HashMap<>();
                 AB.put("numAB", 2);
