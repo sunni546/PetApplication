@@ -30,8 +30,9 @@ public class Home extends AppCompatActivity {
 
     private Home_ListViewAdapter adapter;
     private ListView listviewPet;
+    private View viewHome;
 
-    private Boolean firstPet = false;
+    private Boolean firstPet = true;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -49,8 +50,9 @@ public class Home extends AppCompatActivity {
             startActivity(intent_cctv);
         }));
 
-        // ListView 참조
+        // 참조
         listviewPet = findViewById(R.id.listview_pet);
+        viewHome = findViewById(R.id.v_home);
 
         //firebase 인스턴스 초기화
         firebaseAuth = FirebaseAuth.getInstance();
@@ -69,19 +71,12 @@ public class Home extends AppCompatActivity {
             firstPet = userDB.getNumPets() == 0;
 
             // pet 리스트 생성
-            View viewHome = findViewById(R.id.v_home);
-
             if (firstPet) {
-                isFirstPet(viewHome, listviewPet);
+                isFirstPet();
             } else {
-                isNotFirstPet(viewHome, listviewPet);
+                makeListviewPet();
             }
         });
-
-        // 리스트 생성
-        if (!firstPet) {
-            makeListviewPet();
-        }
 
         // pet 추가 버튼
         ImageButton btnAdd = findViewById(R.id.btn_add);
@@ -116,6 +111,8 @@ public class Home extends AppCompatActivity {
     }
 
     public void makeListviewPet() {
+        isNotFirstPet();
+
         // Adapter 생성
         adapter = new Home_ListViewAdapter();
 
@@ -150,12 +147,12 @@ public class Home extends AppCompatActivity {
                 });
     }
 
-    public void isFirstPet(View v, ListView lv) {
-        v.setVisibility(View.GONE);
-        lv.setVisibility(View.GONE);
+    public void isFirstPet() {
+        viewHome.setVisibility(View.GONE);
+        listviewPet.setVisibility(View.GONE);
     }
-    public void isNotFirstPet(View v, ListView lv) {
-        v.setVisibility(View.VISIBLE);
-        lv.setVisibility(View.VISIBLE);
+    public void isNotFirstPet() {
+        viewHome.setVisibility(View.VISIBLE);
+        listviewPet.setVisibility(View.VISIBLE);
     }
 }
