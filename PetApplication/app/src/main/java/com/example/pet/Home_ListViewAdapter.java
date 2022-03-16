@@ -1,7 +1,10 @@
 package com.example.pet;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +14,29 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 
 public class Home_ListViewAdapter extends BaseAdapter {
 
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<Home_ListView_Item> listViewItemList = new ArrayList<Home_ListView_Item>() ;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore firebaseFirestore;
 
     // 생성자
     Home_ListViewAdapter() { }
@@ -34,6 +54,10 @@ public class Home_ListViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final int pos = position;
         final Context context = parent.getContext();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        String userUid = user.getUid();
 
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
@@ -54,6 +78,8 @@ public class Home_ListViewAdapter extends BaseAdapter {
         tvName.setText(listViewItem.getName());
         tvDetail.setText(listViewItem.getDetail());
 
+
+        String Petname=listViewItem.getName();
         // button1 클릭 시 TextView(textView1)의 내용 변경.
         ImageButton btnDelete = (ImageButton) convertView.findViewById(R.id.btn_delete);
         btnDelete.setOnClickListener(new Button.OnClickListener() {
@@ -63,6 +89,78 @@ public class Home_ListViewAdapter extends BaseAdapter {
 
                 // listview 갱신.
                 notifyDataSetChanged();
+
+                DocumentReference docRefUsers2 = firebaseFirestore.collection("Users").
+                        document(userUid).collection("Pets").document(Petname).
+                        collection("AbnormalBehaviors").document("AbnormalBehaviors");
+                docRefUsers2.delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error deleting document", e);
+                            }
+                        });
+
+                DocumentReference docRefUsers3 = firebaseFirestore.collection("Users").
+                        document(userUid).collection("Pets").document(Petname).
+                        collection("Act").document("Act");
+                docRefUsers3.delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error deleting document", e);
+                            }
+                        });
+
+                DocumentReference docRefUsers4 = firebaseFirestore.collection("Users").
+                        document(userUid).collection("Pets").document(Petname).
+                        collection("Emotion").document("Emotion");
+                docRefUsers4.delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error deleting document", e);
+                            }
+                        });
+                DocumentReference docRefUsers = firebaseFirestore.collection("Users").document(userUid).collection("Pets").document(Petname);
+                docRefUsers.delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error deleting document", e);
+                            }
+                        });
+
+
+
+
+
+                DocumentReference userOfPet = firebaseFirestore.collection("Users").document(userUid);
+                userOfPet.update("numPets", FieldValue.increment(-1));
             }
         });
 

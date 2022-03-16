@@ -124,7 +124,7 @@ public class Profile_add extends AppCompatActivity {
                 Act.put("수면 시간", 1);
                 Act.put("식사 시간", 2);
                 Act.put("운동 시간",3);
-                newPet.collection("Act").document(stringtime).set(Act)
+                newPet.collection("Act").document("Act").set(Act)
                         .addOnFailureListener(e -> Log.w("DB_Pet_Act", "error", e));
 
                 // TODO : 이상횟수
