@@ -15,13 +15,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -84,12 +90,14 @@ public class Home_ListViewAdapter extends BaseAdapter {
                 // listview 갱신.
                 notifyDataSetChanged();
 
-                DocumentReference docRefUsers = firebaseFirestore.collection("Users").document(userUid).collection("Pets").document(Petname);
-                docRefUsers.delete()
+                DocumentReference docRefUsers2 = firebaseFirestore.collection("Users").
+                        document(userUid).collection("Pets").document(Petname).
+                        collection("AbnormalBehaviors").document("AbnormalBehaviors");
+                docRefUsers2.delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "DocumentSnapshot successfully deleted!"+Petname);
+                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -98,6 +106,61 @@ public class Home_ListViewAdapter extends BaseAdapter {
                                 Log.w(TAG, "Error deleting document", e);
                             }
                         });
+
+                DocumentReference docRefUsers3 = firebaseFirestore.collection("Users").
+                        document(userUid).collection("Pets").document(Petname).
+                        collection("Act").document("Act");
+                docRefUsers3.delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error deleting document", e);
+                            }
+                        });
+
+                DocumentReference docRefUsers4 = firebaseFirestore.collection("Users").
+                        document(userUid).collection("Pets").document(Petname).
+                        collection("Emotion").document("Emotion");
+                docRefUsers4.delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error deleting document", e);
+                            }
+                        });
+                DocumentReference docRefUsers = firebaseFirestore.collection("Users").document(userUid).collection("Pets").document(Petname);
+                docRefUsers.delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error deleting document", e);
+                            }
+                        });
+
+
+
+
+
+                DocumentReference userOfPet = firebaseFirestore.collection("Users").document(userUid);
+                userOfPet.update("numPets", FieldValue.increment(-1));
             }
         });
 
