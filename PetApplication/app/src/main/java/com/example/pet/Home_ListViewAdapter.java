@@ -85,11 +85,9 @@ public class Home_ListViewAdapter extends BaseAdapter {
         btnDelete.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 // 아이템 삭제
-                listViewItemList.remove(pos) ;
+                listViewItemList.remove(pos);
 
-                // listview 갱신.
-                notifyDataSetChanged();
-
+                // DB 삭제
                 DocumentReference docRefUsers2 = firebaseFirestore.collection("Users").
                         document(userUid).collection("Pets").document(Petname).
                         collection("AbnormalBehaviors").document("AbnormalBehaviors");
@@ -109,7 +107,7 @@ public class Home_ListViewAdapter extends BaseAdapter {
 
                 DocumentReference docRefUsers3 = firebaseFirestore.collection("Users").
                         document(userUid).collection("Pets").document(Petname).
-                        collection("Act").document("Act");
+                        collection("Actions").document("Actions");
                 docRefUsers3.delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -126,7 +124,7 @@ public class Home_ListViewAdapter extends BaseAdapter {
 
                 DocumentReference docRefUsers4 = firebaseFirestore.collection("Users").
                         document(userUid).collection("Pets").document(Petname).
-                        collection("Emotion").document("Emotion");
+                        collection("Emotions").document("Emotions");
                 docRefUsers4.delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -140,6 +138,7 @@ public class Home_ListViewAdapter extends BaseAdapter {
                                 Log.w(TAG, "Error deleting document", e);
                             }
                         });
+
                 DocumentReference docRefUsers = firebaseFirestore.collection("Users").document(userUid).collection("Pets").document(Petname);
                 docRefUsers.delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -155,12 +154,12 @@ public class Home_ListViewAdapter extends BaseAdapter {
                             }
                         });
 
-
-
-
-
+                // DB : 마리 수 감소
                 DocumentReference userOfPet = firebaseFirestore.collection("Users").document(userUid);
                 userOfPet.update("numPets", FieldValue.increment(-1));
+
+                // listview 갱신.
+                ((Home)Home.hContext).makeListviewPet();
             }
         });
 

@@ -59,7 +59,7 @@ public class Info extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     Map<String, Object> Emotion = new HashMap<>();
     Map<String, String> sampleMap = new HashMap<>();
-    Map<String, Object> Act = new HashMap<>();
+    Map<String, Object> Action = new HashMap<>();
     ArrayList<Integer> num = new ArrayList<>();
     Object obj;
 
@@ -98,7 +98,7 @@ public class Info extends AppCompatActivity {
         //---------------------------Emotion 중 가장 높은 값을 현재 감정 상태로------------------------
         DocumentReference docRef = db.collection("Users").document(userUid)
                 .collection("Pets").document(petNameStr)
-                .collection("Emotion").document("Emotion");
+                .collection("Emotions").document("Emotions");
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -158,17 +158,17 @@ public class Info extends AppCompatActivity {
 
         DocumentReference docRe2 = db.collection("Users").document(userUid)
                 .collection("Pets").document(petNameStr)
-                .collection("Act").document("TOTAL");
+                .collection("Actions").document("TOTAL");
         docRe2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
-                        Act = document.getData();
-                        total_sleep = String.valueOf(Act.get("수면 시간"));
-                        total_eat = String.valueOf(Act.get("식사 시간"));
-                        total_act = String.valueOf(Act.get("활동 시간"));
+                        Action = document.getData();
+                        total_sleep = String.valueOf(Action.get("수면 시간"));
+                        total_eat = String.valueOf(Action.get("식사 시간"));
+                        total_act = String.valueOf(Action.get("활동 시간"));
 
                         total_sleep_h = findViewById(R.id.tv_h_sleep);
                         total_sleep_m = findViewById(R.id.tv_m_sleep);

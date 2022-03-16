@@ -27,7 +27,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -58,7 +57,7 @@ public class Chart_Action extends AppCompatActivity {
     TextView act_m;
 
 
-    Map<String, Object> Act = new HashMap<>();
+    Map<String, Object> Action = new HashMap<>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +94,7 @@ public class Chart_Action extends AppCompatActivity {
                 .document(userUid)
                 .collection("Pets")
                 .document(petNameStr)
-                .collection("Act")
+                .collection("Actions")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -106,17 +105,17 @@ public class Chart_Action extends AppCompatActivity {
 
         DocumentReference docRef = db.collection("Users").document(userUid)
                 .collection("Pets").document(petNameStr)
-                .collection("Act").document("TOTAL");
+                .collection("Actions").document("TOTAL");
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
-                        Act = document.getData();
-                        sleep = String.valueOf(Act.get("수면 시간"));
-                        eat = String.valueOf(Act.get("식사 시간"));
-                        act =String.valueOf(Act.get("활동 시간"));
+                        Action = document.getData();
+                        sleep = String.valueOf(Action.get("수면 시간"));
+                        eat = String.valueOf(Action.get("식사 시간"));
+                        act =String.valueOf(Action.get("활동 시간"));
 
                         sleep_t=(Integer.parseInt(sleep)/count);
                         eat_t=(Integer.parseInt(eat)/count);

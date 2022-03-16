@@ -27,7 +27,7 @@ public class Profile_add extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth = null;
     private FirebaseFirestore firebaseFirestore = null;
-    String stringtime;
+    String stringTime;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_add);
@@ -113,18 +113,18 @@ public class Profile_add extends AppCompatActivity {
                 Emotion.put("화남/불쾌", 4);
                 Emotion.put("공포", 5);
                 Emotion.put("공격성", 6);
-                newPet.collection("Emotion").document("Emotion").set(Emotion)
+                newPet.collection("Emotions").document("Emotions").set(Emotion)
                         .addOnFailureListener(e -> Log.w("DB_Pet_Emotion", "error", e));
 
                 // TODO : 활동
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh", Locale.KOREA);
                 Calendar calendar = Calendar.getInstance();
-                stringtime=simpleDateFormat.format(calendar.getTime());
+                stringTime = simpleDateFormat.format(calendar.getTime());
                 Map<String, Object> Act = new HashMap<>();
                 Act.put("수면 시간", 1);
                 Act.put("식사 시간", 2);
                 Act.put("운동 시간",3);
-                newPet.collection("Act").document("Act").set(Act)
+                newPet.collection("Actions").document("Actions").set(Act)
                         .addOnFailureListener(e -> Log.w("DB_Pet_Act", "error", e));
 
                 // TODO : 이상횟수
