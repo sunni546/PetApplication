@@ -11,6 +11,7 @@ import org.videolan.libvlc.util.VLCVideoLayout;
 public class Home_CCTV extends AppCompatActivity
 {
     private static final String url = "rtsp://172.30.1.56:8554/stream.sdp";
+    // private static final String url = "http://172.30.1.52:8080/video";
 
     private LibVLC libVlc;
     private MediaPlayer mediaPlayer;
