@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PetApplication">
         <activity
-            android:name=".Home_CCTV"
+            android:name=".Main_Logo"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
         <activity android:name=".Main_Join"/>
         <activity android:name=".Main_LogIn"/>
         <activity android:name=".Home"/>
-        <activity android:name=".Main_Logo"/>
+        <activity android:name=".Home_CCTV"/>
         <activity android:name=".Info"/>
         <activity android:name=".Profile_info"/>
         <activity android:name=".Profile_add"/>
