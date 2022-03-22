@@ -50,4 +50,6 @@ dependencies {
     // https://firebase.google.com/docs/android/setup#available-libraries
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.google.firebase:firebase-firestore:24.0.1'
+
+    implementation 'org.videolan.android:libvlc-all:3.4.4'
 }
