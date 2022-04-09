@@ -43,7 +43,7 @@ public class CCTV extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cctv);
 
-        // Info 화면에서 pet 이름 받아오기
+        // Info 화면에서 pet cctv_url 받아오기
         Intent intentInfo = new Intent(this.getIntent());
         cctvUrlStr = intentInfo.getStringExtra("cctvUrl");
 
