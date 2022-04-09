@@ -133,8 +133,6 @@
 
             </LinearLayout>
 
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -192,8 +190,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_marginBottom="50dp">
+                android:orientation="horizontal">
 
                 <RadioGroup
                     android:id="@+id/disease"
@@ -221,6 +218,27 @@
                 </RadioGroup>
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="50dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CCTV Url : " />
+
+                <EditText
+
+                    android:id="@+id/cctv_url"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:hint="http://111.22.3.444:5555/cctv" />
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>
@@ -237,15 +255,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:textColor="@color/black"
         android:id="@+id/save_btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/G"
         android:text="저장"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cancel_btn"
-        tools:layout_editor_absoluteY="16dp"
-        android:backgroundTint="@color/G"/>
+        tools:layout_editor_absoluteY="16dp" />
 
     <Button
         android:textColor="@color/black"

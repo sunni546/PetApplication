@@ -23,7 +23,7 @@
         <activity android:name=".Main_Join"/>
         <activity android:name=".Main_LogIn"/>
         <activity android:name=".Home"/>
-        <activity android:name=".Home_CCTV"/>
+        <activity android:name=".CCTV"/>
         <activity android:name=".Info"/>
         <activity android:name=".Profile_info"/>
         <activity android:name=".Profile_add"/>

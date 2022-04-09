@@ -28,15 +28,16 @@ public class Profile_add extends AppCompatActivity {
     private FirebaseAuth firebaseAuth = null;
     private FirebaseFirestore firebaseFirestore = null;
     String stringTime;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_add);
 
-        //firebase 인스턴스 초기화
+        // firebase 인스턴스 초기화
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        //취소 버튼
+        // 취소 버튼
         Button cancel_btn = (Button) findViewById(R.id.cancel_btn_add);
         cancel_btn.setOnClickListener(view -> {
             finish();
@@ -51,41 +52,45 @@ public class Profile_add extends AppCompatActivity {
                 // DB 에 User 저장
                 String userUid = user.getUid();
 
-                //이름
+                // 이름
                 EditText name_et = findViewById(R.id.name);
                 String name = name_et.getText().toString();
 
-                //성별
+                // 성별
                 RadioGroup gender_rg = findViewById(R.id.gender);
                 int num = gender_rg.getCheckedRadioButtonId();
                 RadioButton gender_rb = findViewById(num);
                 String gender = gender_rb.getText().toString();
 
-                //나이
+                // 나이
                 EditText age_et = findViewById(R.id.age);
                 String age = age_et.getText().toString();
 
-                //Cat/Dog
+                // Cat/Dog
                 RadioGroup cd_rg = findViewById(R.id.c_d);
                 int num1 = cd_rg.getCheckedRadioButtonId();
                 RadioButton cd_rb = findViewById(num1);
                 String c_d = cd_rb.getText().toString();
 
-                //종
+                // 종
                 EditText breed_et = findViewById(R.id.breed);
                 String breed = breed_et.getText().toString();
 
-                //중성화
+                // 중성화
                 RadioGroup neuter_rg = findViewById(R.id.neuter);
                 int num2 = neuter_rg.getCheckedRadioButtonId();
                 RadioButton neuter_rb = findViewById(num2);
                 String neuter = neuter_rb.getText().toString();
 
-                //질병
+                // 질병
                 RadioGroup disease_rg = findViewById(R.id.disease);
                 int num3 = disease_rg.getCheckedRadioButtonId();
                 RadioButton disease_rb = findViewById(num3);
                 String disease = disease_rb.getText().toString();
+
+                // cctv_url
+                EditText cctvUrl_et = findViewById(R.id.cctv_url);
+                String cctvUrl = cctvUrl_et.getText().toString();
 
                 DocumentReference newPet = firebaseFirestore.collection("Users").document(userUid)
                         .collection("Pets").document(name);
@@ -99,8 +104,10 @@ public class Profile_add extends AppCompatActivity {
                 Info.put("breed", breed);
                 Info.put("neuter", neuter);
                 Info.put("disease", disease);
+                Info.put("cctvUrl", cctvUrl);
                 newPet.set(Info)
                         .addOnFailureListener(e -> Log.w("DB_Pet_Info", "error", e));
+
                 // 사용자의 pet 수 수정
                 DocumentReference userOfPet = firebaseFirestore.collection("Users").document(userUid);
                 userOfPet.update("numPets", FieldValue.increment(1));

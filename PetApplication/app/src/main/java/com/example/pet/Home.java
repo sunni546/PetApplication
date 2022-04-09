@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,12 +42,6 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.home);
 
         hContext = this;
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener((view -> {
-            Intent intent_cctv = new Intent(getApplicationContext(),Home_CCTV.class);
-            startActivity(intent_cctv);
-        }));
 
         // 참조
         listviewPet = findViewById(R.id.listview_pet);

@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -67,7 +68,6 @@ public class Info extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info);
-
 
         // Home 화면에서 pet 이름 받아오기
         Intent intentHome = new Intent(this.getIntent());
@@ -216,6 +216,34 @@ public class Info extends AppCompatActivity {
         Intent intentAbnormalBehavior = new Intent(this, Chart_AbnormalBehavior.class);
         layoutAbnormalBehavior.setOnClickListener(view -> {
             startActivity(intentAbnormalBehavior);
+        });
+
+        DocumentReference docRef2 = db.collection("Users").document(userUid)
+                .collection("Pets").document(petNameStr);
+        docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("PETCCTVURL", "DocumentSnapshot data: " + document.getData());
+                        String cctvUrlStr = document.get("cctvUrl").toString();
+
+                        // cctv 버튼
+                        FloatingActionButton fab = findViewById(R.id.fab);
+                        fab.setOnClickListener((view -> {
+                            // cctv 화면으로 넘어가기
+                            Intent intentCctv = new Intent(getApplicationContext(), CCTV.class);
+                            intentCctv.putExtra("cctvUrl", cctvUrlStr);
+                            startActivity(intentCctv);
+                        }));
+                    } else {
+                        Log.d("PETCCTVURL", "No such document");
+                    }
+                } else {
+                    Log.d("PETCCTVURL", "get failed with ", task.getException());
+                }
+            }
         });
     }
 
