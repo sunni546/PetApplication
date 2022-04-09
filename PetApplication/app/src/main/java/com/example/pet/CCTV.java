@@ -1,6 +1,7 @@
 package com.example.pet;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,8 @@ import org.videolan.libvlc.Media;
 import org.videolan.libvlc.MediaPlayer;
 import org.videolan.libvlc.util.VLCVideoLayout;
 
+import wseemann.media.FFmpegMediaMetadataRetriever;
+
 public class CCTV extends AppCompatActivity {
 
     private static String cctvUrlStr;
@@ -31,6 +34,8 @@ public class CCTV extends AppCompatActivity {
     private LibVLC libVlc;
     private MediaPlayer mediaPlayer;
     private VLCVideoLayout videoLayout;
+
+    private FFmpegMediaMetadataRetriever mediaMetadataRetriever;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -61,6 +66,25 @@ public class CCTV extends AppCompatActivity {
         mediaPlayer.setMedia(media);
         media.release();
         mediaPlayer.play();
+
+        /*
+        while (<condition to break loop>) {
+        FFmpegMediaMetadataRetriever mediaMetadataRetriever = new FFmpegMediaMetadataRetriever();
+        mediaMetadataRetriever.setDataSource(<stream URL>);
+        Bitmap b = mediaMetadataRetriever.getFrameAtTime(); // current frame
+        mediaMetadataRetriever.release();
+        //Pause for 5 seconds
+        Thread.sleep(5000);
+        */
+
+        mediaMetadataRetriever = new FFmpegMediaMetadataRetriever();
+        mediaMetadataRetriever.setDataSource(cctvUrlStr);
+        mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);
+        mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST);
+        Bitmap b = mediaMetadataRetriever.getFrameAtTime(2000000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST); // frame at 2 seconds
+        byte [] artwork = mediaMetadataRetriever.getEmbeddedPicture();
+
+        mediaMetadataRetriever.release();
     }
 
     @Override
