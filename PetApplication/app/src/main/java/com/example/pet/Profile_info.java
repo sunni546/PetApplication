@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -111,7 +112,7 @@ public class Profile_info extends AppCompatActivity {
 
 
         //취소 버튼
-        Button cancel_btn = (Button) findViewById(R.id.cancel_btn);
+        ImageButton cancel_btn = (ImageButton) findViewById(R.id.cancel_btn);
         cancel_btn.setOnClickListener(view -> {
             finish();
         });

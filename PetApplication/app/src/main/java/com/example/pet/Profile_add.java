@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -38,13 +39,13 @@ public class Profile_add extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         // 취소 버튼
-        Button cancel_btn = (Button) findViewById(R.id.cancel_btn_add);
+        ImageButton cancel_btn = (ImageButton) findViewById(R.id.cancel_btn_add);
         cancel_btn.setOnClickListener(view -> {
             finish();
         });
 
         // 저장 버튼
-        Button save_btn = (Button) findViewById(R.id.save_btn_add);
+        ImageButton save_btn = (ImageButton) findViewById(R.id.save_btn_add);
         save_btn.setOnClickListener(view -> {
             FirebaseUser user = firebaseAuth.getCurrentUser();
             if (user != null) {

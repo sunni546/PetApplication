@@ -4,41 +4,123 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#e9ecef">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:backgroundTint="#e9ecef"
+                android:scaleType="fitCenter"
+                android:id="@+id/btn_cctv_back"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/img_6"
+                android:layout_weight="1"/>
+
+
+            <TextView
+                android:textColor="#999999"
+                android:fontFamily="@font/rubik"
+                android:text="CCTV"
+                android:gravity="center"
+                android:textSize="33dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                />
+
+            <ImageButton
+                android:backgroundTint="#e9ecef"
+                android:scaleType="fitCenter"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="100dp"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CCTV"
-            android:textColor="@color/black"
-            android:textSize="30dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
+            android:text="2022-03-13 13:16"
+            android:textColor="#436C69"
+            android:fontFamily="@font/rubik"
+            android:textSize="30dp"
+            android:gravity="center"
+            />
         <org.videolan.libvlc.util.VLCVideoLayout
             android:id="@+id/videoLayout"
-            android:layout_width="match_parent"
-            android:layout_height="500dp">
-
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp">
         </org.videolan.libvlc.util.VLCVideoLayout>
+
     </LinearLayout>
 
-    <LinearLayout
+
+    <FrameLayout
+        android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2"
-        android:orientation="vertical"/>
+        android:orientation="vertical">
+
+        <View
+            android:layout_marginTop="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:background="@drawable/oval" />
+
+        <TextView
+            android:id="@+id/today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4월 11일"
+            android:textSize="25dp"
+            android:layout_marginTop="90dp"
+            android:layout_marginLeft="80dp"
+            android:fontFamily="@font/rubik"/>
+
+        <TextView
+            android:id="@+id/notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="긴급 알림 없음"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="25dp"
+            android:layout_marginTop="130dp"
+            android:layout_marginLeft="50dp"
+            android:fontFamily="@font/aller"/>
+
+        <ImageView
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:scaleType="fitCenter"
+            android:src="@drawable/img_5" />
+
+
+    </FrameLayout>
 
 </LinearLayout>

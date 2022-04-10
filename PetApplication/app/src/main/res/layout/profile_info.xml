@@ -4,230 +4,293 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/G"
+    android:background="#FFE8E8"
     >
 
-    <ScrollView
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        android:id="@+id/scrollView2"
-        android:layout_width="349dp"
-        android:layout_height="341dp"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/circleImageView">
+        <View
+            android:backgroundTint="#83CFC1"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/shape_rectangle" />
+
+        <View
+            android:backgroundTint="@color/white"
+            android:layout_marginTop="200dp"
+            android:layout_gravity="center"
+            android:layout_width="800dp"
+            android:layout_height="800dp"
+            android:background="@drawable/oval" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_marginLeft="20dp"
+                android:backgroundTint="#83CFC1"
+                android:scaleType="fitCenter"
+                android:id="@+id/cancel_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/img_6"
+                android:layout_weight="1"/>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+            <TextView
+                android:textColor="#54817E"
+                android:fontFamily="@font/rubik"
+                android:text="Profile"
                 android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="이름 : "
-                    android:textSize="18dp" />
-
-                <TextView
-                    android:id="@+id/pro_info_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="멍구"
-                    android:textSize="18dp" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="성별 : "
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:id="@+id/pro_info_gender"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="암컷"
-                        android:textSize="18dp" />
-
-                </RadioGroup>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="나이: "
-                    android:textSize="18dp" />
-
-                <TextView
-                    android:id="@+id/pro_info_age"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="3살"
-                    android:textSize="18dp" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
+                android:textSize="33dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                />
 
-                <TextView
-                    android:id="@+id/pro_info_c_d"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="고양이"
-                    android:textSize="18dp" />
+            <ImageButton
+                android:layout_marginRight="20dp"
+                android:backgroundTint="#83CFC1"
+                android:scaleType="fitCenter"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"/>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="품종 : "
-                    android:textSize="18dp" />
-
-                <TextView
-                    android:id="@+id/pro_info_breed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="러시안 블루"
-                    android:textSize="18dp" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="중성화 여부 : "
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:id="@+id/pro_info_neuter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="O"
-                        android:textSize="18dp" />
-
-
-                </RadioGroup>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="병력 여부 : "
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:id="@+id/pro_info_disease"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="O"
-                        android:textSize="18dp" />
-
-                </RadioGroup>
-
-            </LinearLayout>
         </LinearLayout>
 
-    </ScrollView>
+        <ImageView
+            android:layout_gravity="center"
+            android:padding="15dp"
+            android:id="@+id/ImageView_profile"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:src="@drawable/img_3"
+            android:scaleType="fitCenter"
+            android:background="@drawable/oval"
+            android:backgroundTint="@color/white" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleImageView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="30dp"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/cancel_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="300dp"
-        android:backgroundTint="@color/G"
-        android:text="취소"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="16dp" />
+        <ScrollView
+
+            android:layout_gravity="center"
+            android:id="@+id/scrollView2"
+            android:layout_marginTop="80dp"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik"
+                        android:text="이름 : "
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/pro_info_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik"
+                        android:text="멍구"
+                        android:textSize="20dp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/rubik"
+                            android:text="성별 : "
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:id="@+id/pro_info_gender"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/rubik"
+                            android:text="암컷"
+                            android:textSize="20dp" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik"
+                        android:text="나이: "
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/pro_info_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik"
+                        android:text="3살"
+                        android:textSize="20dp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/pro_info_c_d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik"
+                        android:text="고양이"
+                        android:textSize="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik"
+                        android:text="품종 : "
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/pro_info_breed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/rubik"
+                        android:text="러시안 블루"
+                        android:textSize="20dp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/rubik"
+                            android:text="중성화 여부 : "
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:id="@+id/pro_info_neuter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/rubik"
+                            android:text="O"
+                            android:textSize="20dp" />
+
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/rubik"
+                            android:text="병력 여부 : "
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:id="@+id/pro_info_disease"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/rubik"
+                            android:text="O"
+                            android:textSize="20dp" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

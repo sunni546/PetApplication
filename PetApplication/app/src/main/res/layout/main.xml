@@ -12,50 +12,48 @@
         android:orientation="vertical"
         android:gravity="center">
 
-                    <ImageView
-                        android:src="@drawable/img"
-                        android:id="@+id/iv_logo"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        />
+        <ImageView
+            android:src="@drawable/img"
+            android:id="@+id/iv_logo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Petmily"           
-                        android:textSize="60sp"
-                        android:textColor="@color/white"
-                        android:gravity="center"
-                        android:fontFamily="@font/rubik"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Petmily"
+            android:textSize="60sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:fontFamily="@font/rubik"/>
 
-                    <Button
-                        android:textSize="20dp"
-                        android:layout_marginTop="100dp"
-                        android:id="@+id/btn_log_in_main"
-                        android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:layout_marginLeft="50dp"
-                        android:layout_marginRight="50dp"
-                        android:text="Login"
-                        android:textColor="#4F5353"
-                        android:background="@drawable/shape"
-                        android:backgroundTint="@color/Btn"
-                        android:elevation="10dp"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:textSize="20dp"
+            android:layout_marginTop="100dp"
+            android:id="@+id/btn_log_in_main"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:text="Login"
+            android:textColor="#4F5353"
+            android:background="@drawable/shape"
+            android:backgroundTint="@color/Btn"
+            android:elevation="10dp"/>
 
-                    <Button
-                        android:textSize="20dp"
-                        android:layout_marginTop="20dp"
-                        android:id="@+id/btn_join_main"
-                        android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:text="Join"
-                        android:layout_marginLeft="50dp"
-                        android:layout_marginRight="50dp"
-                        android:textColor="#4F5353"
-                        android:background="@drawable/shape"
-                        android:backgroundTint="@color/Btn"
-                        android:elevation="10dp"
-                        />
+        <androidx.appcompat.widget.AppCompatButton
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/btn_join_main"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="Join"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:textColor="#4F5353"
+            android:background="@drawable/shape"
+            android:elevation="10dp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
