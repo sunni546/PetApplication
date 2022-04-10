@@ -20,9 +20,15 @@ public class Networking extends Thread {
     private String IP = StringResource.getStringResource(ContextStorage.getCtx(), R.string.AI_Server_IP);
     private int portNum = Integer.parseInt(StringResource.getStringResource(ContextStorage.getCtx(), R.string.AI_Server_Port));
     private byte[] msg;
+    public byte[] receive_data;
+    public String receive_msg;
 
     public Networking(@NonNull String name, byte[] msg) {
         super(name);
+        this.msg = msg;
+    }
+
+    public void setting_msg(byte[] msg) {
         this.msg = msg;
     }
 
@@ -34,29 +40,27 @@ public class Networking extends Thread {
 
             try(OutputStream sender = client.getOutputStream(); InputStream receiver = client.getInputStream();) {
 
-                ByteBuffer b = ByteBuffer.allocate(4);
+                byte[] size = ByteBuffer.allocate(4).putInt(this.msg.length).array();
 
-                b.order(ByteOrder.LITTLE_ENDIAN);
-                b.putInt(this.msg.length);
-
-                sender.write(b.array(), 0, 4);
+                sender.write(size);
                 sender.write(this.msg);
+                sender.flush();
 
-                data = new byte[4];
+                receive_data = new byte[4];
 
-                receiver.read(data, 0, 4);
+                receiver.read(receive_data, 0, 4);
 
-                ByteBuffer c = ByteBuffer.wrap(data);
+                ByteBuffer c = ByteBuffer.wrap(receive_data);
                 c.order(ByteOrder.LITTLE_ENDIAN);
 
                 int length = c.getInt();
 
-                data = new byte[length];
+                receive_data = new byte[length];
 
-                receiver.read(data, 0, length);
+                receiver.read(receive_data, 0, length);
 
-                msg = new String(data, "UTF-8");
-                Log.d("Send", msg);
+                receive_msg = new String(receive_data, "UTF-8");
+                System.out.println(receive_msg);
 
                 client.close();
             }
