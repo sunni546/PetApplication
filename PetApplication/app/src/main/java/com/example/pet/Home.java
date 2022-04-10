@@ -93,7 +93,7 @@ public class Home extends AppCompatActivity {
         });
 
         // 로그아웃 버튼
-        Button btnLogOut = findViewById(R.id.btn_log_out);
+        ImageButton btnLogOut = findViewById(R.id.btn_log_out);
         btnLogOut.setOnClickListener(view -> {
             // 로그아웃
             FirebaseAuth.getInstance().signOut();
