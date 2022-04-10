@@ -4,6 +4,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.pet.R;
+import com.example.pet.utils.ContextStorage;
+import com.example.pet.utils.StringResource;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
@@ -13,11 +17,11 @@ import java.nio.ByteOrder;
 
 public class Networking extends Thread {
 
-    private String IP = "@string/AI_Server_IP";
-    private int portNum = Integer.parseInt("@string/AI_Server_Port");
-    private String msg;
+    private String IP = StringResource.getStringResource(ContextStorage.getCtx(), R.string.AI_Server_IP);
+    private int portNum = Integer.parseInt(StringResource.getStringResource(ContextStorage.getCtx(), R.string.AI_Server_Port));
+    private byte[] msg;
 
-    public Networking(@NonNull String name, String msg) {
+    public Networking(@NonNull String name, byte[] msg) {
         super(name);
         this.msg = msg;
     }
@@ -30,15 +34,13 @@ public class Networking extends Thread {
 
             try(OutputStream sender = client.getOutputStream(); InputStream receiver = client.getInputStream();) {
 
-                byte[] data = msg.getBytes();
-
                 ByteBuffer b = ByteBuffer.allocate(4);
 
                 b.order(ByteOrder.LITTLE_ENDIAN);
-                b.putInt(data.length);
+                b.putInt(this.msg.length);
 
                 sender.write(b.array(), 0, 4);
-                sender.write(data);
+                sender.write(this.msg);
 
                 data = new byte[4];
 
