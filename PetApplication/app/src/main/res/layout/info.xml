@@ -445,34 +445,36 @@
                                 android:layout_marginEnd="10dp"
                                 android:text="@string/number_of_times" />
 
+                            </LinearLayout>
+
                         </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
-        </ScrollView>
+            </ScrollView>
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bar"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="35dp"
         android:layout_gravity="bottom"
         android:layout_marginTop="27dp"
         android:backgroundTint="@color/G" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_gravity=""
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:backgroundTint="@color/Blue"
         app:layout_anchor="@id/bar"
         app:layout_anchorGravity="center" />
 
-
-    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
