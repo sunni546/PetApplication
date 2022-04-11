@@ -2,14 +2,17 @@ package com.example.pet;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.pet.Network.Networking;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,11 +28,16 @@ import org.videolan.libvlc.Media;
 import org.videolan.libvlc.MediaPlayer;
 import org.videolan.libvlc.util.VLCVideoLayout;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.Base64;
+
 import wseemann.media.FFmpegMediaMetadataRetriever;
 
-public class CCTV extends AppCompatActivity {
+public class Cctv extends AppCompatActivity {
 
     private static String cctvUrlStr;
+    private String petNameStr;
 
     private LibVLC libVlc;
     private MediaPlayer mediaPlayer;
@@ -37,14 +45,16 @@ public class CCTV extends AppCompatActivity {
 
     private FFmpegMediaMetadataRetriever mediaMetadataRetriever;
 
+    byte [] msg = null;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cctv);
 
-        // Info 화면에서 pet cctv_url 받아오기
+        // Info 화면에서 pet 이름, cctv_url 받아오기
         Intent intentInfo = new Intent(this.getIntent());
+        petNameStr = intentInfo.getStringExtra("petName");
         cctvUrlStr = intentInfo.getStringExtra("cctvUrl");
 
         libVlc = new LibVLC(this);
@@ -53,8 +63,7 @@ public class CCTV extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
 
         mediaPlayer.attachViews(videoLayout, null, false, false);
@@ -69,27 +78,35 @@ public class CCTV extends AppCompatActivity {
 
         /*
         while (<condition to break loop>) {
-        FFmpegMediaMetadataRetriever mediaMetadataRetriever = new FFmpegMediaMetadataRetriever();
-        mediaMetadataRetriever.setDataSource(<stream URL>);
-        Bitmap b = mediaMetadataRetriever.getFrameAtTime(); // current frame
-        mediaMetadataRetriever.release();
-        //Pause for 5 seconds
-        Thread.sleep(5000);
+            FFmpegMediaMetadataRetriever mediaMetadataRetriever = new FFmpegMediaMetadataRetriever();
+            mediaMetadataRetriever.setDataSource(<stream URL>);
+            Bitmap b = mediaMetadataRetriever.getFrameAtTime(); // current frame
+            mediaMetadataRetriever.release();
+            //Pause for 5 seconds
+            Thread.sleep(5000);
         */
 
         mediaMetadataRetriever = new FFmpegMediaMetadataRetriever();
         mediaMetadataRetriever.setDataSource(cctvUrlStr);
         mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);
         mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST);
-        Bitmap b = mediaMetadataRetriever.getFrameAtTime(2000000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST); // frame at 2 seconds
-        byte [] artwork = mediaMetadataRetriever.getEmbeddedPicture();
+        Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime(2000000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST); // frame at 2 seconds
+
+        /*
+        Networking networking = new Networking(petNameStr, msg);
+
+        msg = bitmapToByteArray(bitmap);
+
+        networking.setting_msg(msg);
+
+        networking.run();
+        */
 
         mediaMetadataRetriever.release();
     }
 
     @Override
-    protected void onStop()
-    {
+    protected void onStop() {
         super.onStop();
 
         mediaPlayer.stop();
@@ -97,12 +114,19 @@ public class CCTV extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         super.onDestroy();
 
         mediaPlayer.release();
         libVlc.release();
+    }
+
+    // Bitmap을 Byte로 변환
+    public byte[] bitmapToByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
     }
 }
 

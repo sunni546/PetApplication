@@ -9,7 +9,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import java.util.Map.Entry;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,10 +25,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 public class Info extends AppCompatActivity {
 
@@ -233,7 +230,8 @@ public class Info extends AppCompatActivity {
                         FloatingActionButton fab = findViewById(R.id.fab);
                         fab.setOnClickListener((view -> {
                             // cctv 화면으로 넘어가기
-                            Intent intentCctv = new Intent(getApplicationContext(), CCTV.class);
+                            Intent intentCctv = new Intent(getApplicationContext(), Cctv.class);
+                            intentCctv.putExtra("petName", petNameStr);
                             intentCctv.putExtra("cctvUrl", cctvUrlStr);
                             startActivity(intentCctv);
                         }));
