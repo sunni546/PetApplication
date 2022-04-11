@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -69,7 +70,7 @@ public class Chart_Action extends AppCompatActivity {
         Intent intentInfo = new Intent(this.getIntent());
         String petNameStr = intentInfo.getStringExtra("petName");
 
-        Button cancel_btn = (Button) findViewById(R.id.button_back);
+        ImageButton cancel_btn = (ImageButton) findViewById(R.id.button_back);
         cancel_btn.setOnClickListener(view -> {
             finish();
         });

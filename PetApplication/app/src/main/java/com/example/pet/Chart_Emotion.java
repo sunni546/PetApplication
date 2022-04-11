@@ -9,6 +9,7 @@ import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -67,7 +68,7 @@ public class Chart_Emotion<Int> extends AppCompatActivity {
         setContentView(R.layout.chart_emotion);
 
         //취소 버튼
-        Button cancel_btn = (Button) findViewById(R.id.button_b);
+        ImageButton cancel_btn = (ImageButton) findViewById(R.id.button_b);
         cancel_btn.setOnClickListener(view -> {
             finish();
         });
@@ -77,8 +78,6 @@ public class Chart_Emotion<Int> extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String userUid = user.getUid();
-        petname=findViewById(R.id.pet_name);
-        petname.setText(petNameStr);
 
         //DB Emotion Read
         DocumentReference docRef = db.collection("Users").document(userUid)
