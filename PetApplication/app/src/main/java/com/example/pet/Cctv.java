@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +31,11 @@ import org.videolan.libvlc.util.VLCVideoLayout;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import wseemann.media.FFmpegMediaMetadataRetriever;
 
@@ -47,10 +52,20 @@ public class Cctv extends AppCompatActivity {
 
     byte [] msg = null;
 
+    public static String format_yyyyMMdd_HHmm = "yyyy-MM-dd hh:mm";
+    private TextView tvCurrentTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cctv);
+
+        // 현재 시간 출력하기
+        tvCurrentTime = findViewById(R.id.tv_current_time);
+        Date currentTime = Calendar.getInstance().getTime();
+        SimpleDateFormat format = new SimpleDateFormat(format_yyyyMMdd_HHmm, Locale.getDefault());
+        String currentTimeStr = format.format(currentTime);
+        tvCurrentTime.setText(currentTimeStr);
 
         // Info 화면에서 pet 이름, cctv_url 받아오기
         Intent intentInfo = new Intent(this.getIntent());
