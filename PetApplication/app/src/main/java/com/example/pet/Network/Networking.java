@@ -1,7 +1,5 @@
 package com.example.pet.Network;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.example.pet.R;
@@ -38,7 +36,7 @@ public class Networking extends Thread {
 
             client.connect(ipep);
 
-            try(OutputStream sender = client.getOutputStream(); InputStream receiver = client.getInputStream();) {
+            try (OutputStream sender = client.getOutputStream(); InputStream receiver = client.getInputStream();) {
 
                 byte[] size = ByteBuffer.allocate(4).putInt(this.msg.length).array();
 
@@ -64,7 +62,7 @@ public class Networking extends Thread {
 
                 client.close();
             }
-        }catch (Throwable e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }

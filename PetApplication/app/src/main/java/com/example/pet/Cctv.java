@@ -91,23 +91,37 @@ public class Cctv extends AppCompatActivity {
         media.release();
         mediaPlayer.play();
 
-        /*
-        while (<condition to break loop>) {
-            FFmpegMediaMetadataRetriever mediaMetadataRetriever = new FFmpegMediaMetadataRetriever();
-            mediaMetadataRetriever.setDataSource(<stream URL>);
-            Bitmap b = mediaMetadataRetriever.getFrameAtTime(); // current frame
-            mediaMetadataRetriever.release();
-            //Pause for 5 seconds
-            Thread.sleep(5000);
-        */
+        while (media == null) {
+            mediaMetadataRetriever = new FFmpegMediaMetadataRetriever();
+            mediaMetadataRetriever.setDataSource(cctvUrlStr);
+            mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);
+            mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST);
+            Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime(); // current frame
 
+            Networking networking = new Networking(petNameStr, msg);
+
+            msg = bitmapToByteArray(bitmap);
+
+            networking.setting_msg(msg);
+
+            networking.run();
+
+            try {
+                networking.join();
+                // Pause for 5 seconds
+                // networking.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        /*
         mediaMetadataRetriever = new FFmpegMediaMetadataRetriever();
         mediaMetadataRetriever.setDataSource(cctvUrlStr);
         mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);
         mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST);
         Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime(2000000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST); // frame at 2 seconds
 
-        /*
         Networking networking = new Networking(petNameStr, msg);
 
         msg = bitmapToByteArray(bitmap);
@@ -115,6 +129,13 @@ public class Cctv extends AppCompatActivity {
         networking.setting_msg(msg);
 
         networking.run();
+
+        try {
+            networking.join();
+            networking.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         */
 
         mediaMetadataRetriever.release();
