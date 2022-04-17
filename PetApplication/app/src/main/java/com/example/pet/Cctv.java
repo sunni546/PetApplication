@@ -1,9 +1,12 @@
 package com.example.pet;
 
+import static com.example.pet.Network.BitmapThread.bitmapQueue;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -79,13 +82,13 @@ public class Cctv extends AppCompatActivity {
         mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);
         mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST);
 
-//        BitmapThread bitmapThread = new BitmapThread(mediaMetadataRetriever);
-//        bitmapThread.run();
+        BitmapThread bitmapThread = new BitmapThread(mediaMetadataRetriever);
+        bitmapThread.start();
 
-//        Networking networking = new Networking(petNameStr);
-//        networking.run();
+        Networking networking = new Networking(petNameStr);
+        networking.start();
 
-        mediaMetadataRetriever.release();
+        // mediaMetadataRetriever.release();
     }
 
     @Override
