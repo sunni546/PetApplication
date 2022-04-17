@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pet.Network.BitmapThread;
+import com.example.pet.Network.Networking;
 
 import org.videolan.libvlc.LibVLC;
 import org.videolan.libvlc.Media;
@@ -78,34 +79,13 @@ public class Cctv extends AppCompatActivity {
         mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);
         mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST);
 
-        BitmapThread bitmapThread = new BitmapThread(mediaMetadataRetriever);
-        bitmapThread.run();
+//        BitmapThread bitmapThread = new BitmapThread(mediaMetadataRetriever);
+//        bitmapThread.run();
+
+//        Networking networking = new Networking(petNameStr);
+//        networking.run();
 
         mediaMetadataRetriever.release();
-
-
-        /*
-        mediaMetadataRetriever = new FFmpegMediaMetadataRetriever();
-        mediaMetadataRetriever.setDataSource(cctvUrlStr);
-        mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);
-        mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST);
-        Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime(2000000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST); // frame at 2 seconds
-
-        Networking networking = new Networking(petNameStr, msg);
-
-        msg = bitmapToByteArray(bitmap);
-
-        networking.setting_msg(msg);
-
-        networking.run();
-
-        try {
-            networking.join();
-            networking.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        */
     }
 
     @Override

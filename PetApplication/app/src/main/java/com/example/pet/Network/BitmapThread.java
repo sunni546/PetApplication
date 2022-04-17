@@ -17,6 +17,8 @@ public class BitmapThread extends Thread {
 
     private FFmpegMediaMetadataRetriever mediaMetadataRetriever;
 
+
+
     byte [] msg = null;
 
     public BitmapThread(@NonNull FFmpegMediaMetadataRetriever mediaMetadataRetriever) {
@@ -54,11 +56,4 @@ public class BitmapThread extends Thread {
         }
     }
 
-    // Bitmap을 Byte로 변환
-    public byte[] bitmapToByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress( Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        return byteArray;
-    }
 }
