@@ -3,6 +3,7 @@ package com.example.pet.Network;
 import static com.example.pet.Network.BitmapThread.bitmapQueue;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -28,9 +29,6 @@ public class Networking extends Thread {
 
     public Networking(@NonNull String name) {
         super(name);
-        IP = StringResource.getStringResource(ContextStorage.getCtx(), R.string.AI_Server_IP);
-        portNum = Integer.parseInt(StringResource.getStringResource(ContextStorage.getCtx(), R.string.AI_Server_Port));
-
     }
 
     public void setting_msg(Bitmap msg) {
