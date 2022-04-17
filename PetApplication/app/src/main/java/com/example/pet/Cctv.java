@@ -2,37 +2,21 @@ package com.example.pet;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-import com.example.pet.Network.Networking;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.example.pet.Network.BitmapThread;
 
 import org.videolan.libvlc.LibVLC;
 import org.videolan.libvlc.Media;
 import org.videolan.libvlc.MediaPlayer;
 import org.videolan.libvlc.util.VLCVideoLayout;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -49,8 +33,6 @@ public class Cctv extends AppCompatActivity {
     private VLCVideoLayout videoLayout;
 
     private FFmpegMediaMetadataRetriever mediaMetadataRetriever;
-
-    byte [] msg = null;
 
     public static String format_yyyyMMdd_HHmm = "yyyy-MM-dd hh:mm";
     private TextView tvCurrentTime;
@@ -96,25 +78,11 @@ public class Cctv extends AppCompatActivity {
         mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);
         mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST);
 
-        while (media == null) {
-            Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime(); // current frame
+        BitmapThread bitmapThread = new BitmapThread(mediaMetadataRetriever);
+        bitmapThread.run();
 
-            msg = bitmapToByteArray(bitmap);
+        mediaMetadataRetriever.release();
 
-            Networking networking = new Networking(petNameStr, msg);
-
-            networking.setting_msg(msg);
-
-            networking.run();
-
-            try {
-                networking.join();
-                // Pause for 5 seconds
-                // networking.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
 
         /*
         mediaMetadataRetriever = new FFmpegMediaMetadataRetriever();
@@ -138,8 +106,6 @@ public class Cctv extends AppCompatActivity {
             e.printStackTrace();
         }
         */
-
-        mediaMetadataRetriever.release();
     }
 
     @Override
@@ -156,14 +122,6 @@ public class Cctv extends AppCompatActivity {
 
         mediaPlayer.release();
         libVlc.release();
-    }
-
-    // Bitmap을 Byte로 변환
-    public byte[] bitmapToByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress( Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        return byteArray;
     }
 }
 
