@@ -1,6 +1,8 @@
 package com.example.pet.Network;
 
-import android.util.Log;
+import static com.example.pet.Network.BitmapThread.bitmapQueue;
+
+import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
 
@@ -8,6 +10,7 @@ import com.example.pet.R;
 import com.example.pet.utils.ContextStorage;
 import com.example.pet.utils.StringResource;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
@@ -17,55 +20,72 @@ import java.nio.ByteOrder;
 
 public class Networking extends Thread {
 
-    private String IP = StringResource.getStringResource(ContextStorage.getCtx(), R.string.AI_Server_IP);
-    private int portNum = Integer.parseInt(StringResource.getStringResource(ContextStorage.getCtx(), R.string.AI_Server_Port));
+    private String IP;
+    private int portNum;
     private byte[] msg;
     public byte[] receive_data;
     public String receive_msg;
 
-    public Networking(@NonNull String name, byte[] msg) {
+    public Networking(@NonNull String name) {
         super(name);
-        this.msg = msg;
+        IP = StringResource.getStringResource(ContextStorage.getCtx(), R.string.AI_Server_IP);
+        portNum = Integer.parseInt(StringResource.getStringResource(ContextStorage.getCtx(), R.string.AI_Server_Port));
+
     }
 
-    public void setting_msg(byte[] msg) {
-        this.msg = msg;
+    public void setting_msg(Bitmap msg) {
+        this.msg = bitmapToByteArray(msg);
     }
 
     public void run() {
-        try (Socket client = new Socket()) {
-            InetSocketAddress ipep = new InetSocketAddress(IP, portNum);
+        while (true) {
+            if (bitmapQueue.size() > 0) {
+                try (Socket client = new Socket()) {
+                    InetSocketAddress ipep = new InetSocketAddress(IP, portNum);
 
-            client.connect(ipep);
+                    client.connect(ipep);
 
-            try(OutputStream sender = client.getOutputStream(); InputStream receiver = client.getInputStream();) {
+                    Bitmap first_image = bitmapQueue.poll();
+                    setting_msg(first_image);
 
-                byte[] size = ByteBuffer.allocate(4).putInt(this.msg.length).array();
+                    try (OutputStream sender = client.getOutputStream(); InputStream receiver = client.getInputStream();) {
 
-                sender.write(size);
-                sender.write(this.msg);
-                sender.flush();
+                        byte[] size = ByteBuffer.allocate(4).putInt(this.msg.length).array();
 
-                receive_data = new byte[4];
+                        sender.write(size);
+                        sender.write(this.msg);
+                        sender.flush();
 
-                receiver.read(receive_data, 0, 4);
+                        receive_data = new byte[4];
 
-                ByteBuffer c = ByteBuffer.wrap(receive_data);
-                c.order(ByteOrder.LITTLE_ENDIAN);
+                        receiver.read(receive_data, 0, 4);
 
-                int length = c.getInt();
+                        ByteBuffer c = ByteBuffer.wrap(receive_data);
+                        c.order(ByteOrder.LITTLE_ENDIAN);
 
-                receive_data = new byte[length];
+                        int length = c.getInt();
 
-                receiver.read(receive_data, 0, length);
+                        receive_data = new byte[length];
 
-                receive_msg = new String(receive_data, "UTF-8");
-                System.out.println(receive_msg);
+                        receiver.read(receive_data, 0, length);
 
-                client.close();
+                        receive_msg = new String(receive_data, "UTF-8");
+                        System.out.println(receive_msg);
+
+                        client.close();
+                    }
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
             }
-        }catch (Throwable e) {
-            e.printStackTrace();
         }
+    }
+
+    // Bitmap을 Byte로 변환
+    public byte[] bitmapToByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
     }
 }
