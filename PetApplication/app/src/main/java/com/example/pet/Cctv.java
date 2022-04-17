@@ -91,16 +91,17 @@ public class Cctv extends AppCompatActivity {
         media.release();
         mediaPlayer.play();
 
+        mediaMetadataRetriever = new FFmpegMediaMetadataRetriever();
+        mediaMetadataRetriever.setDataSource(cctvUrlStr);
+        mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);
+        mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST);
+
         while (media == null) {
-            mediaMetadataRetriever = new FFmpegMediaMetadataRetriever();
-            mediaMetadataRetriever.setDataSource(cctvUrlStr);
-            mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);
-            mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST);
             Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime(); // current frame
 
-            Networking networking = new Networking(petNameStr, msg);
-
             msg = bitmapToByteArray(bitmap);
+
+            Networking networking = new Networking(petNameStr, msg);
 
             networking.setting_msg(msg);
 
