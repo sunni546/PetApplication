@@ -53,6 +53,12 @@ public class BitmapThread extends Thread {
             */
 
             Log.d("BITMAPBITMAPBITMAP", String.valueOf(bitmap));
+
+            try {
+                sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
