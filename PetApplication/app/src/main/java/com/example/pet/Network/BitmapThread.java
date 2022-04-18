@@ -17,10 +17,6 @@ public class BitmapThread extends Thread {
 
     private FFmpegMediaMetadataRetriever mediaMetadataRetriever;
 
-
-
-    byte [] msg = null;
-
     public BitmapThread(@NonNull FFmpegMediaMetadataRetriever mediaMetadataRetriever) {
         this.mediaMetadataRetriever = mediaMetadataRetriever;
     }
@@ -33,24 +29,6 @@ public class BitmapThread extends Thread {
             Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime(); // current frame
 
             bitmapQueue.offer(bitmap);
-
-            /*
-            msg = bitmapToByteArray(bitmap);
-
-            Networking networking = new Networking(petNameStr, msg);
-
-            networking.setting_msg(msg);
-
-            networking.run();
-
-            try {
-                networking.join();
-                // Pause for 5 seconds
-                // networking.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            */
 
             Log.d("BITMAPBITMAPBITMAP", String.valueOf(bitmap));
 
