@@ -72,6 +72,7 @@ public class Cctv extends AppCompatActivity {
         media.release();
         mediaPlayer.play();
 
+        // BitmapThread
         mediaMetadataRetriever = new FFmpegMediaMetadataRetriever();
         mediaMetadataRetriever.setDataSource(cctvUrlStr);
         mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);

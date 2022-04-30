@@ -21,7 +21,6 @@ public class BitmapThread extends Thread {
     }
 
     public void run() {
-
         bitmapQueue = new LinkedList<>();
 
         while (true) {
