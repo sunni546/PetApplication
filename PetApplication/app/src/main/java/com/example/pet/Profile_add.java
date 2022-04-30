@@ -2,7 +2,6 @@ package com.example.pet;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -48,7 +47,7 @@ public class Profile_add extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         // 취소 버튼
-        ImageButton cancel_btn = (ImageButton) findViewById(R.id.cancel_btn_add);
+        ImageButton cancel_btn = (ImageButton) findViewById(R.id.btn_ab_back);
         cancel_btn.setOnClickListener(view -> {
             finish();
         });

@@ -5,17 +5,14 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
@@ -23,7 +20,6 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,11 +28,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,8 +48,6 @@ public class Chart_Emotion<Int> extends AppCompatActivity {
     TextView tvfear;
     TextView tvagg;
 
-    TextView petname;
-
     private FirebaseAuth firebaseAuth;
     Map<String, Object> Emotion = new HashMap<>();
     Map<String, Integer> Max_Emo = new HashMap<>();
@@ -67,9 +57,9 @@ public class Chart_Emotion<Int> extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chart_emotion);
 
-        //취소 버튼
-        ImageButton cancel_btn = (ImageButton) findViewById(R.id.button_b);
-        cancel_btn.setOnClickListener(view -> {
+        // 뒤로가기 버튼
+        ImageButton btnEmotionBack = findViewById(R.id.btn_emotion_back);
+        btnEmotionBack.setOnClickListener(view -> {
             finish();
         });
 

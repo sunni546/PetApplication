@@ -3,6 +3,7 @@ package com.example.pet;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,6 +57,13 @@ public class Cctv extends AppCompatActivity {
         libVlc = new LibVLC(this);
         mediaPlayer = new MediaPlayer(libVlc);
         videoLayout = findViewById(R.id.videoLayout);
+
+        // 뒤로가기 버튼
+        ImageButton btnCctvBack = findViewById(R.id.btn_cctv_back);
+        btnCctvBack.setOnClickListener(view -> {
+            // pet 정보 화면으로 넘어가기
+            finish();
+        });
     }
 
     @Override
