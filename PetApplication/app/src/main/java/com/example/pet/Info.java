@@ -104,10 +104,10 @@ public class Info extends AppCompatActivity {
                     if(document.exists()){
                         Emotion = document.getData();
 
-                        happy = String.valueOf(Emotion.get("행복/즐거움"));
-                        comfort = String.valueOf(Emotion.get("평안/안정"));
-                        anxiety =String.valueOf(Emotion.get("불안/슬픔"));
-                        angry = String.valueOf(Emotion.get("화남/불쾌"));
+                        happy = String.valueOf(Emotion.get("행복"));
+                        comfort = String.valueOf(Emotion.get("평안"));
+                        anxiety =String.valueOf(Emotion.get("불안"));
+                        angry = String.valueOf(Emotion.get("화남"));
                         fear = String.valueOf(Emotion.get("공포"));
                         agg = String.valueOf(Emotion.get("공격성"));
 
@@ -120,10 +120,10 @@ public class Info extends AppCompatActivity {
 
                         max_value = String.valueOf(Collections.max(num));
 
-                        sampleMap.put("행복/즐거움",happy);
-                        sampleMap.put("평안/안정",comfort);
-                        sampleMap.put("불안/슬픔",anxiety );
-                        sampleMap.put("화남/불쾌",angry );
+                        sampleMap.put("행복",happy);
+                        sampleMap.put("평안",comfort);
+                        sampleMap.put("불안",anxiety );
+                        sampleMap.put("화남",angry );
                         sampleMap.put("공포",fear);
                         sampleMap.put("공격성",agg);
 

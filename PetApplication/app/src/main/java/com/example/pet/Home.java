@@ -1,5 +1,7 @@
 package com.example.pet;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -11,16 +13,26 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.apphosting.datastore.testing.DatastoreTestTrace;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class Home extends AppCompatActivity {
 
@@ -34,6 +46,9 @@ public class Home extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
+
+
+
 
 
     @Override
@@ -75,31 +90,6 @@ public class Home extends AppCompatActivity {
         ImageButton btnAdd = findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(view -> {
             // pet 정보 추가 화면으로 넘어가기
-
-            String msg="1.0 dog 0.34 Happy WALKRUN";
-            String[] splitText=msg.split(" ");
-
-            switch (splitText[3]){
-                case "Happy":
-                    Log.d("TEST1", "text = "+splitText[3]);
-                    DocumentReference userOfPet = firebaseFirestore.collection("Users").document(userUid);
-                    userOfPet.update("numPets", FieldValue.increment(-1));
-
-                case "Happy2":
-                    Log.d("TEST1", "text = "+splitText[3]);
-                case "Happy3":
-                    Log.d("TEST1", "text = "+splitText[3]);
-                case "Happy4":
-                    Log.d("TEST1", "text = "+splitText[3]);
-                case "Happy5":
-                    Log.d("TEST1", "text = "+splitText[3]);
-                case "Happy6":
-                    Log.d("TEST1", "text = "+splitText[3]);
-                default:
-                    break;
-            }
-
-
 
             Intent intentProfile_add = new Intent(getApplicationContext(),Profile_add.class);
             startActivity(intentProfile_add);
