@@ -207,7 +207,7 @@
                                 <TextView
 
                                     android:textColor="#539591"
-                                    android:id="@+id/tv_h_sleep"
+                                    android:id="@+id/tv_h_rest"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="0"
@@ -225,7 +225,7 @@
 
                                 <TextView
                                     android:textColor="#539591"
-                                    android:id="@+id/tv_m_sleep"
+                                    android:id="@+id/tv_m_rest"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="0"

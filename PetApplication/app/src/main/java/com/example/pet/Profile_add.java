@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -11,18 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pet.Network.BitmapThread;
 import com.example.pet.Network.Networking;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import wseemann.media.FFmpegMediaMetadataRetriever;
@@ -31,7 +27,6 @@ public class Profile_add extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth = null;
     private FirebaseFirestore firebaseFirestore = null;
-    String stringTime;
 
     private String name;
     private String cctvUrl;
@@ -46,10 +41,20 @@ public class Profile_add extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        // 취소 버튼
-        ImageButton cancel_btn = (ImageButton) findViewById(R.id.btn_ab_back);
-        cancel_btn.setOnClickListener(view -> {
-            finish();
+        // 뒤로가기 버튼
+        ImageButton cancel_btn = (ImageButton) findViewById(R.id.btn_petAdd_back);
+        cancel_btn.setOnClickListener(view -> finish());
+
+        // Cat/Dog 프사 바꾸기
+        ImageView circleImageView = findViewById(R.id.circle_image_view);
+        RadioGroup cd_rg = findViewById(R.id.c_d);
+        // 라디오 그룹 클릭 리스너
+        cd_rg.setOnCheckedChangeListener ((group, checkedId) -> {
+            if (checkedId == R.id.cd_rb_cat) {
+                circleImageView.setImageResource(R.drawable.img_9);
+            } else if (checkedId == R.id.cd_rb_dog) {
+                circleImageView.setImageResource(R.drawable.img_3);
+            }
         });
 
         // 저장 버튼
@@ -76,7 +81,6 @@ public class Profile_add extends AppCompatActivity {
                 String age = age_et.getText().toString();
 
                 // Cat/Dog
-                RadioGroup cd_rg = findViewById(R.id.c_d);
                 int num1 = cd_rg.getCheckedRadioButtonId();
                 RadioButton cd_rb = findViewById(num1);
                 String c_d = cd_rb.getText().toString();
@@ -104,7 +108,7 @@ public class Profile_add extends AppCompatActivity {
                 DocumentReference newPet = firebaseFirestore.collection("Users").document(userUid)
                         .collection("Pets").document(name);
 
-                // TODO : 동물 정보 추가
+                // 동물 정보 추가
                 Map<String, String> Info = new HashMap<>();
                 Info.put("name", name);
                 Info.put("gender", gender);
@@ -145,6 +149,5 @@ public class Profile_add extends AppCompatActivity {
 
             // mediaMetadataRetriever.release();
         });
-
     }
 }
