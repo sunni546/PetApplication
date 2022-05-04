@@ -36,16 +36,16 @@ public class Chart_Action extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth firebaseAuth;
     int count;
-    String stringtime;
+    String stringTime;
 
-    String sleep;
-    int sleep_t;
+    String rest;
+    int rest_t;
 
     String act;
     int act_t;
 
-    TextView sleep_h;
-    TextView sleep_m;
+    TextView rest_h;
+    TextView rest_m;
 
     TextView act_h;
     TextView act_m;
@@ -68,7 +68,7 @@ public class Chart_Action extends AppCompatActivity {
             finish();
         });
 
-        //수면시간 차트
+        //휴식시간 차트
         BarChart barChart = (BarChart) findViewById(R.id.sleep_chart);
         ArrayList<BarEntry> entries = new ArrayList<>();
         entries.add(new BarEntry(4f, 0));
@@ -82,7 +82,7 @@ public class Chart_Action extends AppCompatActivity {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh", Locale.KOREA);
         Date currentTime = new Date ( );
-        stringtime=simpleDateFormat.format(currentTime);
+        stringTime = simpleDateFormat.format(currentTime);
 
         db.collection("Users")
                 .document(userUid)
@@ -107,16 +107,16 @@ public class Chart_Action extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
                         Action = document.getData();
-                        sleep = String.valueOf(Action.get("수면 시간"));
-                        act =String.valueOf(Action.get("활동 시간"));
+                        rest = String.valueOf(Action.get("휴식 시간"));
+                        act = String.valueOf(Action.get("운동 시간"));
 
-                        sleep_t=(Integer.parseInt(sleep)/count);
+                        rest_t=(Integer.parseInt(rest)/count);
                         act_t=(Integer.parseInt(act)/count);
 
-                        sleep_h = findViewById(R.id.sleep_hour);
-                        sleep_m = findViewById(R.id.sleep_minute);
-                        sleep_h.setText(String.valueOf(sleep_t/60));
-                        sleep_m.setText(String.valueOf(sleep_t%60));
+                        rest_h = findViewById(R.id.rest_hour);
+                        rest_m = findViewById(R.id.rest_minute);
+                        rest_h.setText(String.valueOf(rest_t/60));
+                        rest_m.setText(String.valueOf(rest_t%60));
 
                         act_h = findViewById(R.id.act_hour);
                         act_m = findViewById(R.id.act_minute);

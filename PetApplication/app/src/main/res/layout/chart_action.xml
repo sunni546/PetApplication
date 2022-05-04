@@ -64,13 +64,13 @@
 
 
             <TextView
-                android:fontFamily="@font/aller"
-                android:textStyle="bold"
-                android:textSize="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/aller"
                 android:gravity="center"
-                android:text="수면 시간" />
+                android:text="@string/rest_time"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <com.github.mikephil.charting.charts.BarChart
                 android:layout_marginTop="10dp"
@@ -90,18 +90,18 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:fontFamily="@font/aller"
-                    android:textStyle="bold"
-                    android:text="평균 수면 시간 : "
-                    android:textSize="18dp" />
+                    android:gravity="center"
+                    android:text="평균 휴식 시간 : "
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
 
                 <TextView
 
                     android:fontFamily="@font/aller"
                     android:textStyle="bold"
-                    android:id="@+id/sleep_hour"
+                    android:id="@+id/rest_hour"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -110,18 +110,18 @@
                     android:textSize="18dp" />
 
                 <TextView
-                    android:fontFamily="@font/aller"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/aller"
                     android:gravity="center"
-                    android:text="시간 "
-                    android:textSize="18dp" />
+                    android:text="@string/hour"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:fontFamily="@font/aller"
                     android:textStyle="bold"
-                    android:id="@+id/sleep_minute"
+                    android:id="@+id/rest_minute"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -130,13 +130,13 @@
                     android:textSize="18dp" />
 
                 <TextView
-                    android:fontFamily="@font/aller"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/aller"
                     android:gravity="center"
-                    android:text="분"
-                    android:textSize="18dp" />
+                    android:text="@string/minute"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -146,14 +146,14 @@
             <!-- ㅡㅡㅡㅡㅡㅡㅡㅡ활동 시간ㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 
             <TextView
-                android:fontFamily="@font/aller"
-                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/aller"
                 android:gravity="center"
-                android:text="활동 시간"
-                android:textSize="25dp" />
+                android:text="@string/movement_time"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
             <com.github.mikephil.charting.charts.BarChart
                 android:layout_marginTop="10dp"
@@ -171,13 +171,13 @@
                 android:layout_marginBottom="80dp">
 
                 <TextView
-                    android:fontFamily="@font/aller"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/aller"
                     android:gravity="center"
-                    android:text="평균 활동 시간 : "
-                    android:textSize="18dp" />
+                    android:text="평균 운동 시간 : "
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
 
                 <TextView
@@ -192,13 +192,13 @@
                     android:textSize="18dp" />
 
                 <TextView
-                    android:fontFamily="@font/aller"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/aller"
                     android:gravity="center"
-                    android:text="시간 "
-                    android:textSize="18dp" />
+                    android:text="@string/hour"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:fontFamily="@font/aller"
@@ -212,13 +212,13 @@
                     android:textSize="18dp" />
 
                 <TextView
-                    android:fontFamily="@font/aller"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/aller"
                     android:gravity="center"
-                    android:text="분"
-                    android:textSize="18dp" />
+                    android:text="@string/minute"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

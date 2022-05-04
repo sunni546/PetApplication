@@ -166,7 +166,7 @@ public class Info extends AppCompatActivity {
                     if(document.exists()){
                         Action = document.getData();
                         total_rest = String.valueOf(Action.get("휴식 시간"));
-                        total_act = String.valueOf(Action.get("활동 시간"));
+                        total_act = String.valueOf(Action.get("운동 시간"));
 
                         total_rest_h = findViewById(R.id.tv_h_rest);
                         total_rest_m = findViewById(R.id.tv_m_rest);
