@@ -12,18 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pet.Network.BitmapThread;
 import com.example.pet.Network.Networking;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import wseemann.media.FFmpegMediaMetadataRetriever;
@@ -32,7 +27,6 @@ public class Profile_add extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth = null;
     private FirebaseFirestore firebaseFirestore = null;
-    String stringTime;
 
     private String name;
     private String cctvUrl;
@@ -47,12 +41,6 @@ public class Profile_add extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-<<<<<<< Updated upstream
-        // 취소 버튼
-        ImageButton cancel_btn = (ImageButton) findViewById(R.id.btn_ab_back);
-        cancel_btn.setOnClickListener(view -> {
-            finish();
-=======
         // 뒤로가기 버튼
         ImageButton cancel_btn = (ImageButton) findViewById(R.id.btn_petAdd_back);
         cancel_btn.setOnClickListener(view -> finish());
@@ -67,10 +55,7 @@ public class Profile_add extends AppCompatActivity {
             } else if (checkedId == R.id.cd_rb_dog) {
                 circleImageView.setImageResource(R.drawable.img_3);
             }
->>>>>>> Stashed changes
         });
-
-
 
         // 저장 버튼
         ImageButton save_btn = (ImageButton) findViewById(R.id.save_btn_add);
@@ -123,7 +108,7 @@ public class Profile_add extends AppCompatActivity {
                 DocumentReference newPet = firebaseFirestore.collection("Users").document(userUid)
                         .collection("Pets").document(name);
 
-                // TODO : 동물 정보 추가
+                // 동물 정보 추가
                 Map<String, String> Info = new HashMap<>();
                 Info.put("name", name);
                 Info.put("gender", gender);
@@ -139,35 +124,6 @@ public class Profile_add extends AppCompatActivity {
                 // 사용자의 pet 수 수정
                 DocumentReference userOfPet = firebaseFirestore.collection("Users").document(userUid);
                 userOfPet.update("numPets", FieldValue.increment(1));
-
-                // TODO : 감정
-                Map<String, Object> Emotion = new HashMap<>();
-                Emotion.put("행복/즐거움", 1);
-                Emotion.put("평안/안정", 2);
-                Emotion.put("불안/슬픔", 3);
-                Emotion.put("화남/불쾌", 4);
-                Emotion.put("공포", 5);
-                Emotion.put("공격성", 6);
-                newPet.collection("Emotions").document("Emotions").set(Emotion)
-                        .addOnFailureListener(e -> Log.w("DB_Pet_Emotion", "error", e));
-
-                // TODO : 활동
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh", Locale.KOREA);
-                Calendar calendar = Calendar.getInstance();
-                stringTime = simpleDateFormat.format(calendar.getTime());
-                Map<String, Object> Act = new HashMap<>();
-                Act.put("수면 시간", 1);
-                Act.put("식사 시간", 2);
-                Act.put("운동 시간",3);
-                newPet.collection("Actions").document("Actions").set(Act)
-                        .addOnFailureListener(e -> Log.w("DB_Pet_Act", "error", e));
-
-                // TODO : 이상횟수
-                Map<String, Object> AB = new HashMap<>();
-                AB.put("numAB", 2);
-                AB.put("timeAB", new Timestamp(new Date()));
-                newPet.collection("AbnormalBehaviors").document("AbnormalBehaviors").set(AB)
-                        .addOnFailureListener(e -> Log.w("DB_Pet_AB", "error", e));
 
                 // 팝업 끄기
                 // Home 화면으로
@@ -193,6 +149,5 @@ public class Profile_add extends AppCompatActivity {
 
             // mediaMetadataRetriever.release();
         });
-
     }
 }

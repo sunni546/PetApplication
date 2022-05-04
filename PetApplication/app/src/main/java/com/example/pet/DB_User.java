@@ -16,21 +16,8 @@ public class DB_User {
         this.numPets = 0;
     }
 
-    // 이메일
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
     // pet 수
     public Integer getNumPets() {
         return numPets;
-    }
-
-    public void setNumPets(Integer numPets) {
-        this.numPets = numPets;
     }
 }

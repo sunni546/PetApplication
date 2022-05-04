@@ -32,7 +32,7 @@ public class Info extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String happy;
-    String comfort;
+    String relax;
     String anxiety;
     String angry;
     String fear;
@@ -40,26 +40,20 @@ public class Info extends AppCompatActivity {
     String emotionStr;
     String max_value;
 
-    String total_sleep;
-    String total_eat;
+    String total_rest;
     String total_act;
 
-    TextView total_sleep_h;
-    TextView total_sleep_m;
-
-    TextView total_eat_h;
-    TextView total_eat_m;
+    TextView total_rest_h;
+    TextView total_rest_m;
 
     TextView total_act_h;
     TextView total_act_m;
-
 
     private FirebaseAuth firebaseAuth;
     Map<String, Object> Emotion = new HashMap<>();
     Map<String, String> sampleMap = new HashMap<>();
     Map<String, Object> Action = new HashMap<>();
     ArrayList<Integer> num = new ArrayList<>();
-    Object obj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +67,17 @@ public class Info extends AppCompatActivity {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String userUid = user.getUid();
 
-        // TODO: pet name
+        // pet name
         TextView tvPetName = (TextView) findViewById(R.id.tv_petName);
         tvPetName.setText(petNameStr);
+
+        // 뒤로가기 버튼
+        ImageButton btnInfoBack = (ImageButton) findViewById(R.id.btn_info_back);
+        btnInfoBack.setOnClickListener(view -> {
+            Intent intentHomeBack = new Intent(getApplicationContext(), Home.class);
+            startActivity(intentHomeBack);
+            finish();
+        });
 
         // pet info 버튼
         ImageButton btnPetInfo = (ImageButton) findViewById(R.id.btn_petInfo);
@@ -104,15 +106,15 @@ public class Info extends AppCompatActivity {
                     if(document.exists()){
                         Emotion = document.getData();
 
-                        happy = String.valueOf(Emotion.get("행복/즐거움"));
-                        comfort = String.valueOf(Emotion.get("평안/안정"));
-                        anxiety =String.valueOf(Emotion.get("불안/슬픔"));
-                        angry = String.valueOf(Emotion.get("화남/불쾌"));
+                        happy = String.valueOf(Emotion.get("행복"));
+                        relax = String.valueOf(Emotion.get("평안"));
+                        anxiety =String.valueOf(Emotion.get("불안"));
+                        angry = String.valueOf(Emotion.get("화남"));
                         fear = String.valueOf(Emotion.get("공포"));
                         agg = String.valueOf(Emotion.get("공격성"));
 
                         num.add(Integer.parseInt(happy));
-                        num.add(Integer.parseInt(comfort));
+                        num.add(Integer.parseInt(relax));
                         num.add(Integer.parseInt(anxiety));
                         num.add(Integer.parseInt(angry));
                         num.add(Integer.parseInt(fear));
@@ -120,10 +122,10 @@ public class Info extends AppCompatActivity {
 
                         max_value = String.valueOf(Collections.max(num));
 
-                        sampleMap.put("행복/즐거움",happy);
-                        sampleMap.put("평안/안정",comfort);
-                        sampleMap.put("불안/슬픔",anxiety );
-                        sampleMap.put("화남/불쾌",angry );
+                        sampleMap.put("행복",happy);
+                        sampleMap.put("평안",relax);
+                        sampleMap.put("불안",anxiety );
+                        sampleMap.put("화남",angry );
                         sampleMap.put("공포",fear);
                         sampleMap.put("공격성",agg);
 
@@ -163,23 +165,13 @@ public class Info extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
                         Action = document.getData();
-<<<<<<< Updated upstream
-                        total_sleep = String.valueOf(Action.get("수면 시간"));
-                        total_eat = String.valueOf(Action.get("식사 시간"));
-=======
-                        total_sleep = String.valueOf(Action.get("휴식 시간"));
->>>>>>> Stashed changes
+                        total_rest = String.valueOf(Action.get("휴식 시간"));
                         total_act = String.valueOf(Action.get("활동 시간"));
 
-                        total_sleep_h = findViewById(R.id.tv_h_sleep);
-                        total_sleep_m = findViewById(R.id.tv_m_sleep);
-                        total_sleep_h.setText(String.valueOf(Integer.parseInt(total_sleep)/60));
-                        total_sleep_m.setText(String.valueOf(Integer.parseInt(total_sleep)%60));
-
-                        total_eat_h = findViewById(R.id.tv_h_eat);
-                        total_eat_m = findViewById(R.id.tv_m_eat);
-                        total_eat_h.setText(String.valueOf(Integer.parseInt(total_eat)/60));
-                        total_eat_m.setText(String.valueOf(Integer.parseInt(total_eat)%60));
+                        total_rest_h = findViewById(R.id.tv_h_rest);
+                        total_rest_m = findViewById(R.id.tv_m_rest);
+                        total_rest_h.setText(String.valueOf(Integer.parseInt(total_rest)/60));
+                        total_rest_m.setText(String.valueOf(Integer.parseInt(total_rest)%60));
 
                         total_act_h = findViewById(R.id.tv_h_movement);
                         total_act_m = findViewById(R.id.tv_m_movement);
@@ -210,10 +202,6 @@ public class Info extends AppCompatActivity {
         LinearLayout layoutAbnormalBehavior = (LinearLayout) findViewById(R.id.layout_abnormal_behavior);
         TextView tvAbnormalBehavior = (TextView) findViewById(R.id.tv_abnormal_behavior);
 
-        // TODO: 이상행동
-        String abnormalBehaviorStr = "6";
-        // tvAbnormalBehavior.setText(abnormalBehaviorStr);
-
         Intent intentAbnormalBehavior = new Intent(this, Chart_AbnormalBehavior.class);
         layoutAbnormalBehavior.setOnClickListener(view -> {
             startActivity(intentAbnormalBehavior);
@@ -235,7 +223,6 @@ public class Info extends AppCompatActivity {
                         fab.setOnClickListener((view -> {
                             // cctv 화면으로 넘어가기
                             Intent intentCctv = new Intent(getApplicationContext(), Cctv.class);
-                            intentCctv.putExtra("petName", petNameStr);
                             intentCctv.putExtra("cctvUrl", cctvUrlStr);
                             startActivity(intentCctv);
                         }));

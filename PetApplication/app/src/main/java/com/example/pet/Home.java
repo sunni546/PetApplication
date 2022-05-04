@@ -98,6 +98,7 @@ public class Home extends AppCompatActivity {
             // Main_Logo 화면으로 넘어가기
             Intent intentMainLogo = new Intent(getApplicationContext(), Main_Logo.class);
             startActivity(intentMainLogo);
+            finish();
         });
     }
 

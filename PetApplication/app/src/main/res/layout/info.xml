@@ -21,7 +21,7 @@
                 android:layout_marginLeft="20dp"
                 android:backgroundTint="#e9ecef"
                 android:scaleType="fitCenter"
-                android:id="@+id/btn_ab_back"
+                android:id="@+id/btn_info_back"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/img_6"
@@ -207,7 +207,7 @@
                                 <TextView
 
                                     android:textColor="#539591"
-                                    android:id="@+id/tv_h_sleep"
+                                    android:id="@+id/tv_h_rest"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="0"
@@ -225,7 +225,7 @@
 
                                 <TextView
                                     android:textColor="#539591"
-                                    android:id="@+id/tv_m_sleep"
+                                    android:id="@+id/tv_m_rest"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="0"
@@ -241,72 +241,6 @@
                                     android:text="@string/minute" />
 
                             </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:padding="10dp">
-
-                            <TextView
-                                android:textColor="#545454"
-                                android:textSize="15dp"
-                                android:textStyle="bold"
-                                android:id="@+id/textView6"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/eat_time" />
-
-
-                            <LinearLayout
-                                android:backgroundTint="@color/G"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/background_corner_shape"
-                                android:orientation="horizontal"
-                                android:gravity="center"
-                                android:padding="20dp">
-
-                                <TextView
-
-                                    android:textColor="#539591"
-                                    android:id="@+id/tv_h_eat"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="0"
-                                    android:textSize="30dp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/textView7"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="20dp"
-                                    android:text="시간"
-                                    android:layout_marginRight="15dp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:textColor="#539591"
-                                    android:id="@+id/tv_m_eat"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="0"
-                                    android:textSize="30dp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/textView8"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="20dp"
-                                    android:textStyle="bold"
-                                    android:text="@string/minute" />
-
-                            </LinearLayout>
-
 
                         </LinearLayout>
 
