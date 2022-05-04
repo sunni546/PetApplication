@@ -46,8 +46,8 @@ public class Profile_add extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        // 취소 버튼
-        ImageButton cancel_btn = (ImageButton) findViewById(R.id.btn_ab_back);
+        // 뒤로가기 버튼
+        ImageButton cancel_btn = (ImageButton) findViewById(R.id.btn_petAdd_back);
         cancel_btn.setOnClickListener(view -> {
             finish();
         });

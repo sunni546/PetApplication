@@ -21,7 +21,6 @@ import java.util.Locale;
 public class Cctv extends AppCompatActivity {
 
     private static String cctvUrlStr;
-    private String petNameStr;
 
     private LibVLC libVlc;
     private MediaPlayer mediaPlayer;
@@ -44,7 +43,6 @@ public class Cctv extends AppCompatActivity {
 
         // Info 화면에서 pet 이름, cctv_url 받아오기
         Intent intentInfo = new Intent(this.getIntent());
-        petNameStr = intentInfo.getStringExtra("petName");
         cctvUrlStr = intentInfo.getStringExtra("cctvUrl");
 
         libVlc = new LibVLC(this);

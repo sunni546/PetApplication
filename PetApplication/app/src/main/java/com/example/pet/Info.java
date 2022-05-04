@@ -77,6 +77,14 @@ public class Info extends AppCompatActivity {
         TextView tvPetName = (TextView) findViewById(R.id.tv_petName);
         tvPetName.setText(petNameStr);
 
+        // 뒤로가기 버튼
+        ImageButton btnInfoBack = findViewById(R.id.btn_info_back);
+        btnInfoBack.setOnClickListener(view -> {
+            // Home 화면으로 넘어가기
+            startActivity(intentHome);
+            finish();
+        });
+
         // pet info 버튼
         ImageButton btnPetInfo = (ImageButton) findViewById(R.id.btn_petInfo);
         Intent intentProfile_info = new Intent(this, Profile_info.class);
@@ -231,7 +239,6 @@ public class Info extends AppCompatActivity {
                         fab.setOnClickListener((view -> {
                             // cctv 화면으로 넘어가기
                             Intent intentCctv = new Intent(getApplicationContext(), Cctv.class);
-                            intentCctv.putExtra("petName", petNameStr);
                             intentCctv.putExtra("cctvUrl", cctvUrlStr);
                             startActivity(intentCctv);
                         }));

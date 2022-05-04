@@ -111,8 +111,8 @@ public class Profile_info extends AppCompatActivity {
 
 
 
-        //취소 버튼
-        ImageButton cancel_btn = (ImageButton) findViewById(R.id.cancel_btn);
+        // 뒤로가기 버튼
+        ImageButton cancel_btn = (ImageButton) findViewById(R.id.btn_petInfo_back);
         cancel_btn.setOnClickListener(view -> {
             finish();
         });
