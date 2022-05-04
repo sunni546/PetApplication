@@ -163,8 +163,12 @@ public class Info extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
                         Action = document.getData();
+<<<<<<< Updated upstream
                         total_sleep = String.valueOf(Action.get("수면 시간"));
                         total_eat = String.valueOf(Action.get("식사 시간"));
+=======
+                        total_sleep = String.valueOf(Action.get("휴식 시간"));
+>>>>>>> Stashed changes
                         total_act = String.valueOf(Action.get("활동 시간"));
 
                         total_sleep_h = findViewById(R.id.tv_h_sleep);

@@ -75,7 +75,7 @@
         <ImageView
             android:layout_gravity="center"
             android:padding="15dp"
-            android:id="@+id/circleImageView"
+            android:id="@+id/circle_image_view"
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:src="@drawable/img_3"
@@ -196,13 +196,13 @@
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/cat"
+                            android:id="@+id/cd_rb_cat"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="고양이" />
 
                         <RadioButton
-                            android:id="@+id/dog"
+                            android:id="@+id/cd_rb_dog"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="강아지" />

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -46,11 +47,30 @@ public class Profile_add extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
+<<<<<<< Updated upstream
         // 취소 버튼
         ImageButton cancel_btn = (ImageButton) findViewById(R.id.btn_ab_back);
         cancel_btn.setOnClickListener(view -> {
             finish();
+=======
+        // 뒤로가기 버튼
+        ImageButton cancel_btn = (ImageButton) findViewById(R.id.btn_petAdd_back);
+        cancel_btn.setOnClickListener(view -> finish());
+
+        // Cat/Dog 프사 바꾸기
+        ImageView circleImageView = findViewById(R.id.circle_image_view);
+        RadioGroup cd_rg = findViewById(R.id.c_d);
+        // 라디오 그룹 클릭 리스너
+        cd_rg.setOnCheckedChangeListener ((group, checkedId) -> {
+            if (checkedId == R.id.cd_rb_cat) {
+                circleImageView.setImageResource(R.drawable.img_9);
+            } else if (checkedId == R.id.cd_rb_dog) {
+                circleImageView.setImageResource(R.drawable.img_3);
+            }
+>>>>>>> Stashed changes
         });
+
+
 
         // 저장 버튼
         ImageButton save_btn = (ImageButton) findViewById(R.id.save_btn_add);
@@ -76,7 +96,6 @@ public class Profile_add extends AppCompatActivity {
                 String age = age_et.getText().toString();
 
                 // Cat/Dog
-                RadioGroup cd_rg = findViewById(R.id.c_d);
                 int num1 = cd_rg.getCheckedRadioButtonId();
                 RadioButton cd_rb = findViewById(num1);
                 String c_d = cd_rb.getText().toString();
