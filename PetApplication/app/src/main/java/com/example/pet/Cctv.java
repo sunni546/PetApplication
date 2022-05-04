@@ -8,9 +8,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.pet.Network.BitmapThread;
-import com.example.pet.Network.Networking;
-
 import org.videolan.libvlc.LibVLC;
 import org.videolan.libvlc.Media;
 import org.videolan.libvlc.MediaPlayer;
@@ -21,8 +18,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import wseemann.media.FFmpegMediaMetadataRetriever;
-
 public class Cctv extends AppCompatActivity {
 
     private static String cctvUrlStr;
@@ -31,8 +26,6 @@ public class Cctv extends AppCompatActivity {
     private LibVLC libVlc;
     private MediaPlayer mediaPlayer;
     private VLCVideoLayout videoLayout;
-
-    private FFmpegMediaMetadataRetriever mediaMetadataRetriever;
 
     public static String format_yyyyMMdd_HHmm = "yyyy-MM-dd hh:mm";
     private TextView tvCurrentTime;
@@ -79,20 +72,6 @@ public class Cctv extends AppCompatActivity {
         mediaPlayer.setMedia(media);
         media.release();
         mediaPlayer.play();
-
-        // BitmapThread
-        mediaMetadataRetriever = new FFmpegMediaMetadataRetriever();
-        mediaMetadataRetriever.setDataSource(cctvUrlStr);
-        mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);
-        mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST);
-
-        BitmapThread bitmapThread = new BitmapThread(mediaMetadataRetriever);
-        bitmapThread.start();
-
-        Networking networking = new Networking(petNameStr);
-        networking.start();
-
-        // mediaMetadataRetriever.release();
     }
 
     @Override
