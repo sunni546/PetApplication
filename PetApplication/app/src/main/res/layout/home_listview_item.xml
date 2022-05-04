@@ -8,11 +8,12 @@
     android:descendantFocusability="blocksDescendants">
 
     <ImageView
-        android:contentDescription="Photo"
         android:id="@+id/iv_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_gravity="center"
+        android:padding="22dp"
+        android:scaleType="fitCenter" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -25,18 +26,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:fontFamily="@font/rubik"
             android:gravity="center_vertical"
             android:text="Name"
             android:textColor="#5C8E8B"
-            android:fontFamily="@font/rubik"
             android:textSize="32sp" />
 
         <TextView
-            android:fontFamily="@font/aller"
             android:id="@+id/tv_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/aller"
             android:text="Detail"
             android:textColor="#666666"
             android:textSize="16sp" />
@@ -46,15 +47,17 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <ImageButton
-            android:scaleType="fitCenter"
-            android:backgroundTint="@color/white"
             android:id="@+id/btn_delete"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/img_4"/>
+            android:backgroundTint="@color/white"
+            android:scaleType="fitCenter"
+            android:src="@drawable/img_4" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"

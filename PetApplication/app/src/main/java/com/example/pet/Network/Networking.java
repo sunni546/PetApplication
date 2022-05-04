@@ -8,9 +8,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.pet.R;
-import com.example.pet.utils.ContextStorage;
-import com.example.pet.utils.StringResource;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,7 +33,7 @@ import java.util.Map;
 
 public class Networking extends Thread {
 
-    private  String name;
+    private String name;
     private String IP;
     private int portNum;
     private byte[] msg;
@@ -49,7 +46,7 @@ public class Networking extends Thread {
     public static String format_yyyyMMdd_HHmm2 = "yyMMdd_hh:mm";
 
     public Networking(@NonNull String name) {
-        this.name=name;
+        this.name = name;
     }
 
     public void setting_msg(Bitmap msg) {

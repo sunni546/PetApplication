@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -127,8 +129,22 @@ public class Home extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("LISTVIEWPET", document.getId() + " => " + document.getData());
-                                adapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_launcher_foreground),
-                                        document.get("name").toString(), document.get("age").toString() + "살");
+
+                                // Cat/Dog 프사
+                                String CatDogStr = document.get("cat_dog").toString();
+                                int CatDog = R.drawable.ic_launcher_foreground;
+                                switch (CatDogStr){
+                                    case "고양이":
+                                        CatDog = R.drawable.img_9;
+                                        break;
+                                    case "강아지":
+                                        CatDog = R.drawable.img_3;
+                                        break;
+                                }
+
+                                adapter.addItem(ContextCompat.getDrawable(getApplicationContext(), CatDog),
+                                        document.get("name").toString(), document.get("age").toString() + "세");
+
                                 // listview 갱신
                                 adapter.notifyDataSetChanged();
                             }
