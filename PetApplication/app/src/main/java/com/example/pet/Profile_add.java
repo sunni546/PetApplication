@@ -138,7 +138,6 @@ public class Profile_add extends AppCompatActivity {
                 stringTime = simpleDateFormat.format(calendar.getTime());
                 Map<String, Object> Act = new HashMap<>();
                 Act.put("수면 시간", 1);
-                Act.put("식사 시간", 2);
                 Act.put("운동 시간",3);
                 newPet.collection("Actions").document("Actions").set(Act)
                         .addOnFailureListener(e -> Log.w("DB_Pet_Act", "error", e));

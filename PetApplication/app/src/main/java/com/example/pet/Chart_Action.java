@@ -41,17 +41,11 @@ public class Chart_Action extends AppCompatActivity {
     String sleep;
     int sleep_t;
 
-    String eat;
-    int eat_t;
-
     String act;
     int act_t;
 
     TextView sleep_h;
     TextView sleep_m;
-
-    TextView eat_h;
-    TextView eat_m;
 
     TextView act_h;
     TextView act_m;
@@ -114,22 +108,15 @@ public class Chart_Action extends AppCompatActivity {
                     if(document.exists()){
                         Action = document.getData();
                         sleep = String.valueOf(Action.get("수면 시간"));
-                        eat = String.valueOf(Action.get("식사 시간"));
                         act =String.valueOf(Action.get("활동 시간"));
 
                         sleep_t=(Integer.parseInt(sleep)/count);
-                        eat_t=(Integer.parseInt(eat)/count);
                         act_t=(Integer.parseInt(act)/count);
 
                         sleep_h = findViewById(R.id.sleep_hour);
                         sleep_m = findViewById(R.id.sleep_minute);
                         sleep_h.setText(String.valueOf(sleep_t/60));
                         sleep_m.setText(String.valueOf(sleep_t%60));
-
-                        eat_h = findViewById(R.id.eat_hour);
-                        eat_m = findViewById(R.id.eat_minute);
-                        eat_h.setText(String.valueOf(eat_t/60));
-                        eat_m.setText(String.valueOf(eat_t%60));
 
                         act_h = findViewById(R.id.act_hour);
                         act_m = findViewById(R.id.act_minute);

@@ -32,7 +32,7 @@ public class Info extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String happy;
-    String comfort;
+    String relax;
     String anxiety;
     String angry;
     String fear;
@@ -41,14 +41,10 @@ public class Info extends AppCompatActivity {
     String max_value;
 
     String total_sleep;
-    String total_eat;
     String total_act;
 
     TextView total_sleep_h;
     TextView total_sleep_m;
-
-    TextView total_eat_h;
-    TextView total_eat_m;
 
     TextView total_act_h;
     TextView total_act_m;
@@ -113,14 +109,14 @@ public class Info extends AppCompatActivity {
                         Emotion = document.getData();
 
                         happy = String.valueOf(Emotion.get("행복/즐거움"));
-                        comfort = String.valueOf(Emotion.get("평안/안정"));
+                        relax = String.valueOf(Emotion.get("평안/안정"));
                         anxiety =String.valueOf(Emotion.get("불안/슬픔"));
                         angry = String.valueOf(Emotion.get("화남/불쾌"));
                         fear = String.valueOf(Emotion.get("공포"));
                         agg = String.valueOf(Emotion.get("공격성"));
 
                         num.add(Integer.parseInt(happy));
-                        num.add(Integer.parseInt(comfort));
+                        num.add(Integer.parseInt(relax));
                         num.add(Integer.parseInt(anxiety));
                         num.add(Integer.parseInt(angry));
                         num.add(Integer.parseInt(fear));
@@ -129,7 +125,7 @@ public class Info extends AppCompatActivity {
                         max_value = String.valueOf(Collections.max(num));
 
                         sampleMap.put("행복/즐거움",happy);
-                        sampleMap.put("평안/안정",comfort);
+                        sampleMap.put("평안/안정",relax);
                         sampleMap.put("불안/슬픔",anxiety );
                         sampleMap.put("화남/불쾌",angry );
                         sampleMap.put("공포",fear);
@@ -172,18 +168,12 @@ public class Info extends AppCompatActivity {
                     if(document.exists()){
                         Action = document.getData();
                         total_sleep = String.valueOf(Action.get("수면 시간"));
-                        total_eat = String.valueOf(Action.get("식사 시간"));
                         total_act = String.valueOf(Action.get("활동 시간"));
 
                         total_sleep_h = findViewById(R.id.tv_h_sleep);
                         total_sleep_m = findViewById(R.id.tv_m_sleep);
                         total_sleep_h.setText(String.valueOf(Integer.parseInt(total_sleep)/60));
                         total_sleep_m.setText(String.valueOf(Integer.parseInt(total_sleep)%60));
-
-                        total_eat_h = findViewById(R.id.tv_h_eat);
-                        total_eat_m = findViewById(R.id.tv_m_eat);
-                        total_eat_h.setText(String.valueOf(Integer.parseInt(total_eat)/60));
-                        total_eat_m.setText(String.valueOf(Integer.parseInt(total_eat)%60));
 
                         total_act_h = findViewById(R.id.tv_h_movement);
                         total_act_m = findViewById(R.id.tv_m_movement);
