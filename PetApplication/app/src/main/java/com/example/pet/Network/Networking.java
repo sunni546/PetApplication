@@ -1,5 +1,6 @@
 package com.example.pet.Network;
 
+import static android.content.ContentValues.TAG;
 import static com.example.pet.Network.BitmapThread.bitmapQueue;
 
 import android.graphics.Bitmap;
@@ -10,6 +11,14 @@ import androidx.annotation.NonNull;
 import com.example.pet.R;
 import com.example.pet.utils.ContextStorage;
 import com.example.pet.utils.StringResource;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -18,17 +27,29 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class Networking extends Thread {
 
+    private  String name;
     private String IP;
     private int portNum;
     private byte[] msg;
     public byte[] receive_data;
     public String receive_msg;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore firebaseFirestore;
+
+    public static String format_yyyyMMdd_HHmm = "yyMMdd_hh";
+    public static String format_yyyyMMdd_HHmm2 = "yyMMdd_hh:mm";
 
     public Networking(@NonNull String name) {
-        super(name);
+        this.name=name;
     }
 
     public void setting_msg(Bitmap msg) {
@@ -36,7 +57,21 @@ public class Networking extends Thread {
     }
 
     public void run() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        assert user != null;
+        String userUid = user.getUid();
+
         while (true) {
+            //시간
+            Date currentTime = Calendar.getInstance().getTime();
+            SimpleDateFormat format = new SimpleDateFormat(format_yyyyMMdd_HHmm, Locale.getDefault());
+            SimpleDateFormat format2 = new SimpleDateFormat(format_yyyyMMdd_HHmm2, Locale.getDefault());
+            String currentTimeStr = format.format(currentTime);
+            String currentTimeStr2 = format2.format(currentTime);
+
             if (bitmapQueue.size() > 0) {
                 try (Socket client = new Socket()) {
                     InetSocketAddress ipep = new InetSocketAddress(IP, portNum);
@@ -76,6 +111,164 @@ public class Networking extends Thread {
                         receiver.read(receive_data, 0, length);
 
                         receive_msg = new String(receive_data, "UTF-8");
+                        String[] splitText=receive_msg.split(" ");
+                        String Emo = splitText[3]; //감정
+                        String Act = splitText[4]; //행동
+
+                        //Emotion DB 저장
+                        DocumentReference userOfPet = firebaseFirestore.collection("Users")
+                                .document(userUid).collection("Pets")
+                                .document(name).collection("Emotions")
+                                .document(currentTimeStr);
+                        userOfPet.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        switch (Emo){
+                                            case "Happy":
+                                                userOfPet.update("행복", FieldValue.increment(1));
+                                                break;
+                                            case "F":
+                                                userOfPet.update("공포", FieldValue.increment(1));
+                                                break;
+                                            case "A":
+                                                userOfPet.update("불안", FieldValue.increment(1));
+                                                break;
+                                            case "R":
+                                                userOfPet.update("평안", FieldValue.increment(1));
+                                                break;
+                                            case "AN":
+                                                userOfPet.update("화남", FieldValue.increment(1));
+                                                break;
+                                            case "AG":
+                                                userOfPet.update("공격성", FieldValue.increment(1));
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        Log.d(TAG, "Document exists!");
+                                    }
+                                    else {
+                                        Map<String, Object> Emotion = new HashMap<>();
+                                        Emotion.put("행복", 0);
+                                        Emotion.put("평안", 0);
+                                        Emotion.put("불안", 0);
+                                        Emotion.put("화남", 0);
+                                        Emotion.put("공포", 0);
+                                        Emotion.put("공격성", 0);
+                                        userOfPet.set(Emotion);
+                                        switch (Emo){
+                                            case "Happy":
+                                                userOfPet.update("행복", FieldValue.increment(1));
+                                                break;
+                                            case "F":
+                                                userOfPet.update("공포", FieldValue.increment(1));
+                                                break;
+                                            case "A":
+                                                userOfPet.update("불안", FieldValue.increment(1));
+                                                break;
+                                            case "R":
+                                                userOfPet.update("평안", FieldValue.increment(1));
+                                                break;
+                                            case "AN":
+                                                userOfPet.update("화남", FieldValue.increment(1));
+                                                break;
+                                            case "AG":
+                                                userOfPet.update("공격성", FieldValue.increment(1));
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        Log.d(TAG, "Document does not exist!");
+                                    }
+                                }
+                                else {
+                                    Log.d(TAG, "Failed with: ", task.getException());
+                                }
+                            }
+                        });
+                        //--------------------------------------------------------------------
+
+                        //이상행동인 경우 DB 저장
+                        if (Act.equals("NOTHING")){
+                            DocumentReference userOfPet3 = firebaseFirestore.collection("Users")
+                                    .document(userUid).collection("Pets")
+                                    .document(name).collection("AbnormalBehaviors")
+                                    .document(currentTimeStr);
+                            userOfPet3.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+                                            userOfPet3.update("count", FieldValue.increment(1));
+                                            userOfPet3.update("time", currentTimeStr2);
+                                            Log.d(TAG, "Document exists!");
+                                        } else {
+                                            Map<String, Object> AB_ACT = new HashMap<>();
+                                            AB_ACT.put("count", 0);
+                                            AB_ACT.put("time", 0);
+                                            userOfPet3.set(AB_ACT);
+                                            userOfPet3.update("count", FieldValue.increment(1));
+                                            userOfPet3.update("time", currentTimeStr2);
+                                            Log.d(TAG, "Document does not exist!");
+                                        }
+                                    } else {
+                                        Log.d(TAG, "Failed with: ", task.getException());
+                                    }
+                                }
+                            });
+                        }
+
+                        //이상행동이 아닌 경우 DB 저장
+                        else{
+                            DocumentReference userOfPet2 = firebaseFirestore.collection("Users")
+                                    .document(userUid).collection("Pets")
+                                    .document(name).collection("Actions")
+                                    .document(currentTimeStr);
+                            userOfPet2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+                                            switch (Act){
+                                                case "LYING":
+                                                case "SITDOWN":
+                                                    userOfPet2.update("휴식 시간", FieldValue.increment(1));
+                                                    break;
+                                                default:
+                                                    userOfPet2.update("운동 시간", FieldValue.increment(1));
+                                                    break;
+                                            }
+                                            Log.d(TAG, "Document exists!");
+                                        } else {
+                                            Map<String, Object> ACT = new HashMap<>();
+                                            ACT.put("휴식 시간", 0);
+                                            ACT.put("운동 시간", 0);
+                                            userOfPet2.set(ACT);
+                                            switch (Act){
+                                                case "LYING":
+                                                case "SITDOWN":
+                                                    userOfPet2.update("휴식 시간", FieldValue.increment(1));
+                                                    break;
+                                                default:
+                                                    userOfPet2.update("운동 시간", FieldValue.increment(1));
+                                                    break;
+                                            }
+                                            Log.d(TAG, "Document does not exist!");
+                                        }
+                                    }
+                                    else {
+                                        Log.d(TAG, "Failed with: ", task.getException());
+                                    }
+                                }
+                            });
+                        }
+                        
+                        
                         System.out.println(receive_msg);
 
                         client.close();

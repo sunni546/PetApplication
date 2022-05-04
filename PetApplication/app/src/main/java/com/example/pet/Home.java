@@ -1,5 +1,7 @@
 package com.example.pet;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -11,15 +13,26 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.apphosting.datastore.testing.DatastoreTestTrace;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class Home extends AppCompatActivity {
 
@@ -33,6 +46,10 @@ public class Home extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +90,7 @@ public class Home extends AppCompatActivity {
         ImageButton btnAdd = findViewById(R.id.btn_add);
         btnAdd.setOnClickListener(view -> {
             // pet 정보 추가 화면으로 넘어가기
+
             Intent intentProfile_add = new Intent(getApplicationContext(),Profile_add.class);
             startActivity(intentProfile_add);
         });

@@ -46,8 +46,8 @@ public class Profile_add extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        // 뒤로가기 버튼
-        ImageButton cancel_btn = (ImageButton) findViewById(R.id.btn_petAdd_back);
+        // 취소 버튼
+        ImageButton cancel_btn = (ImageButton) findViewById(R.id.btn_ab_back);
         cancel_btn.setOnClickListener(view -> {
             finish();
         });
@@ -120,34 +120,6 @@ public class Profile_add extends AppCompatActivity {
                 // 사용자의 pet 수 수정
                 DocumentReference userOfPet = firebaseFirestore.collection("Users").document(userUid);
                 userOfPet.update("numPets", FieldValue.increment(1));
-
-                // TODO : 감정
-                Map<String, Object> Emotion = new HashMap<>();
-                Emotion.put("행복/즐거움", 1);
-                Emotion.put("평안/안정", 2);
-                Emotion.put("불안/슬픔", 3);
-                Emotion.put("화남/불쾌", 4);
-                Emotion.put("공포", 5);
-                Emotion.put("공격성", 6);
-                newPet.collection("Emotions").document("Emotions").set(Emotion)
-                        .addOnFailureListener(e -> Log.w("DB_Pet_Emotion", "error", e));
-
-                // TODO : 활동
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh", Locale.KOREA);
-                Calendar calendar = Calendar.getInstance();
-                stringTime = simpleDateFormat.format(calendar.getTime());
-                Map<String, Object> Act = new HashMap<>();
-                Act.put("수면 시간", 1);
-                Act.put("운동 시간",3);
-                newPet.collection("Actions").document("Actions").set(Act)
-                        .addOnFailureListener(e -> Log.w("DB_Pet_Act", "error", e));
-
-                // TODO : 이상횟수
-                Map<String, Object> AB = new HashMap<>();
-                AB.put("numAB", 2);
-                AB.put("timeAB", new Timestamp(new Date()));
-                newPet.collection("AbnormalBehaviors").document("AbnormalBehaviors").set(AB)
-                        .addOnFailureListener(e -> Log.w("DB_Pet_AB", "error", e));
 
                 // 팝업 끄기
                 // Home 화면으로
