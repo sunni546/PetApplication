@@ -1,6 +1,7 @@
 package com.example.pet;
 
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,13 @@ public class Chart_AbnormalBehavior extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chart_abnormal_behavior);
+
+        // 뒤로가기 버튼
+        ImageButton btnAbBack = findViewById(R.id.btn_ab_back);
+        btnAbBack.setOnClickListener(view -> {
+            // pet 정보 화면으로 넘어가기
+            finish();
+        });
 
         // 이상 행동 통계
         TextView tv1HourAb = (TextView) findViewById(R.id.tv_1hour_ab);

@@ -21,15 +21,16 @@ public class BitmapThread extends Thread {
     }
 
     public void run() {
-
         bitmapQueue = new LinkedList<>();
 
         while (true) {
             Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime(); // current frame
 
+            Log.d("BITMAPBITMAPBITMAP", String.valueOf(bitmap));
+
             bitmapQueue.offer(bitmap);
 
-            Log.d("BITMAPBITMAPBITMAP", String.valueOf(bitmap));
+            Log.d("BITMAPBITMAPBITMAP", String.valueOf(bitmapQueue.size()));
 
             try {
                 sleep(1000);

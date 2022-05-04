@@ -2,7 +2,6 @@ package com.example.pet;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -10,6 +9,8 @@ import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pet.Network.BitmapThread;
+import com.example.pet.Network.Networking;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,11 +25,18 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import wseemann.media.FFmpegMediaMetadataRetriever;
+
 public class Profile_add extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth = null;
     private FirebaseFirestore firebaseFirestore = null;
     String stringTime;
+
+    private String name;
+    private String cctvUrl;
+
+    private FFmpegMediaMetadataRetriever mediaMetadataRetriever;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +47,7 @@ public class Profile_add extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         // 취소 버튼
-        ImageButton cancel_btn = (ImageButton) findViewById(R.id.cancel_btn_add);
+        ImageButton cancel_btn = (ImageButton) findViewById(R.id.btn_ab_back);
         cancel_btn.setOnClickListener(view -> {
             finish();
         });
@@ -55,7 +63,7 @@ public class Profile_add extends AppCompatActivity {
 
                 // 이름
                 EditText name_et = findViewById(R.id.name);
-                String name = name_et.getText().toString();
+                name = name_et.getText().toString();
 
                 // 성별
                 RadioGroup gender_rg = findViewById(R.id.gender);
@@ -91,7 +99,7 @@ public class Profile_add extends AppCompatActivity {
 
                 // cctv_url
                 EditText cctvUrl_et = findViewById(R.id.cctv_url);
-                String cctvUrl = cctvUrl_et.getText().toString();
+                cctvUrl = cctvUrl_et.getText().toString();
 
                 DocumentReference newPet = firebaseFirestore.collection("Users").document(userUid)
                         .collection("Pets").document(name);
@@ -151,6 +159,20 @@ public class Profile_add extends AppCompatActivity {
                 // 실패
                 Log.w("DB_Pet", "error: user is null");
             }
+
+            // BitmapThread
+            mediaMetadataRetriever = new FFmpegMediaMetadataRetriever();
+            mediaMetadataRetriever.setDataSource(cctvUrl);
+            mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM);
+            mediaMetadataRetriever.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST);
+
+            BitmapThread bitmapThread = new BitmapThread(mediaMetadataRetriever);
+            bitmapThread.start();
+
+            Networking networking = new Networking(name);
+            networking.start();
+
+            // mediaMetadataRetriever.release();
         });
 
     }

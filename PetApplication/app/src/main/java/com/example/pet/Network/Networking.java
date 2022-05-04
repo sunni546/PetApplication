@@ -47,16 +47,24 @@ public class Networking extends Thread {
                     setting_msg(first_image);
 
                     try (OutputStream sender = client.getOutputStream(); InputStream receiver = client.getInputStream();) {
+                        String length_ = Integer.toString(this.msg.length);
 
-                        byte[] size = ByteBuffer.allocate(4).putInt(this.msg.length).array();
+                        byte[] data = length_.getBytes();
 
-                        sender.write(size);
+                        ByteBuffer b = ByteBuffer.allocate(4);
+
+                        b.order(ByteOrder.LITTLE_ENDIAN);
+                        b.putInt(data.length);
+
+                        sender.write(b.array(), 0, 4);
+                        sender.write(data);
+
                         sender.write(this.msg);
                         sender.flush();
 
-                        receive_data = new byte[4];
+                        receive_data = new byte[64];
 
-                        receiver.read(receive_data, 0, 4);
+                        receiver.read(receive_data, 0, 64);
 
                         ByteBuffer c = ByteBuffer.wrap(receive_data);
                         c.order(ByteOrder.LITTLE_ENDIAN);
@@ -75,6 +83,12 @@ public class Networking extends Thread {
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
+            }
+
+            try {
+                sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }

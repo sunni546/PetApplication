@@ -5,7 +5,6 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -57,7 +56,6 @@ public class Chart_Action extends AppCompatActivity {
     TextView act_h;
     TextView act_m;
 
-
     Map<String, Object> Action = new HashMap<>();
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +68,9 @@ public class Chart_Action extends AppCompatActivity {
         Intent intentInfo = new Intent(this.getIntent());
         String petNameStr = intentInfo.getStringExtra("petName");
 
-        ImageButton cancel_btn = (ImageButton) findViewById(R.id.button_back);
-        cancel_btn.setOnClickListener(view -> {
+        // 뒤로가기 버튼
+        ImageButton btnActionBack = (ImageButton) findViewById(R.id.btn_action_back);
+        btnActionBack.setOnClickListener(view -> {
             finish();
         });
 
