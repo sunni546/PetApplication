@@ -34,13 +34,11 @@ import java.util.Map;
 public class Networking extends Thread {
 
     private String name;
-    private String IP;
+    private String IP = "";
     private int portNum;
     private byte[] msg;
     public byte[] receive_data;
     public String receive_msg;
-    private FirebaseAuth firebaseAuth;
-    private FirebaseFirestore firebaseFirestore;
 
     public static String format_yyyyMMdd_HHmm = "yyMMdd_HH";
     public static String format_yyyyMMdd_HHmm2 = "yyMMdd_HH:mm";
@@ -54,8 +52,8 @@ public class Networking extends Thread {
     }
 
     public void run() {
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseFirestore = FirebaseFirestore.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
         assert user != null;
@@ -76,9 +74,12 @@ public class Networking extends Thread {
                     client.connect(ipep);
 
                     Bitmap first_image = bitmapQueue.poll();
+
+                    bitmapQueue.poll();
+
                     setting_msg(first_image);
 
-                    try (OutputStream sender = client.getOutputStream(); InputStream receiver = client.getInputStream();) {
+                    try (OutputStream sender = client.getOutputStream(); InputStream receiver = client.getInputStream()) {
                         String length_ = Integer.toString(this.msg.length);
 
                         byte[] data = length_.getBytes();
@@ -108,18 +109,21 @@ public class Networking extends Thread {
                         receiver.read(receive_data, 0, length);
 
                         receive_msg = new String(receive_data, "UTF-8");
-                        String[] splitText=receive_msg.split(" ");
-                        String Emo = splitText[3]; // 감정
-                        String Act = splitText[4]; // 행동
 
-                        //Emotion DB 저장
-                        DocumentReference userOfPet = firebaseFirestore.collection("Users")
-                                .document(userUid).collection("Pets")
-                                .document(name).collection("Emotions")
-                                .document(currentTimeStr);
-                        userOfPet.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        System.out.println(receive_msg);
+                        Log.d("NetworkingNetworking", receive_msg);
+
+                        if (receive_msg.length() > 1) {
+                            String[] splitText=receive_msg.split(" ");
+                            String Emo = splitText[3]; // 감정
+                            String Act = splitText[4]; // 행동
+
+                            //Emotion DB 저장
+                            DocumentReference userOfPet = firebaseFirestore.collection("Users")
+                                    .document(userUid).collection("Pets")
+                                    .document(name).collection("Emotions")
+                                    .document(currentTimeStr);
+                            userOfPet.get().addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
@@ -184,19 +188,16 @@ public class Networking extends Thread {
                                 else {
                                     Log.d(TAG, "Failed with: ", task.getException());
                                 }
-                            }
-                        });
-                        //--------------------------------------------------------------------
+                            });
+                            //--------------------------------------------------------------------
 
-                        //이상행동인 경우 DB 저장
-                        if (Act.equals("NOTHING")){
-                            DocumentReference userOfPet3 = firebaseFirestore.collection("Users")
-                                    .document(userUid).collection("Pets")
-                                    .document(name).collection("AbnormalBehaviors")
-                                    .document(currentTimeStr);
-                            userOfPet3.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            //이상행동인 경우 DB 저장
+                            if (Act.equals("NOTHING")){
+                                DocumentReference userOfPet3 = firebaseFirestore.collection("Users")
+                                        .document(userUid).collection("Pets")
+                                        .document(name).collection("AbnormalBehaviors")
+                                        .document(currentTimeStr);
+                                userOfPet3.get().addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
                                         DocumentSnapshot document = task.getResult();
                                         if (document.exists()) {
@@ -215,19 +216,16 @@ public class Networking extends Thread {
                                     } else {
                                         Log.d(TAG, "Failed with: ", task.getException());
                                     }
-                                }
-                            });
-                        }
+                                });
+                            }
 
-                        //이상행동이 아닌 경우 DB 저장
-                        else{
-                            DocumentReference userOfPet2 = firebaseFirestore.collection("Users")
-                                    .document(userUid).collection("Pets")
-                                    .document(name).collection("Actions")
-                                    .document(currentTimeStr);
-                            userOfPet2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            //이상행동이 아닌 경우 DB 저장
+                            else{
+                                DocumentReference userOfPet2 = firebaseFirestore.collection("Users")
+                                        .document(userUid).collection("Pets")
+                                        .document(name).collection("Actions")
+                                        .document(currentTimeStr);
+                                userOfPet2.get().addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
                                         DocumentSnapshot document = task.getResult();
                                         if (document.exists()) {
@@ -261,12 +259,9 @@ public class Networking extends Thread {
                                     else {
                                         Log.d(TAG, "Failed with: ", task.getException());
                                     }
-                                }
-                            });
+                                });
+                            }
                         }
-                        
-                        
-                        System.out.println(receive_msg);
 
                         client.close();
                     }

@@ -148,6 +148,7 @@ public class Profile_add extends AppCompatActivity {
             networking.start();
 
             // mediaMetadataRetriever.release();
+
         });
     }
 }

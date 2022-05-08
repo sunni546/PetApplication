@@ -60,7 +60,7 @@ public class Info extends AppCompatActivity {
     TextView tv_hour_act;
     TextView tv_min_act;
 
-    public static String format_yyyyMMdd_HHmm = "yyMMdd_hh";
+    public static String format_yyyyMMdd_HHmm = "yyMMdd_HH";
 
     private FirebaseAuth firebaseAuth;
     Map<String, Object> Emotion = new HashMap<>();
