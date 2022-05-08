@@ -28,8 +28,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Chart_Emotion<Int> extends AppCompatActivity {
@@ -48,14 +52,19 @@ public class Chart_Emotion<Int> extends AppCompatActivity {
     TextView tvfear;
     TextView tvagg;
 
+    public static String format_yyyyMMdd_HHmm = "yyMMdd_hh";
+
     private FirebaseAuth firebaseAuth;
     Map<String, Object> Emotion = new HashMap<>();
-    Map<String, Integer> Max_Emo = new HashMap<>();
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chart_emotion);
+
+        Date currentTime = Calendar.getInstance().getTime();
+        SimpleDateFormat format = new SimpleDateFormat(format_yyyyMMdd_HHmm, Locale.getDefault());
+        String currentTimeStr = format.format(currentTime);
 
         // 뒤로가기 버튼
         ImageButton btnEmotionBack = findViewById(R.id.btn_emotion_back);
@@ -72,7 +81,7 @@ public class Chart_Emotion<Int> extends AppCompatActivity {
         //DB Emotion Read
         DocumentReference docRef = db.collection("Users").document(userUid)
                 .collection("Pets").document(petNameStr)
-                .collection("Emotion").document("Emotion");
+                .collection("Emotions").document(currentTimeStr);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -80,22 +89,14 @@ public class Chart_Emotion<Int> extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
                         Emotion = document.getData();
-                        Log.d(TAG, "No such document"+Emotion);
+                        Log.d("NOOO", "No such document"+Emotion);
 
-                        happy = String.valueOf(Emotion.get("행복/즐거움"));
-                        comfort = String.valueOf(Emotion.get("평안/안정"));
-                        anxiety =String.valueOf(Emotion.get("불안/슬픔"));
-                        angry = String.valueOf(Emotion.get("화남/불쾌"));
+                        happy = String.valueOf(Emotion.get("행복"));
+                        comfort = String.valueOf(Emotion.get("평안"));
+                        anxiety =String.valueOf(Emotion.get("불안"));
+                        angry = String.valueOf(Emotion.get("화남"));
                         fear = String.valueOf(Emotion.get("공포"));
                         agg = String.valueOf(Emotion.get("공격성"));
-
-                        Max_Emo.put("행복/즐거움", Integer.parseInt(happy));
-                        Max_Emo.put("평안/안정", Integer.parseInt(comfort));
-                        Max_Emo.put("불안/슬픔", Integer.parseInt(anxiety));
-                        Max_Emo.put("화남/불쾌", Integer.parseInt(angry));
-                        Max_Emo.put("공포", Integer.parseInt(fear));
-                        Max_Emo.put("공격성", Integer.parseInt(agg));
-
 
                         tvhappy = findViewById(R.id.emo_1);
                         tvcomfort = findViewById(R.id.emo_2);

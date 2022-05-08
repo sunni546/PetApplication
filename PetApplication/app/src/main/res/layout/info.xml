@@ -129,7 +129,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textSize="30dp"
+                                android:textSize="25dp"
                                 android:textStyle="bold" />
 
                         </LinearLayout>
@@ -351,7 +351,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
-                                android:text="@string/day_total" />
+                                android:text="한 시간 내" />
 
                             <TextView
                                 android:id="@+id/tv_abnormal_behavior_1day"

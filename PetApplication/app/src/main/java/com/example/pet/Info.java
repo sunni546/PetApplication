@@ -22,9 +22,15 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.w3c.dom.Text;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -40,17 +46,25 @@ public class Info extends AppCompatActivity {
     String emotionStr;
     String max_value;
 
-    String total_rest;
-    String total_act;
+    String ACount_st;
+    String Time;
+    Integer ACount;
+    Integer Total_Acount=0;
 
-    TextView total_rest_h;
-    TextView total_rest_m;
+    String Act;
+    String Rest;
 
-    TextView total_act_h;
-    TextView total_act_m;
+    TextView tv_abnormal;
+    TextView tv_hour_rest;
+    TextView tv_min_rest;
+    TextView tv_hour_act;
+    TextView tv_min_act;
+
+    public static String format_yyyyMMdd_HHmm = "yyMMdd_hh";
 
     private FirebaseAuth firebaseAuth;
     Map<String, Object> Emotion = new HashMap<>();
+    Map<String, Object> Abnormal = new HashMap<>();
     Map<String, String> sampleMap = new HashMap<>();
     Map<String, Object> Action = new HashMap<>();
     ArrayList<Integer> num = new ArrayList<>();
@@ -66,6 +80,11 @@ public class Info extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String userUid = user.getUid();
+
+        Date currentTime = Calendar.getInstance().getTime();
+        SimpleDateFormat format = new SimpleDateFormat(format_yyyyMMdd_HHmm, Locale.getDefault());
+        String currentTimeStr = format.format(currentTime);
+
 
         // pet name
         TextView tvPetName = (TextView) findViewById(R.id.tv_petName);
@@ -92,12 +111,17 @@ public class Info extends AppCompatActivity {
         LinearLayout layoutEmotion = (LinearLayout) findViewById(R.id.layout_emotion);
         TextView tvEmotion = (TextView) findViewById(R.id.tv_emotion);
         ImageView ivEmotion = (ImageView) findViewById(R.id.iv_emotion);
+        tv_abnormal = findViewById(R.id.tv_abnormal_behavior_1day);
+        tv_hour_rest = findViewById(R.id.tv_h_rest);
+        tv_min_rest = findViewById(R.id.tv_m_rest);
+        tv_hour_act = findViewById(R.id.tv_h_movement);
+        tv_min_act = findViewById(R.id.tv_m_movement);
 
         // TODO: emotion
         //---------------------------Emotion 중 가장 높은 값을 현재 감정 상태로------------------------
         DocumentReference docRef = db.collection("Users").document(userUid)
                 .collection("Pets").document(petNameStr)
-                .collection("Emotions").document("Emotions");
+                .collection("Emotions").document(currentTimeStr);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -142,6 +166,55 @@ public class Info extends AppCompatActivity {
             }
         });
 
+        DocumentReference docRef4 = db.collection("Users").document(userUid)
+                .collection("Pets").document(petNameStr)
+                .collection("AbnormalBehaviors").document(currentTimeStr);
+        docRef4.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document2 = task.getResult();
+                    if (document2.exists()){
+                        Abnormal=document2.getData();
+                        ACount_st = String.valueOf(Abnormal.get("count"));
+                        Time = String.valueOf(Abnormal.get("time"));
+                        tv_abnormal.setText(ACount_st);
+
+                        //ACount=Integer.parseInt(ACount_st);
+                        //Total_Acount=Total_Acount+ACount;
+                    }
+                }
+            }
+        });
+
+        DocumentReference docRef5 = db.collection("Users").document(userUid)
+                .collection("Pets").document(petNameStr)
+                .collection("Actions").document(currentTimeStr);
+        docRef5.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document3 = task.getResult();
+                    if (document3.exists()){
+                        Action=document3.getData();
+                        Act = String.valueOf(Action.get("운동 시간"));
+                        Rest = String.valueOf(Action.get("휴식 시간"));
+                        Log.d("Act_time", "Act time : "+Act);
+
+                        Integer Act_hour = Integer.parseInt(Act)/3600;
+                        Integer Act_min = (Integer.parseInt(Act)%3600)/60;
+                        Integer Rest_hour = Integer.parseInt(Rest)/3600;
+                        Integer Rest_min = (Integer.parseInt(Rest)%3600)/60;
+
+                        tv_hour_act.setText(String.valueOf(Act_hour));
+                        tv_min_act.setText(String.valueOf(Act_min));
+                        tv_hour_rest.setText(String.valueOf(Rest_hour));
+                        tv_min_rest.setText(String.valueOf(Rest_min));
+                    }
+                }
+            }
+        });
+
         ivEmotion.setImageResource(R.drawable.ic_launcher_foreground);
 
         Intent intentEmotion = new Intent(this, Chart_Emotion.class);
@@ -154,42 +227,6 @@ public class Info extends AppCompatActivity {
 
         // 활동 ------------------------------------------------------------------------------------
         LinearLayout layoutAction = (LinearLayout) findViewById(R.id.layout_action);
-
-        DocumentReference docRe2 = db.collection("Users").document(userUid)
-                .collection("Pets").document(petNameStr)
-                .collection("Actions").document("TOTAL");
-        docRe2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
-                    DocumentSnapshot document = task.getResult();
-                    if(document.exists()){
-                        Action = document.getData();
-                        total_rest = String.valueOf(Action.get("휴식 시간"));
-                        total_act = String.valueOf(Action.get("운동 시간"));
-
-                        total_rest_h = findViewById(R.id.tv_h_rest);
-                        total_rest_m = findViewById(R.id.tv_m_rest);
-                        total_rest_h.setText(String.valueOf(Integer.parseInt(total_rest)/60));
-                        total_rest_m.setText(String.valueOf(Integer.parseInt(total_rest)%60));
-
-                        total_act_h = findViewById(R.id.tv_h_movement);
-                        total_act_m = findViewById(R.id.tv_m_movement);
-                        total_act_h.setText(String.valueOf(Integer.parseInt(total_act)/60));
-                        total_act_m.setText(String.valueOf(Integer.parseInt(total_act)%60));
-                    }
-                    else{
-                        Log.d(TAG, "No such document");
-                    }
-                }
-                else{
-                    Log.d(TAG, "get failed with", task.getException());
-                }
-            }
-        });
-
-
-
         Intent intentAction = new Intent(this, Chart_Action.class);
         layoutAction.setOnClickListener(view -> {
             intentAction.putExtra("petName", petNameStr);
@@ -204,12 +241,13 @@ public class Info extends AppCompatActivity {
 
         Intent intentAbnormalBehavior = new Intent(this, Chart_AbnormalBehavior.class);
         layoutAbnormalBehavior.setOnClickListener(view -> {
+            intentAbnormalBehavior.putExtra("petName",petNameStr);
             startActivity(intentAbnormalBehavior);
         });
 
-        DocumentReference docRef2 = db.collection("Users").document(userUid)
+        DocumentReference docRef3 = db.collection("Users").document(userUid)
                 .collection("Pets").document(petNameStr);
-        docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        docRef3.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
