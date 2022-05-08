@@ -217,6 +217,27 @@ public class Networking extends Thread {
                                     }
                                 }
                             });
+
+                            //Total 구하기
+                            DocumentReference total_ref_Ab = firebaseFirestore.collection("Users")
+                                    .document(userUid).collection("Pets")
+                                    .document(name).collection("AbnormalBehaviors")
+                                    .document("Total");
+                            total_ref_Ab.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+                                            total_ref_Ab.update("count", FieldValue.increment(1));
+                                            Log.d(TAG, "Document exists!");
+                                        }
+                                    } else {
+                                        Log.d(TAG, "Failed with: ", task.getException());
+                                    }
+                                }
+                            });
+
                         }
 
                         //이상행동이 아닌 경우 DB 저장
@@ -259,6 +280,35 @@ public class Networking extends Thread {
                                         }
                                     }
                                     else {
+                                        Log.d(TAG, "Failed with: ", task.getException());
+                                    }
+                                }
+                            });
+
+
+                            //전체 시간
+                            DocumentReference total_ref_Act = firebaseFirestore.collection("Users")
+                                    .document(userUid).collection("Pets")
+                                    .document(name).collection("Actions")
+                                    .document("Total");
+                            total_ref_Act.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document2 = task.getResult();
+                                        if (document2.exists()) {
+                                            switch (Act){
+                                                case "LYING":
+                                                case "SITDOWN":
+                                                    total_ref_Act.update("휴식 시간", FieldValue.increment(1));
+                                                    break;
+                                                default:
+                                                    total_ref_Act.update("운동 시간", FieldValue.increment(1));
+                                                    break;
+                                            }
+                                            Log.d(TAG, "Document exists!");
+                                        }
+                                    } else {
                                         Log.d(TAG, "Failed with: ", task.getException());
                                     }
                                 }

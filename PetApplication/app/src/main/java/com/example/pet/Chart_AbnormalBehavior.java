@@ -88,6 +88,7 @@ public class Chart_AbnormalBehavior extends AppCompatActivity {
         tv1HourAb = (TextView) findViewById(R.id.tv_1hour_ab);
         tv1dDayAb = (TextView) findViewById(R.id.tv_1day_ab);
 
+        //이상행동 횟수 구하기
         DocumentReference docRef = db.collection("Users").document(userUid)
                 .collection("Pets").document(petNameStr)
                 .collection("AbnormalBehaviors").document(currentTimeStr);
