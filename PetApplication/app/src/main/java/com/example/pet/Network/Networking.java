@@ -109,8 +109,8 @@ public class Networking extends Thread {
 
                         receive_msg = new String(receive_data, "UTF-8");
                         String[] splitText=receive_msg.split(" ");
-                        String Emo = splitText[3]; //감정
-                        String Act = splitText[4]; //행동
+                        String Emo = splitText[3]; // 감정
+                        String Act = splitText[4]; // 행동
 
                         //Emotion DB 저장
                         DocumentReference userOfPet = firebaseFirestore.collection("Users")
@@ -124,25 +124,25 @@ public class Networking extends Thread {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
                                         switch (Emo){
-                                            case "Happy":
+                                            case "Happy" :
                                                 userOfPet.update("행복", FieldValue.increment(1));
                                                 break;
-                                            case "F":
+                                            case "Fear" :
                                                 userOfPet.update("공포", FieldValue.increment(1));
                                                 break;
-                                            case "A":
+                                            case "Unrest/Sad" :
                                                 userOfPet.update("불안", FieldValue.increment(1));
                                                 break;
-                                            case "R":
+                                            case "Relax" :
                                                 userOfPet.update("평안", FieldValue.increment(1));
                                                 break;
-                                            case "AN":
+                                            case "Angry/Discomfort" :
                                                 userOfPet.update("화남", FieldValue.increment(1));
                                                 break;
-                                            case "AG":
+                                            case "Aggression" :
                                                 userOfPet.update("공격성", FieldValue.increment(1));
                                                 break;
-                                            default:
+                                            default :
                                                 break;
                                         }
                                         Log.d(TAG, "Document exists!");
@@ -157,25 +157,25 @@ public class Networking extends Thread {
                                         Emotion.put("공격성", 0);
                                         userOfPet.set(Emotion);
                                         switch (Emo){
-                                            case "Happy":
+                                            case "Happy" :
                                                 userOfPet.update("행복", FieldValue.increment(1));
                                                 break;
-                                            case "F":
+                                            case "Fear" :
                                                 userOfPet.update("공포", FieldValue.increment(1));
                                                 break;
-                                            case "A":
+                                            case "Unrest/Sad" :
                                                 userOfPet.update("불안", FieldValue.increment(1));
                                                 break;
-                                            case "R":
+                                            case "Relax" :
                                                 userOfPet.update("평안", FieldValue.increment(1));
                                                 break;
-                                            case "AN":
+                                            case "Angry/Discomfort" :
                                                 userOfPet.update("화남", FieldValue.increment(1));
                                                 break;
-                                            case "AG":
+                                            case "Aggression" :
                                                 userOfPet.update("공격성", FieldValue.increment(1));
                                                 break;
-                                            default:
+                                            default :
                                                 break;
                                         }
                                         Log.d(TAG, "Document does not exist!");
@@ -232,11 +232,11 @@ public class Networking extends Thread {
                                         DocumentSnapshot document = task.getResult();
                                         if (document.exists()) {
                                             switch (Act){
-                                                case "LYING":
-                                                case "SITDOWN":
+                                                case "LYING" :
+                                                case "SITDOWN" :
                                                     userOfPet2.update("휴식 시간", FieldValue.increment(1));
                                                     break;
-                                                default:
+                                                default :
                                                     userOfPet2.update("운동 시간", FieldValue.increment(1));
                                                     break;
                                             }
@@ -247,11 +247,11 @@ public class Networking extends Thread {
                                             ACT.put("운동 시간", 0);
                                             userOfPet2.set(ACT);
                                             switch (Act){
-                                                case "LYING":
-                                                case "SITDOWN":
+                                                case "LYING" :
+                                                case "SITDOWN" :
                                                     userOfPet2.update("휴식 시간", FieldValue.increment(1));
                                                     break;
-                                                default:
+                                                default :
                                                     userOfPet2.update("운동 시간", FieldValue.increment(1));
                                                     break;
                                             }
