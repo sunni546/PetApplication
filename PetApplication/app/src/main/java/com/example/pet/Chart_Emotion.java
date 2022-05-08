@@ -52,7 +52,7 @@ public class Chart_Emotion<Int> extends AppCompatActivity {
     TextView tvfear;
     TextView tvagg;
 
-    public static String format_yyyyMMdd_HHmm = "yyMMdd_hh";
+    public static String format_yyyyMMdd_HHmm = "yyMMdd_HH";
 
     private FirebaseAuth firebaseAuth;
     Map<String, Object> Emotion = new HashMap<>();

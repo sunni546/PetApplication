@@ -80,7 +80,7 @@ public class Chart_Action extends AppCompatActivity {
         barChart.setData(data);
 
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh", Locale.KOREA);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH", Locale.KOREA);
         Date currentTime = new Date ( );
         stringTime = simpleDateFormat.format(currentTime);
 

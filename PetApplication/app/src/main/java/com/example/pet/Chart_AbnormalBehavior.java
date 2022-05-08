@@ -43,7 +43,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class Chart_AbnormalBehavior extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public static String format_yyyyMMdd_HHmm = "yyMMdd_hh";
+    public static String format_yyyyMMdd_HHmm = "yyMMdd_HH";
     public static String format_yyyyMMdd_HHmm2 = "yyMMdd_";
     String n;
     Map<String, Object> Abnormal2 = new HashMap<>();

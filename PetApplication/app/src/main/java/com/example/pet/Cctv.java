@@ -26,7 +26,7 @@ public class Cctv extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     private VLCVideoLayout videoLayout;
 
-    public static String format_yyyyMMdd_HHmm = "yyyy-MM-dd hh:mm";
+    public static String format_yyyyMMdd_HHmm = "yyyy-MM-dd HH:mm";
     private TextView tvCurrentTime;
 
     @Override

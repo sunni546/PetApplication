@@ -42,8 +42,8 @@ public class Networking extends Thread {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
 
-    public static String format_yyyyMMdd_HHmm = "yyMMdd_hh";
-    public static String format_yyyyMMdd_HHmm2 = "yyMMdd_hh:mm";
+    public static String format_yyyyMMdd_HHmm = "yyMMdd_HH";
+    public static String format_yyyyMMdd_HHmm2 = "yyMMdd_HH:mm";
 
     public Networking(@NonNull String name) {
         this.name = name;
