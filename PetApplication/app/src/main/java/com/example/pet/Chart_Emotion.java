@@ -39,15 +39,15 @@ import java.util.Map;
 public class Chart_Emotion<Int> extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String happy;
-    String comfort;
-    String anxiety;
+    String relax;
+    String unrest;
     String angry;
     String fear;
     String agg;
 
     TextView tvhappy;
-    TextView tvcomfort;
-    TextView tvanxiety;
+    TextView tvrelax;
+    TextView tvunrest;
     TextView tvangry;
     TextView tvfear;
     TextView tvagg;
@@ -92,22 +92,22 @@ public class Chart_Emotion<Int> extends AppCompatActivity {
                         Log.d("NOOO", "No such document"+Emotion);
 
                         happy = String.valueOf(Emotion.get("행복"));
-                        comfort = String.valueOf(Emotion.get("평안"));
-                        anxiety =String.valueOf(Emotion.get("불안"));
+                        relax = String.valueOf(Emotion.get("평안"));
+                        unrest =String.valueOf(Emotion.get("불안"));
                         angry = String.valueOf(Emotion.get("화남"));
                         fear = String.valueOf(Emotion.get("공포"));
                         agg = String.valueOf(Emotion.get("공격성"));
 
                         tvhappy = findViewById(R.id.emo_1);
-                        tvcomfort = findViewById(R.id.emo_2);
-                        tvanxiety = findViewById(R.id.emo_3);
+                        tvrelax = findViewById(R.id.emo_2);
+                        tvunrest = findViewById(R.id.emo_3);
                         tvangry = findViewById(R.id.emo_4);
                         tvfear = findViewById(R.id.emo_5);
                         tvagg = findViewById(R.id.emo_6 );
 
                         tvhappy.setText(happy);
-                        tvcomfort.setText(comfort);
-                        tvanxiety.setText(anxiety);
+                        tvrelax.setText(relax);
+                        tvunrest.setText(unrest);
                         tvangry.setText(angry);
                         tvfear.setText(fear);
                         tvagg.setText(agg);
@@ -176,16 +176,16 @@ public class Chart_Emotion<Int> extends AppCompatActivity {
         entries6.add(new Entry(4, 2));
         entries6.add(new Entry(5, 1));
 
-        LineDataSet dataSet = new LineDataSet(entries, "행복/즐거움");
+        LineDataSet dataSet = new LineDataSet(entries, "행복");
         dataSet.setColors(Color.BLACK);
 
-        LineDataSet dataSet2 = new LineDataSet(entries2, "평안/안정");
+        LineDataSet dataSet2 = new LineDataSet(entries2, "평안");
         dataSet2.setColors(Color.RED);
 
-        LineDataSet dataSet3 = new LineDataSet(entries3, "불안/슬픔");
+        LineDataSet dataSet3 = new LineDataSet(entries3, "불안");
         dataSet3.setColors(Color.BLUE);
 
-        LineDataSet dataSet4 = new LineDataSet(entries4, "화남/불쾌");
+        LineDataSet dataSet4 = new LineDataSet(entries4, "화남");
         dataSet4.setColors(Color.GREEN);
 
         LineDataSet dataSet5 = new LineDataSet(entries5, "공포");
