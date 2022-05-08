@@ -1,6 +1,6 @@
 package com.example.pet;
 
-import static android.content.ContentValues.TAG;
+import static java.lang.Integer.*;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,22 +22,19 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Chart_AbnormalBehavior extends AppCompatActivity {
@@ -57,13 +54,17 @@ public class Chart_AbnormalBehavior extends AppCompatActivity {
     TextView tv1HourAb;
     TextView tv1dDayAb;
 
+    Date currentTime;
+    SimpleDateFormat format;
+    CollectionReference AbRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chart_abnormal_behavior);
 
-        Date currentTime = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat(format_yyyyMMdd_HHmm, Locale.getDefault());
+        currentTime = Calendar.getInstance().getTime();
+        format = new SimpleDateFormat(format_yyyyMMdd_HHmm, Locale.getDefault());
         SimpleDateFormat format2 = new SimpleDateFormat(format_yyyyMMdd_HHmm2, Locale.getDefault());
         String currentTimeStr = format.format(currentTime);
         String currentTimeStr2 = format2.format(currentTime);
@@ -111,16 +112,33 @@ public class Chart_AbnormalBehavior extends AppCompatActivity {
 
         // TODO
         ArrayList<Entry> entries = new ArrayList<>();
+
         // 그래프에 넣을 점 설정
+        AbRef = db.collection("Users").document(userUid)
+                .collection("Pets").document(petNameStr)
+                .collection("AbnormalBehaviors");
+
+        for (int i = 0; i < 6; i++) {
+            String documentName = subtract1Hour(i);
+            Log.d("GGGGGGGGGGGGGGGGGGGGG", documentName);
+
+            DB_Ab db_ab = new DB_Ab(AbRef, documentName);
+            entries.add(0, new BarEntry(5 - i, db_ab.findY()));
+        }
+
+        /*
         entries.add(new BarEntry(0, 1));
         entries.add(new BarEntry(1, 3));
         entries.add(new BarEntry(2, 2));
         entries.add(new BarEntry(3, 1));
         entries.add(new BarEntry(4, 4));
         entries.add(new BarEntry(5, 8));
+        */
+
+        Log.d("GGGGGGGGGGGGGGGGGGGGG", String.valueOf(entries));
 
         // 세로축 설정
-        LineDataSet dataset = new LineDataSet(entries, "횟수");
+        LineDataSet dataset = new LineDataSet(entries, "시간");
         dataset.setAxisDependency(YAxis.AxisDependency.RIGHT);
 
         // 차트에 데이터 입력
@@ -137,5 +155,12 @@ public class Chart_AbnormalBehavior extends AppCompatActivity {
 
         lineChart1DayAb.animateY(1500);
         lineChart1DayAb.setData(data);
+    }
+
+    public String subtract1Hour(int i) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentTime);
+        cal.add(Calendar.HOUR, -(i));
+        return format.format(cal.getTime());
     }
 }
