@@ -34,7 +34,7 @@ import java.util.Map;
 public class Networking extends Thread {
 
     private String name;
-    private String IP;
+    private String IP = "";
     private int portNum;
     private byte[] msg;
     public byte[] receive_data;
@@ -74,6 +74,9 @@ public class Networking extends Thread {
                     client.connect(ipep);
 
                     Bitmap first_image = bitmapQueue.poll();
+
+                    bitmapQueue.poll();
+
                     setting_msg(first_image);
 
                     try (OutputStream sender = client.getOutputStream(); InputStream receiver = client.getInputStream()) {
@@ -108,8 +111,9 @@ public class Networking extends Thread {
                         receive_msg = new String(receive_data, "UTF-8");
 
                         System.out.println(receive_msg);
+                        Log.d("NetworkingNetworking", receive_msg);
 
-                        if (receive_msg != null) {
+                        if (receive_msg.length() > 1) {
                             String[] splitText=receive_msg.split(" ");
                             String Emo = splitText[3]; // 감정
                             String Act = splitText[4]; // 행동

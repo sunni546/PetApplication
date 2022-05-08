@@ -26,7 +26,7 @@ public class BitmapThread extends Thread {
         while (true) {
             Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime(); // current frame
 
-            Log.d("BITMAPBITMAPBITMAP", String.valueOf(bitmap));
+            // Log.d("BITMAPBITMAPBITMAP", String.valueOf(bitmap));
 
             bitmapQueue.offer(bitmap);
 
