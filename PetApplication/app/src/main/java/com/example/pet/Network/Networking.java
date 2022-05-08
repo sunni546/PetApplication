@@ -217,7 +217,7 @@ public class Networking extends Thread {
                                     }
                                 }
                             });
-
+                            /*
                             //Total 구하기
                             DocumentReference total_ref_Ab = firebaseFirestore.collection("Users")
                                     .document(userUid).collection("Pets")
@@ -236,7 +236,7 @@ public class Networking extends Thread {
                                         Log.d(TAG, "Failed with: ", task.getException());
                                     }
                                 }
-                            });
+                            });*/
 
                         }
 
@@ -284,8 +284,7 @@ public class Networking extends Thread {
                                     }
                                 }
                             });
-
-
+                            /*
                             //전체 시간
                             DocumentReference total_ref_Act = firebaseFirestore.collection("Users")
                                     .document(userUid).collection("Pets")
@@ -312,7 +311,7 @@ public class Networking extends Thread {
                                         Log.d(TAG, "Failed with: ", task.getException());
                                     }
                                 }
-                            });
+                            });*/
                         }
                         
                         
