@@ -172,7 +172,7 @@ public class Chart_AbnormalBehavior extends AppCompatActivity {
                         lineChart1HourAb.setDrawGridBackground(false);
 
                         Description description = new Description();
-                        description.setText("1 Hour");
+                        description.setText("time");
                         lineChart1HourAb.setDescription(description);
 
                         lineChart1HourAb.animateY(1000); // 애니메이션 설정
@@ -248,7 +248,7 @@ public class Chart_AbnormalBehavior extends AppCompatActivity {
                         lineChart1DayAb.setDrawGridBackground(false);
 
                         Description description = new Description();
-                        description.setText("1 Day");
+                        description.setText("time");
                         lineChart1DayAb.setDescription(description);
 
                         lineChart1DayAb.animateY(1000); // 애니메이션 설정
