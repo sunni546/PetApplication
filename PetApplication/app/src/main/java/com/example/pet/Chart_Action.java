@@ -39,7 +39,6 @@ import java.util.Map;
 
 public class Chart_Action extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseAuth firebaseAuth;
     int count;
     String stringTime;
 
@@ -66,7 +65,7 @@ public class Chart_Action extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chart_action);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String userUid = user.getUid();
         Intent intentInfo = new Intent(this.getIntent());
@@ -101,38 +100,35 @@ public class Chart_Action extends AppCompatActivity {
                         labels.add("1h");
                         labels.add("0");
 
-                        // 휴식 시간
+                        // 그래프에 값 추가
                         ArrayList<BarEntry> entriesRest = new ArrayList<>();
-                        for (int i = 0; i < 6; i++) { entriesRest.add(new BarEntry(i, 0)); }
-
-                        // 운동 시간
                         ArrayList<BarEntry> entriesAct = new ArrayList<>();
-                        for (int i = 0; i < 6; i++) { entriesAct.add(new BarEntry(i, 0)); }
+                        for (int i = 0; i < 6; i++) {
+                            entriesRest.add(new BarEntry(i, 0));
+                            entriesAct.add(new BarEntry(i, 0));
+                        }
 
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             String documentNameStr = document.getId();
 
-                            int yRest = parseInt(String.valueOf(document.get("휴식 시간")))/60;
-                            int yAct = parseInt(String.valueOf(document.get("운동 시간")))/60;
-
                             if (documentNameStr.equals(subtract1Hour(5))) {
-                                entriesRest.set(0, new BarEntry(0, yRest));
-                                entriesAct.set(0, new BarEntry(0, yAct));
+                                entriesRest.set(0, new BarEntry(0, secondToMinute(String.valueOf(document.get("휴식 시간")))));
+                                entriesAct.set(0, new BarEntry(0, secondToMinute(String.valueOf(document.get("운동 시간")))));
                             } else if (documentNameStr.equals(subtract1Hour(4))) {
-                                entriesRest.set(1, new BarEntry(1, yRest));
-                                entriesAct.set(1, new BarEntry(1, yAct));
+                                entriesRest.set(1, new BarEntry(1, secondToMinute(String.valueOf(document.get("휴식 시간")))));
+                                entriesAct.set(1, new BarEntry(1, secondToMinute(String.valueOf(document.get("운동 시간")))));
                             } else if (documentNameStr.equals(subtract1Hour(3))) {
-                                entriesRest.set(2, new BarEntry(2, yRest));
-                                entriesAct.set(2, new BarEntry(2, yAct));
+                                entriesRest.set(2, new BarEntry(2, secondToMinute(String.valueOf(document.get("휴식 시간")))));
+                                entriesAct.set(2, new BarEntry(2, secondToMinute(String.valueOf(document.get("운동 시간")))));
                             } else if (documentNameStr.equals(subtract1Hour(2))) {
-                                entriesRest.set(3, new BarEntry(3, yRest));
-                                entriesAct.set(3, new BarEntry(3, yAct));
+                                entriesRest.set(3, new BarEntry(3, secondToMinute(String.valueOf(document.get("휴식 시간")))));
+                                entriesAct.set(3, new BarEntry(3, secondToMinute(String.valueOf(document.get("운동 시간")))));
                             } else if (documentNameStr.equals(subtract1Hour(1))) {
-                                entriesRest.set(4, new BarEntry(4, yRest));
-                                entriesAct.set(4, new BarEntry(4, yAct));
+                                entriesRest.set(4, new BarEntry(4, secondToMinute(String.valueOf(document.get("휴식 시간")))));
+                                entriesAct.set(4, new BarEntry(4, secondToMinute(String.valueOf(document.get("운동 시간")))));
                             } else if (documentNameStr.equals(currentTimeStr)) {
-                                entriesRest.set(5, new BarEntry(5, yRest));
-                                entriesAct.set(5, new BarEntry(5, yAct));
+                                entriesRest.set(5, new BarEntry(5, secondToMinute(String.valueOf(document.get("휴식 시간")))));
+                                entriesAct.set(5, new BarEntry(5, secondToMinute(String.valueOf(document.get("운동 시간")))));
                             }
                         }
 
@@ -259,5 +255,9 @@ public class Chart_Action extends AppCompatActivity {
         cal.setTime(currentTime);
         cal.add(Calendar.HOUR, -(i));
         return format.format(cal.getTime());
+    }
+
+    protected int secondToMinute(String second) {
+        return parseInt(second) / 60;
     }
 }
