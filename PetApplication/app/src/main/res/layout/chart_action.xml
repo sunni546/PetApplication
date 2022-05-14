@@ -74,7 +74,7 @@
 
             <com.github.mikephil.charting.charts.BarChart
                 android:layout_marginTop="10dp"
-                android:id="@+id/sleep_chart"
+                android:id="@+id/rest_chart"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:background="@drawable/background_corner_shape"/>
