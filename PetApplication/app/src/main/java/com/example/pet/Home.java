@@ -123,34 +123,31 @@ public class Home extends AppCompatActivity {
 
         firebaseFirestore.collection("Users").document(userUid).collection("Pets")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("LISTVIEWPET", document.getId() + " => " + document.getData());
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d("LISTVIEWPET", document.getId() + " => " + document.getData());
 
-                                // Cat/Dog 프사
-                                String CatDogStr = document.get("cat_dog").toString();
-                                int CatDog = R.drawable.ic_launcher_foreground;
-                                switch (CatDogStr){
-                                    case "고양이":
-                                        CatDog = R.drawable.img_9;
-                                        break;
-                                    case "강아지":
-                                        CatDog = R.drawable.img_3;
-                                        break;
-                                }
-
-                                adapter.addItem(ContextCompat.getDrawable(getApplicationContext(), CatDog),
-                                        document.get("name").toString(), document.get("age").toString() + "세");
-
-                                // listview 갱신
-                                adapter.notifyDataSetChanged();
+                            // Cat/Dog 프사
+                            String CatDogStr = document.get("cat_dog").toString();
+                            int CatDog = R.drawable.ic_launcher_foreground;
+                            switch (CatDogStr){
+                                case "고양이":
+                                    CatDog = R.drawable.img_9;
+                                    break;
+                                case "강아지":
+                                    CatDog = R.drawable.img_3;
+                                    break;
                             }
-                        } else {
-                            Log.d("LISTVIEWPET", "Error getting documents: ", task.getException());
+
+                            adapter.addItem(ContextCompat.getDrawable(getApplicationContext(), CatDog),
+                                    document.get("name").toString(), document.get("age").toString() + "세");
+
+                            // listview 갱신
+                            adapter.notifyDataSetChanged();
                         }
+                    } else {
+                        Log.d("LISTVIEWPET", "Error getting documents: ", task.getException());
                     }
                 });
     }

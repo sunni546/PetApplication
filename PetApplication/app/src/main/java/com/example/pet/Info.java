@@ -24,8 +24,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -60,7 +58,7 @@ public class Info extends AppCompatActivity {
     TextView tv_min_rest;
     TextView tv_min_act;
 
-    public static String format_yyyyMMdd_HH = "yyMMdd_HH";
+    public static String format_yyMMdd_HH = "yyMMdd_HH";
 
     private FirebaseAuth firebaseAuth;
     Map<String, Object> Emotion = new HashMap<>();
@@ -82,9 +80,8 @@ public class Info extends AppCompatActivity {
         String userUid = user.getUid();
 
         Date currentTime = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat(format_yyyyMMdd_HH, Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat(format_yyMMdd_HH, Locale.getDefault());
         String currentTimeStr = format.format(currentTime);
-
 
         // pet name
         TextView tvPetName = (TextView) findViewById(R.id.tv_petName);
@@ -253,6 +250,7 @@ public class Info extends AppCompatActivity {
                             // cctv 화면으로 넘어가기
                             Intent intentCctv = new Intent(getApplicationContext(), Cctv.class);
                             intentCctv.putExtra("cctvUrl", cctvUrlStr);
+                            intentCctv.putExtra("petName", petNameStr);
                             startActivity(intentCctv);
                         }));
                     } else {

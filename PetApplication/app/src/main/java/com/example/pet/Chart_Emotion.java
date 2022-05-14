@@ -2,7 +2,7 @@ package com.example.pet;
 
 import static android.content.ContentValues.TAG;
 
-import static com.example.pet.Info.format_yyyyMMdd_HH;
+import static com.example.pet.Info.format_yyMMdd_HH;
 
 import static java.lang.Integer.parseInt;
 
@@ -70,7 +70,7 @@ public class Chart_Emotion extends AppCompatActivity {
         setContentView(R.layout.chart_emotion);
 
         currentTime = Calendar.getInstance().getTime();
-        format = new SimpleDateFormat(format_yyyyMMdd_HH, Locale.getDefault());
+        format = new SimpleDateFormat(format_yyMMdd_HH, Locale.getDefault());
         String currentTimeStr = format.format(currentTime);
 
         // 뒤로가기 버튼
