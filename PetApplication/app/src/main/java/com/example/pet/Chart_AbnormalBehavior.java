@@ -108,10 +108,11 @@ public class Chart_AbnormalBehavior extends AppCompatActivity {
             }
         });
 
+        // 그래프
+        //------------------------------------------------------------------------------------------
         // 이상 행동 1시간 그래프
         lineChart1HourAb = findViewById(R.id.chart_1hour_ab);
 
-        // 시간별 그래프 그리기
         db.collection("Users").document(userUid)
                 .collection("Pets").document(petNameStr)
                 .collection("AbnormalBehaviors")
@@ -185,7 +186,6 @@ public class Chart_AbnormalBehavior extends AppCompatActivity {
         // 이상 행동 1일 그래프
         lineChart1DayAb = (LineChart) findViewById(R.id.chart_1day_ab);
 
-        // 일별 그래프 그리기
         db.collection("Users").document(userUid)
                 .collection("Pets").document(petNameStr)
                 .collection("AbnormalBehaviors")
@@ -257,6 +257,7 @@ public class Chart_AbnormalBehavior extends AppCompatActivity {
                         Log.d("CHARTAB", "Error getting documents: ", task.getException());
                     }
                 });
+        //------------------------------------------------------------------------------------------
     }
 
     protected String subtract1Hour(int i) {
