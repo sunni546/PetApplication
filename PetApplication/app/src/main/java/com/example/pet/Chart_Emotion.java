@@ -1,7 +1,10 @@
 package com.example.pet;
 
-
 import static android.content.ContentValues.TAG;
+
+import static com.example.pet.Info.format_yyMMdd_HH;
+
+import static java.lang.Integer.parseInt;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,9 +20,11 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +32,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,34 +42,35 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class Chart_Emotion<Int> extends AppCompatActivity {
+public class Chart_Emotion extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String happy;
-    String comfort;
-    String anxiety;
+    String relax;
+    String unrest;
     String angry;
     String fear;
     String agg;
 
     TextView tvhappy;
-    TextView tvcomfort;
-    TextView tvanxiety;
+    TextView tvrelax;
+    TextView tvunrest;
     TextView tvangry;
     TextView tvfear;
     TextView tvagg;
 
-    public static String format_yyyyMMdd_HHmm = "yyMMdd_hh";
-
     private FirebaseAuth firebaseAuth;
     Map<String, Object> Emotion = new HashMap<>();
 
+    Date currentTime;
+    SimpleDateFormat format;
+    LineChart lineChartEmotion;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chart_emotion);
 
-        Date currentTime = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat(format_yyyyMMdd_HHmm, Locale.getDefault());
+        currentTime = Calendar.getInstance().getTime();
+        format = new SimpleDateFormat(format_yyMMdd_HH, Locale.getDefault());
         String currentTimeStr = format.format(currentTime);
 
         // 뒤로가기 버튼
@@ -89,25 +96,25 @@ public class Chart_Emotion<Int> extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
                         Emotion = document.getData();
-                        Log.d("NOOO", "No such document"+Emotion);
+                        Log.d("NOOO", "No such document" + Emotion);
 
-                        happy = String.valueOf(Emotion.get("행복"));
-                        comfort = String.valueOf(Emotion.get("평안"));
-                        anxiety =String.valueOf(Emotion.get("불안"));
-                        angry = String.valueOf(Emotion.get("화남"));
-                        fear = String.valueOf(Emotion.get("공포"));
-                        agg = String.valueOf(Emotion.get("공격성"));
+                        happy = String.valueOf(secondToMinute(String.valueOf(Emotion.get("행복"))));
+                        relax = String.valueOf(secondToMinute(String.valueOf(Emotion.get("평안"))));
+                        unrest =String.valueOf(secondToMinute(String.valueOf(Emotion.get("불안"))));
+                        angry = String.valueOf(secondToMinute(String.valueOf(Emotion.get("화남"))));
+                        fear = String.valueOf(secondToMinute(String.valueOf(Emotion.get("공포"))));
+                        agg = String.valueOf(secondToMinute(String.valueOf(Emotion.get("공격성"))));
 
                         tvhappy = findViewById(R.id.emo_1);
-                        tvcomfort = findViewById(R.id.emo_2);
-                        tvanxiety = findViewById(R.id.emo_3);
+                        tvrelax = findViewById(R.id.emo_2);
+                        tvunrest = findViewById(R.id.emo_3);
                         tvangry = findViewById(R.id.emo_4);
                         tvfear = findViewById(R.id.emo_5);
                         tvagg = findViewById(R.id.emo_6 );
 
                         tvhappy.setText(happy);
-                        tvcomfort.setText(comfort);
-                        tvanxiety.setText(anxiety);
+                        tvrelax.setText(relax);
+                        tvunrest.setText(unrest);
                         tvangry.setText(angry);
                         tvfear.setText(fear);
                         tvagg.setText(agg);
@@ -123,111 +130,151 @@ public class Chart_Emotion<Int> extends AppCompatActivity {
             }
         });
 
+        // 그래프
+        //------------------------------------------------------------------------------------------
+        lineChartEmotion = findViewById(R.id.emotion_chart);
 
-        //Draw Chart
-        LineChart lineChart = (LineChart) findViewById(R.id.emotion_chart);
+        db.collection("Users").document(userUid)
+                .collection("Pets").document(petNameStr)
+                .collection("Emotions")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // x축 라벨
+                        ArrayList<String> labels = new ArrayList<>();
+                        labels.add("5h");
+                        labels.add("4h");
+                        labels.add("3h");
+                        labels.add("2h");
+                        labels.add("1h");
+                        labels.add("0");
 
-        ArrayList<Entry> entries = new ArrayList<>();
-        ArrayList<Entry> entries2 = new ArrayList<>();
-        ArrayList<Entry> entries3 = new ArrayList<>();
-        ArrayList<Entry> entries4 = new ArrayList<>();
-        ArrayList<Entry> entries5 = new ArrayList<>();
-        ArrayList<Entry> entries6 = new ArrayList<>();
+                        // 그래프에 값 추가
+                        ArrayList<Entry> entriesHappy = new ArrayList<>();
+                        ArrayList<Entry> entriesRelax = new ArrayList<>();
+                        ArrayList<Entry> entriesAnxiety = new ArrayList<>();
+                        ArrayList<Entry> entriesAngry = new ArrayList<>();
+                        ArrayList<Entry> entriesFear = new ArrayList<>();
+                        ArrayList<Entry> entriesAgg = new ArrayList<>();
 
-        entries.add(new Entry(0, 3));
-        entries.add(new Entry(1, 1));
-        entries.add(new Entry(2, 2));
-        entries.add(new Entry(3, 3));
-        entries.add(new Entry(4, 4));
-        entries.add(new Entry(5, 5));
+                        for (int i = 0; i < 6; i++) {
+                            entriesHappy.add(new BarEntry(i, 0));
+                            entriesRelax.add(new BarEntry(i, 0));
+                            entriesAnxiety.add(new BarEntry(i, 0));
+                            entriesAngry.add(new BarEntry(i, 0));
+                            entriesFear.add(new BarEntry(i, 0));
+                            entriesAgg.add(new BarEntry(i, 0));
+                        }
 
-        entries2.add(new Entry(0, 0));
-        entries2.add(new Entry(1, 2));
-        entries2.add(new Entry(2, 3));
-        entries2.add(new Entry(3, 4));
-        entries2.add(new Entry(4, 5));
-        entries2.add(new Entry(5, 6));
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String documentNameStr = document.getId();
+                            if (documentNameStr.equals(subtract1Hour(5))) {
+                                entriesHappy.set(0, new BarEntry(0, secondToMinute(String.valueOf(document.get("행복")))));
+                                entriesRelax.set(0, new BarEntry(0, secondToMinute(String.valueOf(document.get("평안")))));
+                                entriesAnxiety.set(0, new BarEntry(0, secondToMinute(String.valueOf(document.get("불안")))));
+                                entriesAngry.set(0, new BarEntry(0, secondToMinute(String.valueOf(document.get("화남")))));
+                                entriesFear.set(0, new BarEntry(0, secondToMinute(String.valueOf(document.get("공포")))));
+                                entriesAgg.set(0, new BarEntry(0, secondToMinute(String.valueOf(document.get("공격성")))));
+                            } else if (documentNameStr.equals(subtract1Hour(4))) {
+                                entriesHappy.set(1, new BarEntry(1, secondToMinute(String.valueOf(document.get("행복")))));
+                                entriesRelax.set(1, new BarEntry(1, secondToMinute(String.valueOf(document.get("평안")))));
+                                entriesAnxiety.set(1, new BarEntry(1, secondToMinute(String.valueOf(document.get("불안")))));
+                                entriesAngry.set(1, new BarEntry(1, secondToMinute(String.valueOf(document.get("화남")))));
+                                entriesFear.set(1, new BarEntry(1, secondToMinute(String.valueOf(document.get("공포")))));
+                                entriesAgg.set(1, new BarEntry(1, secondToMinute(String.valueOf(document.get("공격성")))));
+                            } else if (documentNameStr.equals(subtract1Hour(3))) {
+                                entriesHappy.set(2, new BarEntry(2, secondToMinute(String.valueOf(document.get("행복")))));
+                                entriesRelax.set(2, new BarEntry(2, secondToMinute(String.valueOf(document.get("평안")))));
+                                entriesAnxiety.set(2, new BarEntry(2, secondToMinute(String.valueOf(document.get("불안")))));
+                                entriesAngry.set(2, new BarEntry(2, secondToMinute(String.valueOf(document.get("화남")))));
+                                entriesFear.set(2, new BarEntry(2, secondToMinute(String.valueOf(document.get("공포")))));
+                                entriesAgg.set(2, new BarEntry(2, secondToMinute(String.valueOf(document.get("공격성")))));
+                            } else if (documentNameStr.equals(subtract1Hour(2))) {
+                                entriesHappy.set(3, new BarEntry(3, secondToMinute(String.valueOf(document.get("행복")))));
+                                entriesRelax.set(3, new BarEntry(3, secondToMinute(String.valueOf(document.get("평안")))));
+                                entriesAnxiety.set(3, new BarEntry(3, secondToMinute(String.valueOf(document.get("불안")))));
+                                entriesAngry.set(3, new BarEntry(3, secondToMinute(String.valueOf(document.get("화남")))));
+                                entriesFear.set(3, new BarEntry(3, secondToMinute(String.valueOf(document.get("공포")))));
+                                entriesAgg.set(3, new BarEntry(3, secondToMinute(String.valueOf(document.get("공격성")))));
+                            } else if (documentNameStr.equals(subtract1Hour(1))) {
+                                entriesHappy.set(4, new BarEntry(4, secondToMinute(String.valueOf(document.get("행복")))));
+                                entriesRelax.set(4, new BarEntry(4, secondToMinute(String.valueOf(document.get("평안")))));
+                                entriesAnxiety.set(4, new BarEntry(4, secondToMinute(String.valueOf(document.get("불안")))));
+                                entriesAngry.set(4, new BarEntry(4, secondToMinute(String.valueOf(document.get("화남")))));
+                                entriesFear.set(4, new BarEntry(4, secondToMinute(String.valueOf(document.get("공포")))));
+                                entriesAgg.set(4, new BarEntry(4, secondToMinute(String.valueOf(document.get("공격성")))));
+                            } else if (documentNameStr.equals(currentTimeStr)) {
+                                entriesHappy.set(5, new BarEntry(5, secondToMinute(String.valueOf(document.get("행복")))));
+                                entriesRelax.set(5, new BarEntry(5, secondToMinute(String.valueOf(document.get("평안")))));
+                                entriesAnxiety.set(5, new BarEntry(5, secondToMinute(String.valueOf(document.get("불안")))));
+                                entriesAngry.set(5, new BarEntry(5, secondToMinute(String.valueOf(document.get("화남")))));
+                                entriesFear.set(5, new BarEntry(5, secondToMinute(String.valueOf(document.get("공포")))));
+                                entriesAgg.set(5, new BarEntry(5, secondToMinute(String.valueOf(document.get("공격성")))));
+                            }
+                        }
 
-        entries3.add(new Entry(0, 0));
-        entries3.add(new Entry(1, 2));
-        entries3.add(new Entry(2, 2));
-        entries3.add(new Entry(3, 9));
-        entries3.add(new Entry(4, 1));
-        entries3.add(new Entry(5, 1));
+                        LineDataSet dataSetHappy = new LineDataSet(entriesHappy, "행복");
+                        dataSetHappy.setColors(Color.BLACK);
+                        LineDataSet dataSetRelax = new LineDataSet(entriesRelax, "평안");
+                        dataSetRelax.setColors(Color.RED);
+                        LineDataSet dataSetAnxiety = new LineDataSet(entriesAnxiety, "불안");
+                        dataSetAnxiety.setColors(Color.BLUE);
+                        LineDataSet dataSetAngry = new LineDataSet(entriesAngry, "화남");
+                        dataSetAngry.setColors(Color.GREEN);
+                        LineDataSet dataSetFear = new LineDataSet(entriesFear, "공포");
+                        dataSetFear.setColors(Color.GRAY);
+                        LineDataSet dataSetAgg = new LineDataSet(entriesAgg, "공격성");
+                        dataSetAgg.setColors(Color.YELLOW);
 
-        entries4.add(new Entry(0, 0));
-        entries4.add(new Entry(1, 2));
-        entries4.add(new Entry(2, 3));
-        entries4.add(new Entry(3, 1));
-        entries4.add(new Entry(4, 0));
-        entries4.add(new Entry(5, 3));
+                        // 차트에 데이터 입력
+                        LineData data = new LineData();
+                        data.addDataSet(dataSetHappy);
+                        data.addDataSet(dataSetRelax);
+                        data.addDataSet(dataSetAnxiety);
+                        data.addDataSet(dataSetAngry);
+                        data.addDataSet(dataSetFear);
+                        data.addDataSet(dataSetAgg);
+                        lineChartEmotion.setData(data);
 
-        entries5.add(new Entry(0, 0));
-        entries5.add(new Entry(1, 1));
-        entries5.add(new Entry(2, 3));
-        entries5.add(new Entry(3, 2));
-        entries5.add(new Entry(4, 4));
-        entries5.add(new Entry(5, 3));
+                        // x축 설정
+                        XAxis xAxis = lineChartEmotion.getXAxis();
+                        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                        xAxis.setAxisMinimum(0);
+                        xAxis.setLabelCount(10);
 
-        entries6.add(new Entry(0, 0));
-        entries6.add(new Entry(1, 5));
-        entries6.add(new Entry(2, 4));
-        entries6.add(new Entry(3, 3));
-        entries6.add(new Entry(4, 2));
-        entries6.add(new Entry(5, 1));
+                        // y축 설정
+                        // 왼쪽 y축 제거
+                        YAxis yLAxis = lineChartEmotion.getAxisLeft();
+                        yLAxis.setDrawLabels(false);
+                        yLAxis.setDrawAxisLine(false);
+                        yLAxis.setDrawGridLines(false);
 
-        LineDataSet dataSet = new LineDataSet(entries, "행복/즐거움");
-        dataSet.setColors(Color.BLACK);
+                        lineChartEmotion.setDoubleTapToZoomEnabled(false);
+                        lineChartEmotion.setDrawGridBackground(false);
 
-        LineDataSet dataSet2 = new LineDataSet(entries2, "평안/안정");
-        dataSet2.setColors(Color.RED);
+                        Description description = new Description();
+                        description.setText("분");
+                        lineChartEmotion.setDescription(description);
 
-        LineDataSet dataSet3 = new LineDataSet(entries3, "불안/슬픔");
-        dataSet3.setColors(Color.BLUE);
+                        lineChartEmotion.animateY(1000); // 애니메이션 설정
+                        lineChartEmotion.invalidate();
+                    } else {
+                        Log.d("CHARTEMOTION", "Error getting documents: ", task.getException());
+                    }
+                });
+        //------------------------------------------------------------------------------------------
 
-        LineDataSet dataSet4 = new LineDataSet(entries4, "화남/불쾌");
-        dataSet4.setColors(Color.GREEN);
+    }
 
-        LineDataSet dataSet5 = new LineDataSet(entries5, "공포");
-        dataSet5.setColors(Color.GRAY);
+    protected String subtract1Hour(int i) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentTime);
+        cal.add(Calendar.HOUR, -(i));
+        return format.format(cal.getTime());
+    }
 
-        LineDataSet dataSet6 = new LineDataSet(entries6, "공격성");
-        dataSet6.setColors(Color.YELLOW);
-
-        LineData data = new LineData();
-        data.addDataSet(dataSet);
-        data.addDataSet(dataSet2);
-        data.addDataSet(dataSet3);
-        data.addDataSet(dataSet4);
-        data.addDataSet(dataSet5);
-        data.addDataSet(dataSet6);
-
-        lineChart.setData(data);
-
-        XAxis xAxis = lineChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextColor(Color.BLACK);
-        xAxis.enableGridDashedLine(10, 24, 0);
-        xAxis.setAxisMinimum(0);
-        xAxis.setLabelCount(3);
-
-        YAxis yLAxis = lineChart.getAxisLeft();
-        yLAxis.setTextColor(Color.BLACK);
-        YAxis yRAxis = lineChart.getAxisRight();
-        yRAxis.setDrawLabels(false);
-        yRAxis.setDrawAxisLine(false);
-        yRAxis.setDrawGridLines(false);
-
-        lineChart.setDoubleTapToZoomEnabled(false);
-        lineChart.setDrawGridBackground(false);
-
-        Description description = new Description();
-        description.setText("Time");
-
-        lineChart.setDescription(description);
-        lineChart.animateY(2000);
-        lineChart.invalidate();
-
-
+    protected int secondToMinute(String second) {
+        return parseInt(second) / 60;
     }
 }

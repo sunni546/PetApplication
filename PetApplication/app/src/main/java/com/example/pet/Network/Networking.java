@@ -1,6 +1,7 @@
 package com.example.pet.Network;
 
 import static android.content.ContentValues.TAG;
+import static com.example.pet.Info.format_yyMMdd_HH;
 import static com.example.pet.Network.BitmapThread.bitmapQueue;
 
 import android.graphics.Bitmap;
@@ -8,8 +9,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -34,16 +33,13 @@ import java.util.Map;
 public class Networking extends Thread {
 
     private String name;
-    private String IP;
+    private String IP = "";
     private int portNum;
     private byte[] msg;
     public byte[] receive_data;
     public String receive_msg;
-    private FirebaseAuth firebaseAuth;
-    private FirebaseFirestore firebaseFirestore;
 
-    public static String format_yyyyMMdd_HHmm = "yyMMdd_hh";
-    public static String format_yyyyMMdd_HHmm2 = "yyMMdd_hh:mm";
+    public static String format_yyMMdd_HHmm2 = "yyMMdd_HH:mm";
 
     public Networking(@NonNull String name) {
         this.name = name;
@@ -54,8 +50,8 @@ public class Networking extends Thread {
     }
 
     public void run() {
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseFirestore = FirebaseFirestore.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
         assert user != null;
@@ -64,8 +60,8 @@ public class Networking extends Thread {
         while (true) {
             //시간
             Date currentTime = Calendar.getInstance().getTime();
-            SimpleDateFormat format = new SimpleDateFormat(format_yyyyMMdd_HHmm, Locale.getDefault());
-            SimpleDateFormat format2 = new SimpleDateFormat(format_yyyyMMdd_HHmm2, Locale.getDefault());
+            SimpleDateFormat format = new SimpleDateFormat(format_yyMMdd_HH, Locale.getDefault());
+            SimpleDateFormat format2 = new SimpleDateFormat(format_yyMMdd_HHmm2, Locale.getDefault());
             String currentTimeStr = format.format(currentTime);
             String currentTimeStr2 = format2.format(currentTime);
 
@@ -76,9 +72,12 @@ public class Networking extends Thread {
                     client.connect(ipep);
 
                     Bitmap first_image = bitmapQueue.poll();
+
+                    bitmapQueue.poll();
+
                     setting_msg(first_image);
 
-                    try (OutputStream sender = client.getOutputStream(); InputStream receiver = client.getInputStream();) {
+                    try (OutputStream sender = client.getOutputStream(); InputStream receiver = client.getInputStream()) {
                         String length_ = Integer.toString(this.msg.length);
 
                         byte[] data = length_.getBytes();
@@ -108,41 +107,44 @@ public class Networking extends Thread {
                         receiver.read(receive_data, 0, length);
 
                         receive_msg = new String(receive_data, "UTF-8");
-                        String[] splitText=receive_msg.split(" ");
-                        String Emo = splitText[3]; //감정
-                        String Act = splitText[4]; //행동
 
-                        //Emotion DB 저장
-                        DocumentReference userOfPet = firebaseFirestore.collection("Users")
-                                .document(userUid).collection("Pets")
-                                .document(name).collection("Emotions")
-                                .document(currentTimeStr);
-                        userOfPet.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        System.out.println(receive_msg);
+                        Log.d("NetworkingNetworking", receive_msg);
+
+                        if (receive_msg.length() > 1) {
+                            String[] splitText=receive_msg.split(" ");
+                            String Emo = splitText[3]; // 감정
+                            String Act = splitText[4]; // 행동
+
+                            //Emotion DB 저장
+                            DocumentReference userOfPet = firebaseFirestore.collection("Users")
+                                    .document(userUid).collection("Pets")
+                                    .document(name).collection("Emotions")
+                                    .document(currentTimeStr);
+                            userOfPet.get().addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
                                         switch (Emo){
-                                            case "Happy":
+                                            case "Happy" :
                                                 userOfPet.update("행복", FieldValue.increment(1));
                                                 break;
-                                            case "F":
+                                            case "Fear" :
                                                 userOfPet.update("공포", FieldValue.increment(1));
                                                 break;
-                                            case "A":
+                                            case "Unrest/Sad" :
                                                 userOfPet.update("불안", FieldValue.increment(1));
                                                 break;
-                                            case "R":
+                                            case "Relax" :
                                                 userOfPet.update("평안", FieldValue.increment(1));
                                                 break;
-                                            case "AN":
+                                            case "Angry/Discomfort" :
                                                 userOfPet.update("화남", FieldValue.increment(1));
                                                 break;
-                                            case "AG":
+                                            case "Aggression" :
                                                 userOfPet.update("공격성", FieldValue.increment(1));
                                                 break;
-                                            default:
+                                            default :
                                                 break;
                                         }
                                         Log.d(TAG, "Document exists!");
@@ -157,25 +159,25 @@ public class Networking extends Thread {
                                         Emotion.put("공격성", 0);
                                         userOfPet.set(Emotion);
                                         switch (Emo){
-                                            case "Happy":
+                                            case "Happy" :
                                                 userOfPet.update("행복", FieldValue.increment(1));
                                                 break;
-                                            case "F":
+                                            case "Fear" :
                                                 userOfPet.update("공포", FieldValue.increment(1));
                                                 break;
-                                            case "A":
+                                            case "Unrest/Sad" :
                                                 userOfPet.update("불안", FieldValue.increment(1));
                                                 break;
-                                            case "R":
+                                            case "Relax" :
                                                 userOfPet.update("평안", FieldValue.increment(1));
                                                 break;
-                                            case "AN":
+                                            case "Angry/Discomfort" :
                                                 userOfPet.update("화남", FieldValue.increment(1));
                                                 break;
-                                            case "AG":
+                                            case "Aggression" :
                                                 userOfPet.update("공격성", FieldValue.increment(1));
                                                 break;
-                                            default:
+                                            default :
                                                 break;
                                         }
                                         Log.d(TAG, "Document does not exist!");
@@ -184,19 +186,16 @@ public class Networking extends Thread {
                                 else {
                                     Log.d(TAG, "Failed with: ", task.getException());
                                 }
-                            }
-                        });
-                        //--------------------------------------------------------------------
+                            });
+                            //--------------------------------------------------------------------
 
-                        //이상행동인 경우 DB 저장
-                        if (Act.equals("NOTHING")){
-                            DocumentReference userOfPet3 = firebaseFirestore.collection("Users")
-                                    .document(userUid).collection("Pets")
-                                    .document(name).collection("AbnormalBehaviors")
-                                    .document(currentTimeStr);
-                            userOfPet3.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            //이상행동인 경우 DB 저장
+                            if (Act.equals("NOTHING")){
+                                DocumentReference userOfPet3 = firebaseFirestore.collection("Users")
+                                        .document(userUid).collection("Pets")
+                                        .document(name).collection("AbnormalBehaviors")
+                                        .document(currentTimeStr);
+                                userOfPet3.get().addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
                                         DocumentSnapshot document = task.getResult();
                                         if (document.exists()) {
@@ -215,29 +214,25 @@ public class Networking extends Thread {
                                     } else {
                                         Log.d(TAG, "Failed with: ", task.getException());
                                     }
-                                }
-                            });
+                                });
+                            }
 
-                        }
-
-                        //이상행동이 아닌 경우 DB 저장
-                        else{
-                            DocumentReference userOfPet2 = firebaseFirestore.collection("Users")
-                                    .document(userUid).collection("Pets")
-                                    .document(name).collection("Actions")
-                                    .document(currentTimeStr);
-                            userOfPet2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            //이상행동이 아닌 경우 DB 저장
+                            else{
+                                DocumentReference userOfPet2 = firebaseFirestore.collection("Users")
+                                        .document(userUid).collection("Pets")
+                                        .document(name).collection("Actions")
+                                        .document(currentTimeStr);
+                                userOfPet2.get().addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
                                         DocumentSnapshot document = task.getResult();
                                         if (document.exists()) {
                                             switch (Act){
-                                                case "LYING":
-                                                case "SITDOWN":
+                                                case "LYING" :
+                                                case "SITDOWN" :
                                                     userOfPet2.update("휴식 시간", FieldValue.increment(1));
                                                     break;
-                                                default:
+                                                default :
                                                     userOfPet2.update("운동 시간", FieldValue.increment(1));
                                                     break;
                                             }
@@ -248,11 +243,11 @@ public class Networking extends Thread {
                                             ACT.put("운동 시간", 0);
                                             userOfPet2.set(ACT);
                                             switch (Act){
-                                                case "LYING":
-                                                case "SITDOWN":
+                                                case "LYING" :
+                                                case "SITDOWN" :
                                                     userOfPet2.update("휴식 시간", FieldValue.increment(1));
                                                     break;
-                                                default:
+                                                default :
                                                     userOfPet2.update("운동 시간", FieldValue.increment(1));
                                                     break;
                                             }
@@ -262,12 +257,9 @@ public class Networking extends Thread {
                                     else {
                                         Log.d(TAG, "Failed with: ", task.getException());
                                     }
-                                }
-                            });
+                                });
+                            }
                         }
-                        
-                        
-                        System.out.println(receive_msg);
 
                         client.close();
                     }
