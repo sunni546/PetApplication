@@ -103,6 +103,7 @@ public class Chart_Action extends AppCompatActivity {
                         // 그래프에 값 추가
                         ArrayList<BarEntry> entriesRest = new ArrayList<>();
                         ArrayList<BarEntry> entriesAct = new ArrayList<>();
+
                         for (int i = 0; i < 6; i++) {
                             entriesRest.add(new BarEntry(i, 0));
                             entriesAct.add(new BarEntry(i, 0));
