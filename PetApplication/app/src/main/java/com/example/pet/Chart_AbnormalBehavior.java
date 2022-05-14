@@ -1,5 +1,6 @@
 package com.example.pet;
 
+import static com.example.pet.Info.format_yyyyMMdd_HH;
 import static java.lang.Integer.parseInt;
 
 import android.content.Intent;
@@ -38,8 +39,7 @@ import java.util.Map;
 public class Chart_AbnormalBehavior extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public static String format_yyyyMMdd_HHmm = "yyMMdd_HH";
-    public static String format_yyyyMMdd_HHmm2 = "yyMMdd";
+    public static String format_yyyyMMdd = "yyMMdd";
     String n;
     Map<String, Object> Abnormal2 = new HashMap<>();
     String ACount_st2;
@@ -64,8 +64,8 @@ public class Chart_AbnormalBehavior extends AppCompatActivity {
         setContentView(R.layout.chart_abnormal_behavior);
 
         currentTime = Calendar.getInstance().getTime();
-        format = new SimpleDateFormat(format_yyyyMMdd_HHmm, Locale.getDefault());
-        format2 = new SimpleDateFormat(format_yyyyMMdd_HHmm2, Locale.getDefault());
+        format = new SimpleDateFormat(format_yyyyMMdd_HH, Locale.getDefault());
+        format2 = new SimpleDateFormat(format_yyyyMMdd, Locale.getDefault());
         String currentTimeStr = format.format(currentTime);
         String currentTimeStr2 = format2.format(currentTime);
 

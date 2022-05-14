@@ -1,5 +1,7 @@
 package com.example.pet;
 
+import static com.example.pet.Info.format_yyyyMMdd_HH;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,9 +9,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.pet.Network.BitmapThread;
-import com.example.pet.Network.Networking;
 
 import org.videolan.libvlc.LibVLC;
 import org.videolan.libvlc.Media;
@@ -21,8 +20,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import wseemann.media.FFmpegMediaMetadataRetriever;
-
 public class Cctv extends AppCompatActivity {
 
     private static String cctvUrlStr;
@@ -31,7 +28,6 @@ public class Cctv extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     private VLCVideoLayout videoLayout;
 
-    public static String format_yyyyMMdd_HHmm = "yyyy-MM-dd HH:mm";
     private TextView tvCurrentTime;
 
     @Override
@@ -42,7 +38,7 @@ public class Cctv extends AppCompatActivity {
         // 현재 시간 출력하기
         tvCurrentTime = findViewById(R.id.tv_current_time);
         Date currentTime = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat(format_yyyyMMdd_HHmm, Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat(format_yyyyMMdd_HH, Locale.getDefault());
         String currentTimeStr = format.format(currentTime);
         tvCurrentTime.setText(currentTimeStr);
 

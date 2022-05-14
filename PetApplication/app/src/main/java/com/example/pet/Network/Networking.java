@@ -1,6 +1,7 @@
 package com.example.pet.Network;
 
 import static android.content.ContentValues.TAG;
+import static com.example.pet.Info.format_yyyyMMdd_HH;
 import static com.example.pet.Network.BitmapThread.bitmapQueue;
 
 import android.graphics.Bitmap;
@@ -40,7 +41,6 @@ public class Networking extends Thread {
     public byte[] receive_data;
     public String receive_msg;
 
-    public static String format_yyyyMMdd_HHmm = "yyMMdd_HH";
     public static String format_yyyyMMdd_HHmm2 = "yyMMdd_HH:mm";
 
     public Networking(@NonNull String name) {
@@ -62,7 +62,7 @@ public class Networking extends Thread {
         while (true) {
             //시간
             Date currentTime = Calendar.getInstance().getTime();
-            SimpleDateFormat format = new SimpleDateFormat(format_yyyyMMdd_HHmm, Locale.getDefault());
+            SimpleDateFormat format = new SimpleDateFormat(format_yyyyMMdd_HH, Locale.getDefault());
             SimpleDateFormat format2 = new SimpleDateFormat(format_yyyyMMdd_HHmm2, Locale.getDefault());
             String currentTimeStr = format.format(currentTime);
             String currentTimeStr2 = format2.format(currentTime);

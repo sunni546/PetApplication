@@ -1,7 +1,8 @@
 package com.example.pet;
 
-
 import static android.content.ContentValues.TAG;
+
+import static com.example.pet.Info.format_yyyyMMdd_HH;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -36,7 +37,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class Chart_Emotion<Int> extends AppCompatActivity {
+public class Chart_Emotion extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String happy;
     String relax;
@@ -52,8 +53,6 @@ public class Chart_Emotion<Int> extends AppCompatActivity {
     TextView tvfear;
     TextView tvagg;
 
-    public static String format_yyyyMMdd_HHmm = "yyMMdd_HH";
-
     private FirebaseAuth firebaseAuth;
     Map<String, Object> Emotion = new HashMap<>();
 
@@ -63,7 +62,7 @@ public class Chart_Emotion<Int> extends AppCompatActivity {
         setContentView(R.layout.chart_emotion);
 
         Date currentTime = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat(format_yyyyMMdd_HHmm, Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat(format_yyyyMMdd_HH, Locale.getDefault());
         String currentTimeStr = format.format(currentTime);
 
         // 뒤로가기 버튼

@@ -60,7 +60,7 @@ public class Info extends AppCompatActivity {
     TextView tv_hour_act;
     TextView tv_min_act;
 
-    public static String format_yyyyMMdd_HHmm = "yyMMdd_HH";
+    public static String format_yyyyMMdd_HH = "yyMMdd_HH";
 
     private FirebaseAuth firebaseAuth;
     Map<String, Object> Emotion = new HashMap<>();
@@ -82,7 +82,7 @@ public class Info extends AppCompatActivity {
         String userUid = user.getUid();
 
         Date currentTime = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat(format_yyyyMMdd_HHmm, Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat(format_yyyyMMdd_HH, Locale.getDefault());
         String currentTimeStr = format.format(currentTime);
 
 
