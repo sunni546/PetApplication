@@ -48,10 +48,7 @@ public class Chart_Action extends AppCompatActivity {
     String act;
     int act_t;
 
-    TextView rest_h;
     TextView rest_m;
-
-    TextView act_h;
     TextView act_m;
 
     Map<String, Object> Action = new HashMap<>();
@@ -159,7 +156,7 @@ public class Chart_Action extends AppCompatActivity {
                         barChartRest.setDrawGridBackground(false);
 
                         Description descriptionRest = new Description();
-                        descriptionRest.setText("minute");
+                        descriptionRest.setText("분");
                         barChartRest.setDescription(descriptionRest);
 
                         barChartRest.animateY(1000); // 애니메이션 설정
@@ -191,7 +188,7 @@ public class Chart_Action extends AppCompatActivity {
                         barChartAct.setDrawGridBackground(false);
 
                         Description descriptionAct = new Description();
-                        descriptionAct.setText("minute");
+                        descriptionAct.setText("분");
                         barChartAct.setDescription(descriptionAct);
 
                         barChartAct.animateY(1000); // 애니메이션 설정
@@ -214,7 +211,7 @@ public class Chart_Action extends AppCompatActivity {
                 .collection("Actions")
                 .get().addOnCompleteListener(task -> {
                     count = task.getResult().size()-1;
-                    Log.d(TAG,"count : "+count);
+                    Log.d(TAG,"count : " + count);
                 });
 
         DocumentReference docRef = db.collection("Users").document(userUid)
@@ -228,18 +225,14 @@ public class Chart_Action extends AppCompatActivity {
                     rest = String.valueOf(Action.get("휴식 시간"));
                     act = String.valueOf(Action.get("운동 시간"));
 
-                    rest_t=(Integer.parseInt(rest)/count);
-                    act_t=(Integer.parseInt(act)/count);
+                    rest_t = (Integer.parseInt(rest)/count);
+                    act_t = (Integer.parseInt(act)/count);
 
-                    rest_h = findViewById(R.id.rest_hour);
                     rest_m = findViewById(R.id.rest_minute);
-                    rest_h.setText(String.valueOf(rest_t/60));
-                    rest_m.setText(String.valueOf(rest_t%60));
+                    rest_m.setText(String.valueOf(rest_t % 60));
 
-                    act_h = findViewById(R.id.act_hour);
                     act_m = findViewById(R.id.act_minute);
-                    act_h.setText(String.valueOf(act_t/60));
-                    act_m.setText(String.valueOf(act_t%60));
+                    act_m.setText(String.valueOf(act_t % 60));
                 }
                 else{
                     Log.d(TAG, "No such document");

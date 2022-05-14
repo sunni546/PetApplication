@@ -98,12 +98,12 @@ public class Chart_Emotion extends AppCompatActivity {
                         Emotion = document.getData();
                         Log.d("NOOO", "No such document" + Emotion);
 
-                        happy = String.valueOf(Emotion.get("행복"));
-                        relax = String.valueOf(Emotion.get("평안"));
-                        unrest =String.valueOf(Emotion.get("불안"));
-                        angry = String.valueOf(Emotion.get("화남"));
-                        fear = String.valueOf(Emotion.get("공포"));
-                        agg = String.valueOf(Emotion.get("공격성"));
+                        happy = String.valueOf(secondToMinute(String.valueOf(Emotion.get("행복"))));
+                        relax = String.valueOf(secondToMinute(String.valueOf(Emotion.get("평안"))));
+                        unrest =String.valueOf(secondToMinute(String.valueOf(Emotion.get("불안"))));
+                        angry = String.valueOf(secondToMinute(String.valueOf(Emotion.get("화남"))));
+                        fear = String.valueOf(secondToMinute(String.valueOf(Emotion.get("공포"))));
+                        agg = String.valueOf(secondToMinute(String.valueOf(Emotion.get("공격성"))));
 
                         tvhappy = findViewById(R.id.emo_1);
                         tvrelax = findViewById(R.id.emo_2);
@@ -254,7 +254,7 @@ public class Chart_Emotion extends AppCompatActivity {
                         lineChartEmotion.setDrawGridBackground(false);
 
                         Description description = new Description();
-                        description.setText("minute");
+                        description.setText("분");
                         lineChartEmotion.setDescription(description);
 
                         lineChartEmotion.animateY(1000); // 애니메이션 설정

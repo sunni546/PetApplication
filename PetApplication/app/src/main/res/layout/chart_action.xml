@@ -98,27 +98,6 @@
 
 
                 <TextView
-
-                    android:fontFamily="@font/aller"
-                    android:textStyle="bold"
-                    android:id="@+id/rest_hour"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textColor="#539591"
-                    android:textSize="18dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/aller"
-                    android:gravity="center"
-                    android:text="@string/hour"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
-
-                <TextView
                     android:fontFamily="@font/aller"
                     android:textStyle="bold"
                     android:id="@+id/rest_minute"
@@ -179,26 +158,6 @@
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
-
-                <TextView
-                    android:fontFamily="@font/aller"
-                    android:textStyle="bold"
-                    android:id="@+id/act_hour"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textColor="#539591"
-                    android:textSize="18dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/aller"
-                    android:gravity="center"
-                    android:text="@string/hour"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
 
                 <TextView
                     android:fontFamily="@font/aller"

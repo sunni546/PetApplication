@@ -2,6 +2,8 @@ package com.example.pet;
 
 import static android.content.ContentValues.TAG;
 
+import static java.lang.Integer.parseInt;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,9 +57,7 @@ public class Info extends AppCompatActivity {
     String Rest;
 
     TextView tv_abnormal;
-    TextView tv_hour_rest;
     TextView tv_min_rest;
-    TextView tv_hour_act;
     TextView tv_min_act;
 
     public static String format_yyyyMMdd_HH = "yyMMdd_HH";
@@ -112,9 +112,7 @@ public class Info extends AppCompatActivity {
         TextView tvEmotion = (TextView) findViewById(R.id.tv_emotion);
         ImageView ivEmotion = (ImageView) findViewById(R.id.iv_emotion);
         tv_abnormal = findViewById(R.id.tv_abnormal_behavior_1day);
-        tv_hour_rest = findViewById(R.id.tv_h_rest);
         tv_min_rest = findViewById(R.id.tv_m_rest);
-        tv_hour_act = findViewById(R.id.tv_h_movement);
         tv_min_act = findViewById(R.id.tv_m_movement);
 
         // TODO: emotion
@@ -196,20 +194,13 @@ public class Info extends AppCompatActivity {
                 if (task.isSuccessful()){
                     DocumentSnapshot document3 = task.getResult();
                     if (document3.exists()){
-                        Action=document3.getData();
+                        Action = document3.getData();
                         Act = String.valueOf(Action.get("운동 시간"));
                         Rest = String.valueOf(Action.get("휴식 시간"));
-                        Log.d("Act_time", "Act time : "+Act);
+                        Log.d("Act_time", "Act time : " + Act);
 
-                        Integer Act_hour = Integer.parseInt(Act)/3600;
-                        Integer Act_min = (Integer.parseInt(Act)%3600)/60;
-                        Integer Rest_hour = Integer.parseInt(Rest)/3600;
-                        Integer Rest_min = (Integer.parseInt(Rest)%3600)/60;
-
-                        tv_hour_act.setText(String.valueOf(Act_hour));
-                        tv_min_act.setText(String.valueOf(Act_min));
-                        tv_hour_rest.setText(String.valueOf(Rest_hour));
-                        tv_min_rest.setText(String.valueOf(Rest_min));
+                        tv_min_act.setText(String.valueOf(secondToMinute(Act)));
+                        tv_min_rest.setText(String.valueOf(secondToMinute(Rest)));
                     }
                 }
             }
@@ -274,7 +265,7 @@ public class Info extends AppCompatActivity {
         });
     }
 
-    //Value값을 이용해서 Key값을 찾는 함수
+    // Value값을 이용해서 Key값을 찾는 함수
     public static <K, V> K getSingleKeyFromValue(Map<K, V> map, V value) {
         for (Map.Entry<K, V> entry : map.entrySet()) {
             if (Objects.equals(value, entry.getValue())) {
@@ -284,6 +275,9 @@ public class Info extends AppCompatActivity {
         return null;
     }
 
+    protected int secondToMinute(String second) {
+        return parseInt(second) / 60;
+    }
 }
 
 

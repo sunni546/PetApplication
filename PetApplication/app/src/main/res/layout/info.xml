@@ -199,25 +199,6 @@
                                 android:padding="20dp">
 
                                 <TextView
-
-                                    android:textColor="#539591"
-                                    android:id="@+id/tv_h_rest"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="0"
-                                    android:textSize="30dp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/textView4"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="15dp"
-                                    android:text="@string/hour"
-                                    android:textSize="20dp"
-                                    android:textStyle="bold" />
-
-                                <TextView
                                     android:textColor="#539591"
                                     android:id="@+id/tv_m_rest"
                                     android:layout_width="wrap_content"
@@ -260,25 +241,6 @@
                                 android:orientation="horizontal"
                                 android:gravity="center"
                                 android:padding="20dp">
-
-                                <TextView
-
-                                    android:textColor="#539591"
-                                    android:id="@+id/tv_h_movement"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="0"
-                                    android:textSize="30dp"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/textView9"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="15dp"
-                                    android:text="@string/hour"
-                                    android:textSize="20dp"
-                                    android:textStyle="bold" />
 
                                 <TextView
                                     android:textColor="#539591"
