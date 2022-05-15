@@ -87,7 +87,7 @@ public class Chart_AbnormalBehavior extends AppCompatActivity {
 
         // 이상 행동 통계
         tv1HourAb = (TextView) findViewById(R.id.tv_1hour_ab);
-        tv1dDayAb = (TextView) findViewById(R.id.tv_1day_ab);
+
 
         //이상행동 횟수 구하기
         DocumentReference docRef = db.collection("Users").document(userUid)
@@ -116,6 +116,7 @@ public class Chart_AbnormalBehavior extends AppCompatActivity {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        int Total_A=0;
                         ArrayList<Entry> entries = new ArrayList<>();
                         for (int i = 0; i < 6; i++) { entries.add(new BarEntry(i, 0)); }
 
@@ -123,19 +124,28 @@ public class Chart_AbnormalBehavior extends AppCompatActivity {
                             String documentNameStr = document.getId();
                             if (documentNameStr.equals(subtract1Hour(5))) {
                                 entries.set(0, new BarEntry(0, parseInt(String.valueOf(document.get("count")))));
+                                Total_A = Total_A+parseInt(String.valueOf(document.get("count")));
                             } else if (documentNameStr.equals(subtract1Hour(4))) {
                                 entries.set(1, new BarEntry(1, parseInt(String.valueOf(document.get("count")))));
+                                Total_A = Total_A+parseInt(String.valueOf(document.get("count")));
                             } else if (documentNameStr.equals(subtract1Hour(3))) {
                                 entries.set(2, new BarEntry(2, parseInt(String.valueOf(document.get("count")))));
+                                Total_A = Total_A+parseInt(String.valueOf(document.get("count")));
                             } else if (documentNameStr.equals(subtract1Hour(2))) {
                                 entries.set(3, new BarEntry(3, parseInt(String.valueOf(document.get("count")))));
+                                Total_A = Total_A+parseInt(String.valueOf(document.get("count")));
                             } else if (documentNameStr.equals(subtract1Hour(1))) {
                                 entries.set(4, new BarEntry(4, parseInt(String.valueOf(document.get("count")))));
+                                Total_A = Total_A+parseInt(String.valueOf(document.get("count")));
                             } else if (documentNameStr.equals(currentTimeStr)) {
                                 entries.set(5, new BarEntry(5, parseInt(String.valueOf(document.get("count")))));
+                                Total_A = Total_A+parseInt(String.valueOf(document.get("count")));
                             }
                         }
 
+                        tv1dDayAb = (TextView) findViewById(R.id.tv_1day_ab);
+                        tv1dDayAb.setText(String.valueOf(Total_A));
+                        Log.d("Total_A","Total = "+String.valueOf(Total_A));
                         // x축 라벨
                         ArrayList<String> labels = new ArrayList<>();
                         labels.add("5h");

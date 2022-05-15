@@ -128,7 +128,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="하루동안" />
+                            android:text="6시간 이내" />
 
                         <TextView
                             android:gravity="right"
@@ -193,7 +193,7 @@
                     android:id="@+id/textView8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="1일" />
+                    android:text="6시간 이내" />
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/chart_1day_ab"

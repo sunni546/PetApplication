@@ -48,8 +48,8 @@ public class Chart_Action extends AppCompatActivity {
     String act;
     int act_t;
 
-    TextView rest_m;
-    TextView act_m;
+    TextView R_m;
+    TextView A_m;
 
     Map<String, Object> Action = new HashMap<>();
 
@@ -88,6 +88,8 @@ public class Chart_Action extends AppCompatActivity {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        int Total_R=0;
+                        int Total_A=0;
                         // x축 라벨
                         ArrayList<String> labels = new ArrayList<>();
                         labels.add("5h");
@@ -112,24 +114,41 @@ public class Chart_Action extends AppCompatActivity {
                             if (documentNameStr.equals(subtract1Hour(5))) {
                                 entriesRest.set(0, new BarEntry(0, secondToMinute(String.valueOf(document.get("휴식 시간")))));
                                 entriesAct.set(0, new BarEntry(0, secondToMinute(String.valueOf(document.get("운동 시간")))));
+                                Total_R=Total_R+ secondToMinute(String.valueOf(document.get("휴식 시간")));
+                                Total_A=Total_A+secondToMinute(String.valueOf(document.get("운동 시간")));
                             } else if (documentNameStr.equals(subtract1Hour(4))) {
                                 entriesRest.set(1, new BarEntry(1, secondToMinute(String.valueOf(document.get("휴식 시간")))));
                                 entriesAct.set(1, new BarEntry(1, secondToMinute(String.valueOf(document.get("운동 시간")))));
+                                Total_R=Total_R+ secondToMinute(String.valueOf(document.get("휴식 시간")));
+                                Total_A=Total_A+secondToMinute(String.valueOf(document.get("운동 시간")));
                             } else if (documentNameStr.equals(subtract1Hour(3))) {
                                 entriesRest.set(2, new BarEntry(2, secondToMinute(String.valueOf(document.get("휴식 시간")))));
                                 entriesAct.set(2, new BarEntry(2, secondToMinute(String.valueOf(document.get("운동 시간")))));
+                                Total_R=Total_R+ secondToMinute(String.valueOf(document.get("휴식 시간")));
+                                Total_A=Total_A+secondToMinute(String.valueOf(document.get("운동 시간")));
                             } else if (documentNameStr.equals(subtract1Hour(2))) {
                                 entriesRest.set(3, new BarEntry(3, secondToMinute(String.valueOf(document.get("휴식 시간")))));
                                 entriesAct.set(3, new BarEntry(3, secondToMinute(String.valueOf(document.get("운동 시간")))));
+                                Total_R=Total_R+ secondToMinute(String.valueOf(document.get("휴식 시간")));
+                                Total_A=Total_A+secondToMinute(String.valueOf(document.get("운동 시간")));
                             } else if (documentNameStr.equals(subtract1Hour(1))) {
                                 entriesRest.set(4, new BarEntry(4, secondToMinute(String.valueOf(document.get("휴식 시간")))));
                                 entriesAct.set(4, new BarEntry(4, secondToMinute(String.valueOf(document.get("운동 시간")))));
+                                Total_R=Total_R+ secondToMinute(String.valueOf(document.get("휴식 시간")));
+                                Total_A=Total_A+secondToMinute(String.valueOf(document.get("운동 시간")));
                             } else if (documentNameStr.equals(currentTimeStr)) {
                                 entriesRest.set(5, new BarEntry(5, secondToMinute(String.valueOf(document.get("휴식 시간")))));
                                 entriesAct.set(5, new BarEntry(5, secondToMinute(String.valueOf(document.get("운동 시간")))));
+                                Total_R=Total_R+ secondToMinute(String.valueOf(document.get("휴식 시간")));
+                                Total_A=Total_A+secondToMinute(String.valueOf(document.get("운동 시간")));
                             }
                         }
 
+
+                        R_m = (TextView) findViewById(R.id.rest_minute);
+                        R_m.setText(String.valueOf(Total_R));
+                        A_m = (TextView) findViewById(R.id.act_minute);
+                        A_m.setText(String.valueOf(Total_A));
                         // 휴식 시간 그래프
                         BarDataSet datasetRest = new BarDataSet(entriesRest, "시간별 휴식 시간");
                         datasetRest.setColors(ColorTemplate.COLORFUL_COLORS);
@@ -214,34 +233,6 @@ public class Chart_Action extends AppCompatActivity {
                     Log.d(TAG,"count : " + count);
                 });
 
-        DocumentReference docRef = db.collection("Users").document(userUid)
-                .collection("Pets").document(petNameStr)
-                .collection("Actions").document("TOTAL");
-        docRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
-                DocumentSnapshot document = task.getResult();
-                if(document.exists()){
-                    Action = document.getData();
-                    rest = String.valueOf(Action.get("휴식 시간"));
-                    act = String.valueOf(Action.get("운동 시간"));
-
-                    rest_t = (Integer.parseInt(rest)/count);
-                    act_t = (Integer.parseInt(act)/count);
-
-                    rest_m = findViewById(R.id.rest_minute);
-                    rest_m.setText(String.valueOf(rest_t % 60));
-
-                    act_m = findViewById(R.id.act_minute);
-                    act_m.setText(String.valueOf(act_t % 60));
-                }
-                else{
-                    Log.d(TAG, "No such document");
-                }
-            }
-            else{
-                Log.d(TAG, "get failed with", task.getException());
-            }
-        });
     }
 
     protected String subtract1Hour(int i) {

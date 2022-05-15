@@ -57,6 +57,7 @@ public class Info extends AppCompatActivity {
     TextView tv_abnormal;
     TextView tv_min_rest;
     TextView tv_min_act;
+    ImageView Emotion_img;
 
     public static String format_yyMMdd_HH = "yyMMdd_HH";
 
@@ -111,6 +112,7 @@ public class Info extends AppCompatActivity {
         tv_abnormal = findViewById(R.id.tv_abnormal_behavior_1day);
         tv_min_rest = findViewById(R.id.tv_m_rest);
         tv_min_act = findViewById(R.id.tv_m_movement);
+        Emotion_img = findViewById(R.id.iv_emotion);
 
         // TODO: emotion
         //---------------------------Emotion 중 가장 높은 값을 현재 감정 상태로------------------------
@@ -150,6 +152,28 @@ public class Info extends AppCompatActivity {
 
                         emotionStr = getSingleKeyFromValue(sampleMap, max_value);
                         tvEmotion.setText(emotionStr);
+
+
+                        if (emotionStr.equals("행복")){
+                            Emotion_img.setImageResource(R.drawable.happy);
+                        }
+                        else if (emotionStr.equals("평안")){
+                            Emotion_img.setImageResource(R.drawable.relax);
+                        }
+                        else if (emotionStr.equals("불안")){
+                            Emotion_img.setImageResource(R.drawable.anxiety);
+                        }
+                        else if (emotionStr.equals("화남")){
+                            Emotion_img.setImageResource(R.drawable.angry);
+                        }
+                        else if (emotionStr.equals("공포")){
+                            Emotion_img.setImageResource(R.drawable.fear);
+                        }
+                        else if (emotionStr.equals("공격성")){
+                            Emotion_img.setImageResource(R.drawable.agg);
+                        }
+
+
                     }
                     else{
                         Log.d(TAG, "No such document");
