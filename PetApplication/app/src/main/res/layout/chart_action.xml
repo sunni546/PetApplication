@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/aller"
                     android:gravity="center"
-                    android:text="휴식 시간 (6시간 이내) : "
+                    android:text="평균 휴식 시간 (6시간 이내) : "
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -154,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/aller"
                     android:gravity="center"
-                    android:text="운동 시간 (6시간 이내) : "
+                    android:text="평균 운동 시간 (6시간 이내) : "
                     android:textSize="18dp"
                     android:textStyle="bold" />
 

@@ -128,7 +128,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="6시간 이내" />
+                            android:text="오늘 하루" />
 
                         <TextView
                             android:gravity="right"
@@ -168,7 +168,7 @@
                     android:id="@+id/textView7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="1시간" />
+                    android:text="1시간 차트" />
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/chart_1hour_ab"
@@ -193,7 +193,7 @@
                     android:id="@+id/textView8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="6시간 이내" />
+                    android:text="1일 차트" />
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/chart_1day_ab"

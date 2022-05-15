@@ -146,9 +146,9 @@ public class Chart_Action extends AppCompatActivity {
 
 
                         R_m = (TextView) findViewById(R.id.rest_minute);
-                        R_m.setText(String.valueOf(Total_R));
+                        R_m.setText(String.valueOf(Total_R/6));
                         A_m = (TextView) findViewById(R.id.act_minute);
-                        A_m.setText(String.valueOf(Total_A));
+                        A_m.setText(String.valueOf(Total_A/6));
                         // 휴식 시간 그래프
                         BarDataSet datasetRest = new BarDataSet(entriesRest, "시간별 휴식 시간");
                         datasetRest.setColors(ColorTemplate.COLORFUL_COLORS);
